@@ -4,14 +4,15 @@
 <meta charset="ISO-8859-1">
 <title>Welcome Page</title>
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/resources/demos/style.css">
+
+
 <style>
 .p4 {
 	background-image:
-		url('<%=ORSView.APP_CONTEXT%>/img/WallpaperDog-988052.jpg');
-	background-size: 100%;
-	background-repeat: no-repeat;
+		url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg');
+	background-size: cover;
 }
 
 .cl {
@@ -26,10 +27,10 @@
 	<div class="header">
 		<%@include file="Header.jsp"%>
 	</div>
-	<div class="text-cs1">
-		<center>
-			<h1 style="padding-top: 20%; color: white">
-				<b class="cl">" Welcome to online result system "</b>
+	<div class="align-items-center justify-content-center">
+		<center >
+			<h1 style="padding-top: 20%; color: white" >
+				<b class="cl">" Welcome To Online Result System "</b>
 			</h1>
 		</center>
 	</div>

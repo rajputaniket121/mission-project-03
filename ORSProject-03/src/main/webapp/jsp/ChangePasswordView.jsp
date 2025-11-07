@@ -1,6 +1,7 @@
-<%@page import="in.co.rays.project_3.controller.ChangePasswordCtl"%>
-<%@page import="in.co.rays.project_3.util.DataUtility"%>
-<%@page import="in.co.rays.project_3.util.ServletUtility"%>
+
+<%@page import="in.co.rays.proj3.controller.ChangePasswordCtl"%>
+<%@page import="in.co.rays.proj3.utill.DataUtility"%>
+<%@page import="in.co.rays.proj3.utill.ServletUtility"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -66,7 +67,7 @@ i.css {
 							<!--Body-->
 							<div>
 
-								<jsp:useBean id="dto" class="in.co.rays.project_3.dto.UserDTO"
+								<jsp:useBean id="dto" class="in.co.rays.proj3.dto.UserDTO"
 									scope="request"></jsp:useBean>
 								<H4 align="center">
 									<%

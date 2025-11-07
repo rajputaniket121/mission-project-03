@@ -99,11 +99,11 @@ public abstract class BaseCtl extends HttpServlet{
     	long cdt=DataUtility.getLong(request.getParameter("createdDateTime"));
 
     	if(cdt>0){
-    	dto.setCreatedDatetime(DataUtility.getTimeStamp(cdt));
+    	dto.setCreatedDateTime(DataUtility.getTimeStamp(cdt));
     	}else{
-    	dto.setCreatedDatetime(DataUtility.getCurrentTimeStamp());
+    	dto.setCreatedDateTime(DataUtility.getCurrentTimeStamp());
     	}
-    	dto.setModifiedDatetime(DataUtility.getCurrentTimeStamp());
+    	dto.setModifiedDateTime(DataUtility.getCurrentTimeStamp());
     	return dto;
     	}
     /**

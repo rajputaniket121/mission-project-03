@@ -26,7 +26,7 @@ import in.co.rays.proj3.utill.ServletUtility;
 
 /**
  * login functionality controller. perform login operation
- * @author Anshul Prajapati
+ * @author Aniket Rajput
  *
  */
 
@@ -45,7 +45,6 @@ public class LoginCtl extends BaseCtl {
 		if (OP_SIGN_UP.equals(op) || OP_LOG_OUT.equals(op)) {
 			return pass;
 		}
-		System.out.println(request.getParameter("login") + ".........." + request.getParameter("password"));
 
 		if (DataValidator.isNull(request.getParameter("login"))) {
 			request.setAttribute("login", PropertyReader.getValue("error.require", "Login Id"));
@@ -58,7 +57,6 @@ public class LoginCtl extends BaseCtl {
 			request.setAttribute("password", PropertyReader.getValue("error.require", "password"));
 			pass = false;
 		}
-		System.out.println(pass+"/////");
 		return pass;
 
 	}
@@ -99,7 +97,6 @@ public class LoginCtl extends BaseCtl {
 				dto = model.findByPK(id);
 				ServletUtility.setDto(dto, request);
 			} catch (ApplicationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				ServletUtility.handleException(e, request, response);
 				return;
@@ -172,7 +169,6 @@ public class LoginCtl extends BaseCtl {
 
 	@Override
 	protected String getView() {
-		// TODO Auto-generated method stub
 		return ORSView.LOGIN_VIEW;
 	}
 

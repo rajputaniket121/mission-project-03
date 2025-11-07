@@ -5,12 +5,12 @@ import java.util.ResourceBundle;
 
 /**
  * PropertyReader is used to read the property from properties file
- * @author Anshul Prajapati
+ * @author Aniket Rajput
  *
  */
 public class PropertyReader {
 	private static ResourceBundle rb = ResourceBundle
-            .getBundle("in.co.rays.project_3.bundle.system");
+            .getBundle("in.co.rays.proj3.bundle.system");
 
     /**
      * Return value of key

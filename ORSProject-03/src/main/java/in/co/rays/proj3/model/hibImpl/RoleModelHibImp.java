@@ -4,6 +4,7 @@ import java.util.List;
 
 import in.co.rays.proj3.dto.RoleDTO;
 import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.RoleModelInt;
 
@@ -34,18 +35,6 @@ public class RoleModelHibImp implements RoleModelInt{
 	}
 
 	@Override
-	public List list(int pageNo, int pageSize) throws ApplicationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List search(RoleDTO dto) throws ApplicationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List search(RoleDTO dto, int pageNo, int pageSize) throws ApplicationException {
 		// TODO Auto-generated method stub
 		return null;
@@ -62,5 +51,7 @@ public class RoleModelHibImp implements RoleModelInt{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

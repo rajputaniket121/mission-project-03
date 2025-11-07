@@ -1,7 +1,7 @@
-<%@page import="in.co.rays.project_3.util.ServletUtility"%>
-<%@page import="in.co.rays.project_3.util.DataUtility"%>
-<%@page import="in.co.rays.project_3.controller.ForgetPasswordCtl"%>
-<%@page import="in.co.rays.project_3.controller.ORSView"%>
+
+<%@page import="in.co.rays.proj3.controller.ForgetPasswordCtl"%>
+<%@page import="in.co.rays.proj3.utill.DataUtility"%>
+<%@page import="in.co.rays.proj3.utill.ServletUtility"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -89,17 +89,17 @@ i.css {
 							<!--Body-->
 							<div>
 
-								<jsp:useBean id="bean" class="in.co.rays.project_3.dto.UserDTO"
+								<jsp:useBean id="bean" class="in.co.rays.proj3.dto.UserDTO"
 									scope="request"></jsp:useBean>
 
 								<input type="hidden" name="id" value="<%=bean.getId()%>">
 								<input type="hidden" name="createdBy"
 									value="<%=bean.getCreatedBy()%>"> <input type="hidden"
 									name="modifiedBy" value="<%=bean.getModifiedBy()%>"><input
-									type="hidden" name="createdDatetime"
-									value="<%=DataUtility.getTimestamp(bean.getCreatedDatetime())%>">
-								<input type="hidden" name="modifiedDatetime"
-									value="<%=DataUtility.getTimestamp(bean.getModifiedDatetime())%>">
+									type="hidden" name="createdDateTime"
+									value="<%=DataUtility.getTimestamp(bean.getCreatedDateTime())%>">
+								<input type="hidden" name="modifiedDateTime"
+									value="<%=DataUtility.getTimestamp(bean.getModifiedDateTime())%>">
 							</div>
 							<div class="md-form input-group-addon">
 								<span class="pl-sm-5"><b>Email Id</b><span

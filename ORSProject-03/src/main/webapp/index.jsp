@@ -10,7 +10,7 @@
 }
 
 body {
-	background-image: url('img/onlineresultsys.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 }

@@ -20,8 +20,8 @@ public abstract class BaseDTO implements Serializable, Comparable<BaseDTO>, Drop
 	protected Long id;
 	protected String createdBy;
 	protected String modifiedBy;
-	protected Timestamp createdDatetime;
-	protected Timestamp modifiedDatetime;
+	protected Timestamp createdDateTime;
+	protected Timestamp modifiedDateTime;
 
 	public Long getId() {
 		return id;
@@ -47,20 +47,20 @@ public abstract class BaseDTO implements Serializable, Comparable<BaseDTO>, Drop
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Timestamp getCreatedDatetime() {
-		return createdDatetime;
+	public Timestamp getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setCreatedDatetime(Timestamp createdDatetime) {
-		this.createdDatetime = createdDatetime;
+	public void setCreatedDateTime(Timestamp createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
-	public Timestamp getModifiedDatetime() {
-		return modifiedDatetime;
+	public Timestamp getModifiedDateTime() {
+		return modifiedDateTime;
 	}
 
-	public void setModifiedDatetime(Timestamp modifiedDatetime) {
-		this.modifiedDatetime = modifiedDatetime;
+	public void setModifiedDateTime(Timestamp modifiedDateTime) {
+		this.modifiedDateTime = modifiedDateTime;
 	}
 
 	public int compareTo(BaseDTO next) {

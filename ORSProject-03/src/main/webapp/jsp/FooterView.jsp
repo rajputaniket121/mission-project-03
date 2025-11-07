@@ -13,7 +13,7 @@
    width: 100%;
    color: white;
    text-align: center;
- background-image:  linear-gradient(to bottom right, grey, black);
+ background-image: linear-gradient(to bottom right, #fcfcfc, #555555);
 }
 
 </style>
@@ -22,7 +22,7 @@
 <div class="footer">
 <center>
 
-<h5>&#169; RAYS Technologies</h5></center>
+<h5><font color="black">&#169; RAYS Technologies</font></h5></center>
 </div>
 </body>
 
