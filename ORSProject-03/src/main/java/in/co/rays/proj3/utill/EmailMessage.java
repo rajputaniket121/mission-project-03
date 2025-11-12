@@ -3,7 +3,7 @@ package in.co.rays.proj3.utill;
 
 /**
  * EmailBuilder is used to contain the configuration or getter setter
- * @author Anshul Prajapati
+ * @author Aniket Rajput
  *
  */
 public class EmailMessage {

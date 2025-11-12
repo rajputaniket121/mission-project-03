@@ -1,251 +1,158 @@
-<%@page import="in.co.rays.project_3.util.HTMLUtility"%>
-<%@page import="in.co.rays.project_3.util.DataUtility"%>
-<%@page import="in.co.rays.project_3.dto.MarksheetDTO"%>
-<%@page import="java.util.Iterator"%>
+<%@page import="in.co.rays.proj3.controller.ORSView"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="in.co.rays.proj3.utill.DataUtility"%>
+<%@page import="in.co.rays.proj3.controller.MarksheetListCtl"%>
+<%@page import="in.co.rays.proj3.utill.ServletUtility"%>
+<%@page import="in.co.rays.proj3.dto.MarksheetDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="in.co.rays.project_3.util.ServletUtility"%>
-<%@page import="in.co.rays.project_3.controller.MarksheetListCtl"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="java.util.Iterator"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>MarksheetListView</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="<%=ORSView.APP_CONTEXT%>/js/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=ORSView.APP_CONTEXT%>/js/CheckBox11.js"></script>
-<style>
-.p1 {
-	padding: 8px;
-}
-
-.hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/list2.jpg');
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-size: cover;
-	padding-top: 85px;
-
-	/* background-size: 100%; */
-}
-</style>
+    <title>Marksheet List</title>
+    <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css    ">
 </head>
-<body class="hm">
-	<div>
-		<%@include file="Header.jsp"%>
-	</div>
-	<div>
-		<form action="<%=ORSView.MARKSHEET_LIST_CTL%>" method="post">
-			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.MarksheetDTO"
-				scope="request"></jsp:useBean>
-			<%
-				List list1 = (List) request.getAttribute("RollNo");
-			%>
+<body class="p-4"
+    style="background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg'); 
+           background-size: cover; 
+           background-position: center; 
+           background-attachment: fixed; 
+           min-height: 100vh;">
+    <%@include file="Header.jsp"%>
+    <div class="container-fluid p-4">
+        <h2 class="text-center text-light font-weight-bold mt-4">Marksheet List</h2>
 
+        <%
+            if (!ServletUtility.getErrorMessage(request).equals("")) {
+        %>
+        <div class="alert alert-danger"><%=ServletUtility.getErrorMessage(request)%></div>
+        <%
+        }
+        if (!ServletUtility.getSuccessMessage(request).equals("")) {
+        %>
+        <div class="alert alert-success"><%=ServletUtility.getSuccessMessage(request)%></div>
+        <%
+        }
+        %>
 
-			<%
-				int pageNo = ServletUtility.getPageNo(request);
-				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize) + 1;
-				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
-				List list = ServletUtility.getList(request);
-				Iterator<MarksheetDTO> it = list.iterator();
-				if (list.size() != 0) {
-			%>
-			<center>
-				<h1 class="text-dark font-weight-bold pt-3">
-					<font color="black">Marksheet List 
-				</h1>
-				</font>
-			</center>
+        <form action="<%=ORSView.MARKSHEET_LIST_CTL%>" method="POST">
+            <%
+                int pageNo = ServletUtility.getPageNo(request);
+                int pageSize = ServletUtility.getPageSize(request);
+                int index = ((pageNo - 1) * pageSize) + 1;
+                int nextListSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
 
-			</br>
-			<div class="row">
-				<div class="col-md-4"></div>
+                List<MarksheetDTO> list = (List<MarksheetDTO>) ServletUtility.getList(request);
+                Iterator<MarksheetDTO> it = list.iterator();
 
-				<%
-					if (!ServletUtility.getSuccessMessage(request).equals("")) {
-				%>
-				<div class="col-md-4 alert alert-success alert-dismissible"
-					style="background-color: #80ff80">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="#008000"><%=ServletUtility.getSuccessMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
+                if (list.size() != 0) {
+            %>
 
-				<div class="col-md-4"></div>
-			</div>
-			<div class="row">
-				<div class="col-md-4"></div>
+            <input type="hidden" name="pageNo" value="<%=pageNo%>">
+            <input type="hidden" name="pageSize" value="<%=pageSize%>">
 
-				<%
-					if (!ServletUtility.getErrorMessage(request).equals("")) {
-				%>
-				<div class=" col-md-4 alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="red"><%=ServletUtility.getErrorMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-				<div class="col-md-4"></div>
-			</div>
-			<div class="row">
+            <!-- Floating-style search form -->
+            <div class="table-responsive">
+                <table class="table table-borderless w-100 text-center bg-transparent">
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center flex-wrap bg-light bg-opacity-75 p-3 rounded shadow-sm">
+                                <div class="mx-2">
+                                    <label><b>Name :</b></label>
+                                </div>
+                                <div class="mx-2">
+                                    <input type="text" class="form-control form-control-sm" name="name" placeholder="Enter Student Name" value="<%=ServletUtility.getParameter("name", request)%>" style="width: 150px;">
+                                </div>
+                                <div class="mx-2">
+                                    <label><b>Roll No :</b></label>
+                                </div>
+                                <div class="mx-2">
+                                    <input type="text" class="form-control form-control-sm" name="rollNo" placeholder="Enter Roll No." value="<%=ServletUtility.getParameter("rollNo", request)%>" style="width: 120px;">
+                                </div>
+                                <div class="mx-2">
+                                    <input type="submit" class="btn btn-sm btn-primary" name="operation" value="<%=MarksheetListCtl.OP_SEARCH%>">
+                                    <input type="submit" class="btn btn-sm btn-outline-secondary ml-1" name="operation" value="<%=MarksheetListCtl.OP_RESET%>">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
 
-				<div class="col-sm-2"></div>
-				<span><b>Name :</b></span>
-				<div class="col-sm-2">
-					<input class="form-control" type="text" name="name"
-						placeholder="Enter name" class="p1"
-						value="<%=ServletUtility.getParameter("name", request)%>">
-				</div>
-				<span><b>Roll No:</b></span>
-				<div class="col-sm-3"><%=HTMLUtility.getList("rollId", String.valueOf(dto.getId()), list1)%></div>
-				<div class="col-sm-2">
-					<input type="submit" class="btn btn-primary btn-md"
-						style="font-size: 17px" name="operation"
-						value="<%=MarksheetListCtl.OP_SEARCH%>">&emsp; <input
-						type="submit" class="btn btn-dark btn-md" style="font-size: 17px"
-						name="operation" value="<%=MarksheetListCtl.OP_RESET%>">
-				</div>
+            <!-- Data Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover w-100 text-center bg-white shadow-sm">
+                    <thead class="thead-light">
+                        <tr>
+                            <th><input type="checkbox" id="selectall" /> Select All</th>
+                            <th>S.No</th>
+                            <th>Roll No</th>
+                            <th>Name</th>
+                            <th>Physics</th>
+                            <th>Chemistry</th>
+                            <th>Math's</th>
+                            <th>Total</th>
+                            <th>Percentage (%)</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
 
-				<div class="col-sm-3"></div>
-			</div>
+                    <tbody>
+                        <%
+                            while (it.hasNext()) {
+                                MarksheetDTO dto = it.next();
+                                int physics = dto.getPhysics();
+                                int chemistry = dto.getChemistry();
+                                int maths = dto.getMaths();
+                                int total = physics + chemistry + maths;
+                                float percentage = (float) total / 3;
+                                percentage = Float.parseFloat(new DecimalFormat("##.##").format(percentage));
+                        %>
+                        <tr>
+                            <td><input type="checkbox" class="case" name="ids" value="<%=dto.getId()%>"></td>
+                            <td><%=index++%></td>
+                            <td class="text-uppercase"><%=dto.getRollNo()%></td>
+                            <td class="text-capitalize"><%=dto.getName()%></td>
+                            <td><%=dto.getPhysics()%></td>
+                            <td><%=dto.getChemistry()%></td>
+                            <td><%=dto.getMaths()%></td>
+                            <td><%=total%></td>
+                            <td><%=percentage%> %</td>
+                            <td><a href="MarksheetCtl?id=<%=dto.getId()%>" class="btn btn-link btn-sm p-0">Edit</a></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+            </div>
 
+            <table class="table w-100">
+                <tr>
+                    <td width="25%"><input type="submit" class="btn btn-outline-primary" name="operation" value="<%=MarksheetListCtl.OP_PREVIOUS%>" <%=pageNo > 1 ? "" : "disabled"%>></td>
+                    <td width="25%" class="text-center"><input type="submit" class="btn btn-outline-success" name="operation" value="<%=MarksheetListCtl.OP_NEW%>"></td>
+                    <td width="25%" class="text-center"><input type="submit" class="btn btn-outline-danger" name="operation" value="<%=MarksheetListCtl.OP_DELETE%>"></td>
+                    <td width="25%" class="text-right"><input type="submit" class="btn btn-outline-primary" name="operation" value="<%=MarksheetListCtl.OP_NEXT%>" <%=nextListSize != 0 ? "" : "disabled"%>></td>
+                </tr>
+            </table>
 
-			</br>
-			<div style="margin-bottom: 20px;" class="table-responsive">
-				<table class="table  table-dark table-bordered table-hover">
-					<thead>
-						<tr align="center" style="background-color: #8C8C8C;">
-
-							<th width="10%"><input type="checkbox" id="select_all"
-								name="Select" class="text"> Select All</th>
-							<th class="text">S.NO</th>
-							<th class="text">RollNo</th>
-							<th class="text">Name</th>
-							<th class="text">Physics</th>
-							<th class="text">Chemistry</th>
-							<th class="text">Maths</th>
-							<th class="text">Edit</th>
-						</tr>
-					</thead>
-					<%
-						while (it.hasNext()) {
-								dto = it.next();
-					%>
-
-					<tbody>
-						<tr align="center">
-							<td><input type="checkbox" class="checkbox" name="ids"
-								value="<%=dto.getId()%>"></td>
-							<td><%=index++%></td>
-							<td><%=dto.getRollNo()%></td>
-							<td><%=dto.getName()%></td>
-							<td><%=dto.getPhysics()%></td>
-							<td><%=dto.getChemistry()%></td>
-							<td><%=dto.getMaths()%></td>
-
-							<td align="center"><a
-								href="MarksheetCtl?id=<%=dto.getId()%>">Edit</a></td>
-						</tr>
-					</tbody>
-					<%
-						}
-					%>
-				</table>
-			</div>
-			<table width="100%">
-				<tr>
-					<td><input type="submit" name="operation"
-						class="btn btn-secondary btn-md" style="font-size: 17px"
-						value="<%=MarksheetListCtl.OP_PREVIOUS%>"
-						<%=pageNo > 1 ? "" : "disabled"%>></td>
-					<td><input type="submit" name="operation"
-						class="btn btn-primary btn-md" style="font-size: 17px"
-						value="<%=MarksheetListCtl.OP_NEW%>"></td>
-					<td><input type="submit" name="operation"
-						class="btn btn-danger btn-md" style="font-size: 17px"
-						value="<%=MarksheetListCtl.OP_DELETE%>"></td>
-
-					<td align="right"><input type="submit" name="operation"
-						class="btn btn-secondary btn-md" style="font-size: 17px"
-						style="padding: 5px;" value="<%=MarksheetListCtl.OP_NEXT%>"
-						<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
-				</tr>
-				<tr></tr>
-			</table>
-
-			<%
-				}
-				if (list.size() == 0) {
-					System.out.println("user list view list.size==0");
-			%>
-			<center>
-				<h1 class="text-primary font-weight-bold pt-3">
-					<font color="black">Marksheet List 
-				</h1>
-				</font>
-			</center>
-			</br>
-			<div class="row">
-				<div class="col-md-4"></div>
-				<%
-					if (!ServletUtility.getSuccessMessage(request).equals("")) {
-				%>
-
-				<div class="col-md-4 alert alert-success alert-dismissible"
-					style="background-color: #80ff80">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="#008000"><%=ServletUtility.getSuccessMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-
-
-				<%
-					if (!ServletUtility.getErrorMessage(request).equals("")) {
-				%>
-				<div class=" col-md-4 alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="red"><%=ServletUtility.getErrorMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-				<div class="col-md-4"></div>
-			</div>
-			</br>
-			<div style="padding-left: 48%;">
-				<input type="submit" name="operation" class="btn btn-primary btn-md"
-					style="font-size: 17px" value="<%=MarksheetListCtl.OP_BACK%>">
-			</div>
-			<%
-				}
-			%>
-			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
-				type="hidden" name="pageSize" value="<%=pageSize%>">
-
-
-		</form>
-
-	</div>
-	</br>
-	</br>
+            <%
+                }
+                if (list.size() == 0) {
+            %>
+            <table class="table w-100">
+                <tr>
+                    <td class="text-right"><input type="submit" class="btn btn-outline-secondary" name="operation" value="<%=MarksheetListCtl.OP_BACK%>"></td>
+                </tr>
+            </table>
+            <%
+                }
+            %>
+        </form>
+    </div>
+    <%@include file="FooterView.jsp"%>
 </body>
-<%@include file="FooterView.jsp"%>
-
 </html>

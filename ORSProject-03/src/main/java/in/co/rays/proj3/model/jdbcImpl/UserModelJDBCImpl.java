@@ -223,9 +223,8 @@ public class UserModelJDBCImpl implements UserModelInt {
 		Connection conn = null;
 		StringBuffer sql = new StringBuffer("select * from st_user where 1 = 1");
 		List<UserDTO> userList = new ArrayList<UserDTO>();
-
 		if (dto != null) {
-			if (dto.getId() > 0) {
+			if (dto.getId() != null && dto.getId() > 0) {
 				sql.append(" and id = "+dto.getId());
 			}
 			if (dto.getFirstName()!= null && dto.getFirstName().length() > 0) {

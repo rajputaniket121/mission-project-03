@@ -1,7 +1,7 @@
 package in.co.rays.proj3.dto;
 /**
  * Role JavaDto encapsulates role attributes
- * @author Anshul Prajapati
+ * @author Aniket Rajput
  *
  */
 

@@ -1,37 +1,56 @@
-<%@page import="in.co.rays.project_3.controller.ORSView"%>
+<%@page import="in.co.rays.proj3.controller.ORSView"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page isErrorPage="true"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Error</title>
-<link rel="icon" type="image/png"
-	href="<%=ORSView.ERROR_CTL%>/img/logo.png">
+<link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png">
+<style type="text/css">
+.p4 {
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: auto;
+}
+</style>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css  " rel="stylesheet">
 </head>
-<body>
-	<br>
-	<br>
-	<br>
-	<div align="center">
- 		<img src="<%=ORSView.APP_CONTEXT%>/img/404.jpg" width="550" height="250">
+<body class="p4 d-flex flex-column">
+	<main class="container flex-grow-1 d-flex align-items-center justify-content-center">
+		<div class="card grad-card shadow-sm text-center w-100">
+			<div class="card-body py-4">
+				<img src="<%=ORSView.APP_CONTEXT%>/img/404.jpg" class="img-fluid mb-4" style="max-width: 200px; height: auto;">
 
-		<h1>Oops! something went wrong</h1>
-		<font style="color: red; size: 25px;">Requested
-			resource is not available </font>
-		<div style="width: 25%; text-align: justify;">
-			<h3>Try:</h3>
-			<ul>
-				<li>check the network cables,modem,and router</li>
-				<li>reconnect to Wi-Fi</li>
-			</ul>
+				<h2 class="text-danger fw-bold mb-3">Oops! Something went wrong</h2>
+				<p class="text-danger fs-5">Requested resource is not available</p>
+				
+				<div class="col-md-6 mx-auto mt-4">
+					<h5 class="fw-bold">Try:</h5>
+					<ul class="text-start">
+						<li>Check the network cables, modem, and router</li>
+						<li>Reconnect to Wi-Fi</li>
+					</ul>
+				</div>
+				
+				<div class="mt-4">
+					<a href="<%=ORSView.WELCOME_CTL%>" class="btn btn-primary btn-lg px-4">
+						Please click here to Go Back
+					</a>
+				</div>
+			</div>
 		</div>
-	</div><!-- onclick="history.back() " -->
-	<h4 align="center">
-		<font size="5px" color="black"> <a href="<%=ORSView.WELCOME_CTL%>"
-			style="color: deepskyblue;">*Please click here to Go Back*</a></font>
-	</h4>
-
+	</main>
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js  "></script>
 </body>
 </html>

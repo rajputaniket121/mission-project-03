@@ -1,246 +1,141 @@
-<%@page import="java.util.HashMap"%>
-<%@page import="in.co.rays.project_3.util.HTMLUtility"%>
-<%@page import="in.co.rays.project_3.dto.CourseDTO"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="in.co.rays.project_3.util.DataUtility"%>
+<%@page import="in.co.rays.proj3.controller.ORSView"%>
+<%@page import="in.co.rays.proj3.utill.HTMLUtility"%>
+<%@page import="in.co.rays.proj3.utill.DataUtility"%>
+<%@page import="in.co.rays.proj3.controller.CourseListCtl"%>
+<%@page import="in.co.rays.proj3.controller.BaseCtl"%>
+<%@page import="in.co.rays.proj3.dto.CourseDTO"%>
+<%@page import="in.co.rays.proj3.utill.ServletUtility"%>
 <%@page import="java.util.List"%>
-<%@page import="in.co.rays.project_3.util.ServletUtility"%>
-<%@page import="in.co.rays.project_3.controller.CourseListCtl"%>
-<%@page import="in.co.rays.project_3.controller.ORSView"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="java.util.Iterator"%>
+
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Course List View</title>
-<script src="<%=ORSView.APP_CONTEXT%>/js/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=ORSView.APP_CONTEXT%>/js/CheckBox11.js"></script>
-<style>
-
-.text {
-	text-align: center;
-}
-.p4{
-background-image: url('<%=ORSView.APP_CONTEXT%>/img/list2.jpg');
-background-repeat: no-repeat;
-	background-attachment: fixed; 
-	background-size: cover;
-	padding-top: 85px;
-
-	/* background-size: 100%; */
-}
-
-
-</style>
+    <title>Course List</title>
+    <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css    ">
 </head>
-<body class="p4" >
-	<div>
-		<%@include file="Header.jsp"%>
-	</div>
-	<div>
-		<form action="<%=ORSView.COURSE_LIST_CTL%>" method="post">
+<body class="p-4"
+    style="background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg'); 
+           background-size: cover; 
+           background-position: center; 
+           background-attachment: fixed; 
+           min-height: 100vh;">
+    <%@include file="Header.jsp"%>
+    <div class="container-fluid p-4">
+        <jsp:useBean id="dto" class="in.co.rays.proj3.dto.CourseDTO" scope="request"></jsp:useBean>
 
+        <h2 class="text-center text-light font-weight-bold mt-4">Course List</h2>
 
+        <%
+            if (!ServletUtility.getErrorMessage(request).equals("")) {
+        %>
+        <div class="alert alert-danger"><%=ServletUtility.getErrorMessage(request)%></div>
+        <%
+        }
+        if (!ServletUtility.getSuccessMessage(request).equals("")) {
+        %>
+        <div class="alert alert-success"><%=ServletUtility.getSuccessMessage(request)%></div>
+        <%
+        }
+        %>
 
+        <form action="<%=ORSView.COURSE_LIST_CTL%>" method="post">
+            <%
+                int pageNo = ServletUtility.getPageNo(request);
+                int pageSize = ServletUtility.getPageSize(request);
+                int index = ((pageNo - 1) * pageSize) + 1;
+                int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
+                List<CourseDTO> courseList = (List<CourseDTO>) request.getAttribute("courseList");
+                List<CourseDTO> list = (List<CourseDTO>) ServletUtility.getList(request);
+                Iterator<CourseDTO> it = list.iterator();
 
-			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.CourseDTO"
-				scope="request"></jsp:useBean>
-			<%
-				List list1 = (List) request.getAttribute("courseList");
-			%>
-			<%
-				int pageNo = ServletUtility.getPageNo(request);
-				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize) + 1;
-				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
-				List list = ServletUtility.getList(request);
-				Iterator<CourseDTO> it = list.iterator();
-				if (list.size() != 0) {
-			%>
-			<center>
-				<h1 class="text-light font-weight-bold pt-2"><font color="black">
-					Course List</h1></font>
-				<center>
+                if (list.size() != 0) {
+            %>
 
-					<div class="row">
-						<div class="col-md-4"></div>
+            <input type="hidden" name="pageNo" value="<%=pageNo%>">
+            <input type="hidden" name="pageSize" value="<%=pageSize%>">
 
-						<%
-							if (!ServletUtility.getSuccessMessage(request).equals("")) {
-						%>
+            <!-- Floating-style search form -->
+            <div class="table-responsive">
+                <table class="table table-borderless w-100 text-center bg-transparent">
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center flex-wrap bg-light bg-opacity-75 p-3 rounded shadow-sm">
+                                <div class="mx-2">
+                                    <label><b>Course Name :</b></label>
+                                </div>
+                                <div class="mx-2">
+                                    <%=HTMLUtility.getList("courseId", String.valueOf(dto.getId()), courseList)%>
+                                </div>
+                                <div class="mx-2">
+                                    <input type="submit" class="btn btn-sm btn-primary" name="operation" value="<%=CourseListCtl.OP_SEARCH%>">
+                                    <input type="submit" class="btn btn-sm btn-outline-secondary ml-1" name="operation" value="<%=CourseListCtl.OP_RESET%>">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
 
-						<div class="col-md-4 alert alert-success alert-dismissible"
-							style="background-color: #80ff80">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<h4>
-								<font color="#008000"><%=ServletUtility.getSuccessMessage(request)%></font>
-							</h4>
-						</div>
-						<%
-							}
-						%>
+            <!-- Data Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover w-100 text-center bg-white shadow-sm">
+                    <thead class="thead-light">
+                        <tr>
+                            <th><input type="checkbox" id="selectall" /> Select All</th>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Duration</th>
+                            <th>Description</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
 
-						<div class="col-md-4"></div>
-					</div>
-					<div class="row">
-						<div class="col-md-4"></div>
+                    <tbody>
+                        <%
+                            while (it.hasNext()) {
+                                dto = (CourseDTO) it.next();
+                        %>
+                        <tr>
+                            <td><input type="checkbox" class="case" name="ids" value="<%=dto.getId()%>"></td>
+                            <td><%=index++%></td>
+                            <td class="text-capitalize"><%=dto.getCourseName()%></td>
+                            <td class="text-capitalize"><%=dto.getDuration()%></td>
+                            <td class="text-capitalize"><%=dto.getDescription()%></td>
+                            <td><a href="CourseCtl?id=<%=dto.getId()%>" class="btn btn-link btn-sm p-0">Edit</a></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+            </div>
 
-						<%
-							if (!ServletUtility.getErrorMessage(request).equals("")) {
-						%>
-						<div class=" col-md-4 alert alert-danger alert-dismissible">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<h4>
-								<font color="red"> <%=ServletUtility.getErrorMessage(request)%></font>
-							</h4>
-						</div>
-						<%
-							}
-						%>
-						<div class="col-md-4"></div>
-					</div>
-					<div class="row">
+            <table class="table w-100">
+                <tr>
+                    <td width="25%"><input type="submit" class="btn btn-outline-primary" name="operation" value="<%=CourseListCtl.OP_PREVIOUS%>" <%=pageNo > 1 ? "" : "disabled"%>></td>
+                    <td width="25%" class="text-center"><input type="submit" class="btn btn-outline-success" name="operation" value="<%=CourseListCtl.OP_NEW%>"></td>
+                    <td width="25%" class="text-center"><input type="submit" class="btn btn-outline-danger" name="operation" value="<%=CourseListCtl.OP_DELETE%>"></td>
+                    <td width="25%" class="text-right"><input type="submit" class="btn btn-outline-primary" name="operation" value="<%=CourseListCtl.OP_NEXT%>" <%=nextPageSize != 0 ? "" : "disabled"%>></td>
+                </tr>
+            </table>
 
-						<div class="col-sm-2"></div>
-						<div class="col-sm-3">
-							<%=HTMLUtility.getList("courseId", String.valueOf(dto.getId()), list1)%>
-						</div>
-						<div class="col-sm-3">
-							<%
-								HashMap map = new HashMap();
-									map.put("1 y", "1 year");
-									map.put("2 y", "2 year");
-									map.put("3 y", "3 year");
-									map.put("4 y", "4 year");
-									map.put("5 y", "5 year");
-									String HtmlList = HTMLUtility.getList("duration", dto.getDuration(), map);
-							%><%=HtmlList%>
-						</div>
-
-						<div class="col-sm-2">
-							<input type="submit" class="btn btn-primary btn-md"
-								style="font-size: 17px" name="operation"
-								value="<%=CourseListCtl.OP_SEARCH%>">&emsp; <input
-								type="submit" class="btn btn-dark btn-md"
-								style="font-size: 17px" name="operation"
-								value="<%=CourseListCtl.OP_RESET%>">
-						</div>
-
-						<div class="col-sm-2"></div>
-					</div>
-
-
-
-
-
-
-
-					</br>
-					<div style="margin-bottom: 20px;" class="table-responsive">
-						<table class="table table-dark table-bordered">
-							<thead>
-								<tr style="background-color: #8C8C8C;">
-
-									<th width="10%"><input type="checkbox" id="select_all"
-										name="Select" class="text"> Select All</th>
-									<th class="text">S.NO</th>
-									<th class="text">Course Name</th>
-									<th class="text">Duration</th>
-									<th class="text">Description</th>
-									<th class="text">Edit</th>
-								</tr>
-							</thead>
-							<%
-								while (it.hasNext()) {
-										dto = it.next();
-							%>
-
-							<tbody>
-								<tr>
-									<td align="center"><input type="checkbox" class="checkbox"
-										name="ids" value="<%=dto.getId()%>"></td>
-									<td align="center"><%=index++%></td>
-									<td align="center"><%=dto.getCourseName()%></td>
-									<td align="center"><%=dto.getDuration()%></td>
-									<td align="center"><%=dto.getDescription()%></td>
-									<td align="center"><a href="CourseCtl?id=<%=dto.getId()%>">Edit</a></td>
-								</tr>
-							</tbody>
-							<%
-								}
-							%>
-						</table>
-
-
-					</div>
-					<table width="100%">
-						<tr>
-							<td><input type="submit" name="operation"
-								class="btn btn-secondary btn-md" style="font-size: 17px"
-								value="<%=CourseListCtl.OP_PREVIOUS%>"
-								<%=pageNo > 1 ? "" : "disabled"%>></td>
-							<td><input type="submit" name="operation"
-								class="btn btn-primary btn-md" style="font-size: 17px"
-								value="<%=CourseListCtl.OP_NEW%>"></td>
-							<td><input type="submit" name="operation"
-								class="btn btn-danger btn-md" style="font-size: 17px"
-								value="<%=CourseListCtl.OP_DELETE%>"></td>
-
-							<td align="right"><input type="submit" name="operation"
-								class="btn btn-secondary btn-md" style="font-size: 17px"
-								style="padding: 5px;" value="<%=CourseListCtl.OP_NEXT%>"
-								<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
-						</tr>
-						<tr></tr>
-					</table>
-					</br>
-					<%
-						}
-						if (list.size() == 0) {
-							System.out.println("user list view list.size==0");
-					%>
-					<center>
-						<h1 class="text-primary font-weight-bold pt-3">Course
-							List</h1>
-					</center>
-
-					</br>
-					<div class="row">
-						<div class="col-md-4"></div>
-
-						<%
-							if (!ServletUtility.getErrorMessage(request).equals("")) {
-						%>
-						<div class=" col-md-4 alert alert-danger alert-dismissible">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<h4>
-								<font color="red"> <%=ServletUtility.getErrorMessage(request)%></font>
-							</h4>
-						</div>
-						<%
-							}
-						%>
-						<div class="col-md-4"></div>
-					</div>
-					 </br>
-					<div style="padding-left: 48%;">
-						<input type="submit" name="operation"
-							class="btn btn-primary btn-md" style="font-size: 17px"
-							value="<%=CourseListCtl.OP_BACK%>">
-					</div>
-					<%
-						}
-					%>
-					<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
-						type="hidden" name="pageSize" value="<%=pageSize%>">
-		</form>
-
-	</div>
-
+            <%
+                }
+                if (list.size() == 0) {
+            %>
+            <table class="table w-100">
+                <tr>
+                    <td class="text-right"><input type="submit" class="btn btn-outline-secondary" name="operation" value="<%=CourseListCtl.OP_BACK%>"></td>
+                </tr>
+            </table>
+            <%
+                }
+            %>
+        </form>
+    </div>
+    <%@include file="FooterView.jsp"%>
 </body>
-<%@include file="FooterView.jsp"%>
-
 </html>

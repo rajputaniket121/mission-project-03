@@ -1,310 +1,282 @@
-<%@page import="in.co.rays.project_3.util.DataUtility"%>
-<%@page import="in.co.rays.project_3.util.ServletUtility"%>
-<%@page import="in.co.rays.project_3.controller.GetMarksheetCtl"%>
-<%@page import="in.co.rays.project_3.controller.ORSView"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@page import="in.co.rays.proj3.controller.ORSView"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="in.co.rays.proj3.controller.GetMarksheetCtl"%>
+<%@page import="in.co.rays.proj3.utill.DataUtility"%>
+<%@page import="in.co.rays.proj3.utill.ServletUtility"%>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Get Marksheet View</title>
-<script src="<%=ORSView.APP_CONTEXT%>/js/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=ORSView.APP_CONTEXT%>/js/CheckBox11.js"></script>
-<style>
-.p1 {
-	padding: 5px;
-}
+<title>Get Marksheet</title>
+<link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 
-.text {
-	text-align: center;
-}
-
-#po1 {
-	font-size: 18px;
-	text-align: center;
-	height: 30px;
-}
-
-body {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/marks.jpg');
-	background-repeat: no-repeat;
-	background-attachment: fixed; 
+<!-- Same background & card style as User View -->
+<style type="text/css">
+.p4 {
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg');
 	background-size: cover;
-	padding-top: 180px;
-	
-/* 	background-size: 100%; */
+	background-position: center;
+	background-attachment: fixed;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: 70px;
+	padding-bottom: 40px;
+	overflow: auto;
+}
+
+.grad-card {
+	background: rgba(255, 255, 255, 0.92);
+}
+
+.marksheet-table {
+	border: 2px solid #dee2e6;
+	border-radius: 0.375rem;
+	overflow: hidden;
 }
 </style>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css  " rel="stylesheet">
 </head>
-<body>
-	<div>
-		<%@include file="Header.jsp"%>
-	</div>
-	<div>
-		<form action="<%=ORSView.GET_MARKSHEET_CTL%>" method="post">
-
-
-
-			<div align="center">
-				<h1 style="font-size: 40px; padding-top: 24px; color: #162390;">Get
-					Marksheet</h1>
-			</div>
-			<div class="row">
-				<div class="col-md-4"></div>
-
-				<%
-					if (!ServletUtility.getSuccessMessage(request).equals("")) {
-				%>
-
-				<div class="col-md-4 alert alert-success alert-dismissible"
-					style="background-color: #80ff80">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="#008000"><%=ServletUtility.getSuccessMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-
-				<div class="col-md-4"></div>
-			</div>
-			<div class="row">
-				<div class="col-md-4"></div>
-
-				<%
-					if (!ServletUtility.getErrorMessage(request).equals("")) {
-				%>
-				<div class=" col-md-4 alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="red"><%=ServletUtility.getErrorMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-				<div class="col-md-4"></div>
-			</div>
-			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.MarksheetDTO"
-				scope="request"></jsp:useBean>
-			</br>
-			<div class="row">
-				<div class="col-md-4"></div>
-				<span style="margin-left: 15px"><b>Roll No:</b></span>
-				<div class="col-md-2">
-					<input type="text" name="rollNo" class="form-control"
-						placeholder="Enter Roll Number"
-						value="<%=ServletUtility.getParameter("rollNo", request)%>">&emsp;
-				</div>
-				<div class="col-md-2">
-					<input type="submit" class="btn btn-primary btn-md"
-						style="font-size: 17px" name="operation"
-						value="<%=GetMarksheetCtl.OP_GO%>">&emsp;<font color="red"><%=ServletUtility.getErrorMessage("rollNo", request)%></font>
-				</div>
-				<div class="col-md-4"></div>
-
-			</div>
-
-			<%
-				if (dto.getRollNo() != null && dto.getRollNo().trim().length() > 0) {
-			%>
-		
-	</div>
-	<div class="container">
-
-		<table width="100%" style="background-color: white;" border="2px">
-			<tr>
-				<th id="po1" colspan="2">RollNo</th>
-				<td id="po1" align="center" colspan="3"><%=DataUtility.getStringData(dto.getRollNo())%></td>
-			</tr>
-			<tr>
-				<th id="po1" colspan="2">Name</th>
-				<td id="po1" align="center" colspan="3"><%=DataUtility.getStringData(dto.getName())%></td>
-			</tr>
-			<tr style="background-color: #e1b5158c;">
-				<th id="po1">Subject</th>
-				<th id="po1">Max Marks</th>
-				<th id="po1">Min Marks</th>
-				<th id="po1" colspan="2">Marks Obtain</th>
-			</tr>
-			<tr>
-				<td colspan="3"></td>
-				<th id="po1">Marks</th>
-				<th style="color: blue;" id="po1">Grade</th>
-			</tr>
-			<tr>
-				<th id="po1">Physics</th>
-				<td align="center">100</td>
-				<td align="center">35</td>
-				<td id="po1" align="center"><%=DataUtility.getStringData(String.valueOf(dto.getPhysics()))%>
-					<%
-						float physics = dto.getPhysics();
-							if (dto.getPhysics() < 35) {
-					%><span style="color: red;">*</span> <%
- 	}
- %></td>
-				<td align="center">
-					<%
-						if (physics >= 90) {
-					%> <b>A++</b> <%
- 	} else if (physics >= 80) {
- %> <b>A</b> <%
- 	} else if (physics >= 70) {
- %> <b>B++</b> <%
- 	} else if (physics >= 60) {
- %> <b>B</b> <%
- 	} else if (physics >= 50) {
- %> <b>C++</b> <%
- 	} else if (physics >= 40) {
- %> <b>C</b> <%
- 	} else if (physics >= 35) {
- %> <b>D</b> <%
- 	} else if (physics >= 0) {
- %> <font color="red"><b>F</b></font> <%
- 	}
- %>
-				</td>
-			</tr>
-			<tr>
-				<th id="po1">Chemistry</th>
-				<td align="center">100</td>
-				<td align="center">35</td>
-				<td id="po1" align="center"><%=DataUtility.getStringData(String.valueOf(dto.getChemistry()))%>
-					<%
-						float chemistry = dto.getChemistry();
-							if (dto.getChemistry() < 35) {
-					%><span style="color: red;">*</span> <%
- 	}
- %></td>
-				<td align="center">
-					<%
-						if (chemistry >= 90) {
-					%> <b>A++</b> <%
- 	} else if (chemistry >= 80) {
- %> <b>A</b> <%
- 	} else if (chemistry >= 70) {
- %> <b>B++</b> <%
- 	} else if (chemistry >= 60) {
- %> <b>B</b> <%
- 	} else if (chemistry >= 50) {
- %> <b>C++</b> <%
- 	} else if (chemistry >= 40) {
- %> <b>C</b> <%
- 	} else if (chemistry >= 35) {
- %> <b>D</b> <%
- 	} else if (chemistry >= 0) {
- %> <font color="red"><b>F</b></font> <%
- 	}
- %>
-				</td>
-			</tr>
-			<tr>
-				<th id="po1">Maths</th>
-				<td align="center">100</td>
-				<td align="center">35</td>
-				<td id="po1" align="center"><%=DataUtility.getStringData(String.valueOf(dto.getMaths()))%>
-					<%
-						float marks = dto.getMaths();
-							if (marks <= 35) {
-					%><span style="color: red;">*</span> <%
- 	}
- %></td>
-				<td align="center">
-					<%
-						if (marks >= 90) {
-					%> <b>A++</b> <%
- 	} else if (marks >= 80) {
- %> <b>A</b> <%
- 	} else if (marks >= 70) {
- %> <b>B++</b> <%
- 	} else if (marks >= 60) {
- %> <b>B</b> <%
- 	} else if (marks >= 50) {
- %> <b>C++</b> <%
- 	} else if (marks >= 40) {
- %> <b>C</b> <%
- 	} else if (marks >= 35) {
- %> <b>D</b> <%
- 	} else if (marks >= 0) {
- %> <font color="red"><b>F</b></font> <%
- 	}
- %>
-				</td>
-
-			</tr>
-			<tr>
-				<th id="po1" colspan="2">Total</th>
-
-				<td id="po1" align="center" colspan="3">
-					<%
-						int total = ((dto.getMaths()) + (dto.getPhysics()) + (dto.getChemistry()));
-							float percentage = (total * 100) / 300;
-					%><%=total%></td>
-			</tr>
-			<%
-				if ((dto.getMaths() > 35) && (dto.getPhysics() > 35) && (dto.getChemistry() > 35)) {
-			%>
-			<tr>
-
-				<th id="po1" colspan="2">Percentage</th>
-
-				<td id="po1" align="center" colspan="3"><%=percentage%>%</td>
-			</tr>
-			<tr>
-				<th id="po1" align="center" colspan="2"><font color="blue">Grade:</font>
-					<%
-						if (percentage >= 90) {
-					%> <b>A++</b> <%
- 	} else if (percentage >= 80) {
- %> <b>A</b> <%
- 	} else if (percentage >= 70) {
- %> <b>B++</b> <%
- 	} else if (percentage >= 60) {
- %> <b>B</b> <%
- 	} else if (percentage >= 50) {
- %> <b>C++</b> <%
- 	} else if (percentage >= 40) {
- %> <b>C</b> <%
- 	} else if (percentage >= 35) {
- %> <b>D</b> <%
- 	} else if (percentage >= 0) {
- %> <font color="red"><b>F</b></font> <%
- 	}
- %></th>
-				<td id="po1" align="center" colspan="3">
-					<%
-						if (percentage >= 35) {
-					%> <font color="green"><b>PASS</b></font> <%
- 	}
- %>
-				</td>
-			</tr>
-			<%
-				} else {
-			%>
-			<tr>
-				<th id="po1" align="center" colspan="2"><font color="blue">Final
-						Grade:</font><font color="red"><b>F</b></font></th>
-				<td id="po1" align="center" colspan="3"><font color="red"><b>FAIL</b></font></td>
-			</tr>
-
-			<%
-				}
-			%>
-		</table>
-
-		<%
-			}
-		%>
-
+<body class="p4 d-flex flex-column">
+	<div class="header">
+		<%@ include file="Header.jsp"%>
 	</div>
 
+	<main class="container flex-grow-1 d-flex align-items-center justify-content-center">
+		<div class="card grad-card shadow-sm w-100">
+			<div class="card-body py-3">
+				<h5 class="text-center text-success fw-bold mb-3">Get Marksheet</h5>
+
+				<%
+                    String successMsg = ServletUtility.getSuccessMessage(request);
+                    if (!successMsg.equals("")) {
+                %>
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<%=successMsg%>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				<%
+                    }
+                    String errorMsg = ServletUtility.getErrorMessage(request);
+                    if (!errorMsg.equals("")) {
+                %>
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<%=errorMsg%>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				<%
+                    }
+                %>
+
+				<form action="<%=ORSView.GET_MARKSHEET_CTL%>" method="post">
+					<input type="hidden" name="id" value="<%=DataUtility.getLong(request.getParameter("id"))%>">
+
+					<div class="row justify-content-center mb-3">
+						<div class="col-md-6">
+							<div class="input-group input-group-sm">
+								<span class="input-group-text"><i class="fa fa-id-card text-muted"></i></span>
+								<input type="text" class="form-control" name="rollNo" placeholder="Enter Roll No." maxlength="5"
+									value="<%=ServletUtility.getParameter("rollNo", request)%>">
+								<button type="submit" name="operation" class="btn btn-primary btn-sm px-4"
+									value="<%=GetMarksheetCtl.OP_GO%>">Go</button>
+							</div>
+							<div class="text-danger small mt-1">
+								<%=ServletUtility.getErrorMessage("rollNo", request)%>
+							</div>
+						</div>
+					</div>
+					<jsp:useBean id="dto" class="in.co.rays.proj3.dto.MarksheetDTO" scope="request" />
+					<jsp:useBean id="coursedto" class="in.co.rays.proj3.dto.CourseDTO" scope="request" />
+
+					<%
+						
+
+						int physics = DataUtility.getInt(DataUtility.getStringData(dto.getPhysics()));
+						int chemistry = DataUtility.getInt(DataUtility.getStringData(dto.getChemistry()));
+						int maths = DataUtility.getInt(DataUtility.getStringData(dto.getMaths()));
+
+						int total = physics + chemistry + maths;
+						float percentage = (float) total / 3;
+						percentage = Float.parseFloat(new DecimalFormat("##.##").format(percentage));
+
+						if (dto.getRollNo() != null && dto.getRollNo().trim().length() > 0) {
+					%>
+
+					<div class="text-center mb-3">
+						<h3 class="text-warning">Rays Technologies, Indore</h3>
+					</div>
+
+					<div class="row justify-content-center mb-3">
+						<div class="col-md-8">
+							<table class="table table-bordered table-sm">
+								<tbody>
+									<tr>
+										<th class="text-center" style="width: 15%">Name</th>
+										<td class="text-center text-capitalize" style="width: 35%"><%=DataUtility.getStringData(dto.getName())%></td>
+										<th class="text-center" style="width: 15%">Roll No</th>
+										<td class="text-center text-uppercase" style="width: 25%"><%=DataUtility.getStringData(dto.getRollNo())%></td>
+									</tr>
+									<tr>
+										<th class="text-center">Status</th>
+										<td class="text-center">Regular</td>
+										<th class="text-center">Course</th>
+										<td class="text-center text-uppercase"><%=DataUtility.getStringData(coursedto.getCourseName())%></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="row justify-content-center mb-3">
+						<div class="col-md-8">
+							<table class="table table-bordered table-sm">
+								<thead class="table-light">
+									<tr>
+										<th class="text-center">Subject</th>
+										<th class="text-center">Earned Credits</th>
+										<th class="text-center">Total Credits</th>
+										<th class="text-center">Grade</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center">Physics</td>
+										<td class="text-center">
+											<%=physics%>
+											<%
+												if (physics < 33) {
+											%><span class="text-danger">*</span><%
+												}
+											%>
+										</td>
+										<td class="text-center">100</td>
+										<td class="text-center">
+											<%
+												if (physics > 90 && physics <= 100) { %>A+<%
+												} else if (physics > 80 && physics <= 90) { %>A<%
+												} else if (physics > 70 && physics <= 80) { %>B+<%
+												} else if (physics > 60 && physics <= 70) { %>C+<%
+												} else if (physics > 50 && physics <= 60) { %>C<%
+												} else if (physics >= 33 && physics <= 50) { %>D<%
+												} else if (physics >= 0 && physics < 33) { %><span class="text-danger">F</span><%
+												}
+											%>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center">Chemistry</td>
+										<td class="text-center">
+											<%=chemistry%>
+											<%
+												if (chemistry < 33) {
+											%><span class="text-danger">*</span><%
+												}
+											%>
+										</td>
+										<td class="text-center">100</td>
+										<td class="text-center">
+											<%
+												if (chemistry > 90 && chemistry <= 100) { %>A+<%
+												} else if (chemistry > 80 && chemistry <= 90) { %>A<%
+												} else if (chemistry > 70 && chemistry <= 80) { %>B+<%
+												} else if (chemistry > 60 && chemistry <= 70) { %>C+<%
+												} else if (chemistry > 50 && chemistry <= 60) { %>C<%
+												} else if (chemistry >= 33 && chemistry <= 50) { %>D<%
+												} else if (chemistry >= 0 && chemistry < 33) { %><span class="text-danger">F</span><%
+												}
+											%>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center">Maths</td>
+										<td class="text-center">
+											<%=maths%>
+											<%
+												if (maths < 33) {
+											%><span class="text-danger">*</span><%
+												}
+											%>
+										</td>
+										<td class="text-center">100</td>
+										<td class="text-center">
+											<%
+												if (maths > 90 && maths <= 100) { %>A+<%
+												} else if (maths > 80 && maths <= 90) { %>A<%
+												} else if (maths > 70 && maths <= 80) { %>B+<%
+												} else if (maths > 60 && maths <= 70) { %>C+<%
+												} else if (maths > 50 && maths <= 60) { %>C<%
+												} else if (maths >= 33 && maths <= 50) { %>D<%
+												} else if (maths >= 0 && maths < 33) { %><span class="text-danger">F</span><%
+												}
+											%>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="row justify-content-center mb-3">
+						<div class="col-md-8">
+							<table class="table table-bordered table-sm">
+								<thead class="table-light">
+									<tr>
+										<th class="text-center">Total Marks</th>
+										<th class="text-center">Percentage (%)</th>
+										<th class="text-center">Division</th>
+										<th class="text-center">Result</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th class="text-center">
+											<%=total%>
+											<%
+												if (total < 99 || physics < 33 || chemistry < 33 || maths < 33) {
+											%><span class="text-danger">*</span><%
+												}
+											%>
+										</th>
+										<th class="text-center"><%=percentage%> %</th>
+										<th class="text-center">
+											<%
+												if (percentage >= 60 && percentage <= 100) { %>1<sup>st</sup><%
+												} else if (percentage >= 40 && percentage < 60) { %>2<sup>nd</sup><%
+												} else if (percentage >= 0 && percentage < 40) { %>3<sup>rd</sup><%
+												}
+											%>
+										</th>
+										<th class="text-center">
+											<%
+												if (physics >= 33 && chemistry >= 33 && maths >= 33) {
+											%><span class="text-success">Pass</span><%
+												} else {
+											%><span class="text-danger">Fail</span><%
+												}
+											%>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<%
+						}
+					%>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<div class="footer mt-auto py-2">
+		<%@include file="FooterView.jsp"%>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js  "></script>
 </body>
-<div>
-	<%@include file="FooterView.jsp"%>
-</div>
 </html>

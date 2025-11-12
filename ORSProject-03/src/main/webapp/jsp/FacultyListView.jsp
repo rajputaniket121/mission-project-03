@@ -1,242 +1,167 @@
-<%@page import="in.co.rays.project_3.dto.FacultyDTO"%>
-<%@page import="in.co.rays.project_3.util.DataUtility"%>
-<%@page import="java.util.Iterator"%>
+<%@page import="in.co.rays.proj3.controller.ORSView"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="in.co.rays.proj3.utill.DataUtility"%>
+<%@page import="in.co.rays.proj3.controller.FacultyListCtl"%>
+<%@page import="in.co.rays.proj3.utill.ServletUtility"%>
+<%@page import="in.co.rays.proj3.dto.FacultyDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="in.co.rays.project_3.util.HTMLUtility"%>
-<%@page import="in.co.rays.project_3.util.ServletUtility"%>
-<%@page import="in.co.rays.project_3.controller.FacultyListCtl"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="java.util.Iterator"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Faculty List View</title>
-<script src="<%=ORSView.APP_CONTEXT%>/js/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=ORSView.APP_CONTEXT%>/js/CheckBox11.js"></script>
-<style>
-.p1 {
-	padding: 8px;
-}
-
-.p4 {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/list2.jpg');
-	background-repeat: no-repeat;
-	background-attachment: fixed; 
-	background-size: cover;
-	padding-top: 85px;
-	
-	/* background-size: 100%; */
-}
-</style>
+<title>Faculty List</title>
+<link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css    ">
 </head>
-<body class="p4">
-	<div>
-		<%@include file="Header.jsp"%>
-	</div>
-	<div>
+<body class="p-4"
+    style="background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg'); 
+           background-size: cover; 
+           background-position: center; 
+           background-attachment: fixed; 
+           min-height: 100vh;">
+	<%@include file="Header.jsp"%>
+	<div class="container-fluid p-4">
+		<h2 class="text-center text-light font-weight-bold mt-4">Faculty List</h2>
+
+		<%
+			if (!ServletUtility.getErrorMessage(request).equals("")) {
+		%>
+		<div class="alert alert-danger"><%=ServletUtility.getErrorMessage(request)%></div>
+		<%
+		}
+		if (!ServletUtility.getSuccessMessage(request).equals("")) {
+		%>
+		<div class="alert alert-success"><%=ServletUtility.getSuccessMessage(request)%></div>
+		<%
+		}
+		%>
+
 		<form action="<%=ORSView.FACULTY_LIST_CTL%>" method="post">
-
-
-
-			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.FacultyDTO"
-				scope="request"></jsp:useBean>
-			<%
-				List list1 = (List) request.getAttribute("collegeList");
-				List list2 = (List) request.getAttribute("courseList");
-			%>
-
 			<%
 				int pageNo = ServletUtility.getPageNo(request);
 				int pageSize = ServletUtility.getPageSize(request);
 				int index = ((pageNo - 1) * pageSize) + 1;
 				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
-				List list = ServletUtility.getList(request);
+
+				List<FacultyDTO> list = (List<FacultyDTO>) ServletUtility.getList(request);
 				Iterator<FacultyDTO> it = list.iterator();
+
 				if (list.size() != 0) {
 			%>
-			<center>
-				<h1 class="text-primary font-weight-bold pt-3"><font color="black">Faculty List</h1></font>
-			</center>
-			</br>
-			<div class="row">
-				<div class="col-md-4"></div>
 
-				<%
-					if (!ServletUtility.getSuccessMessage(request).equals("")) {
-				%>
+			<input type="hidden" name="pageNo" value="<%=pageNo%>">
+			<input type="hidden" name="pageSize" value="<%=pageSize%>">
 
-				<div class="col-md-4 alert alert-success alert-dismissible"
-					style="background-color: #80ff80">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="#008000"><%=ServletUtility.getSuccessMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
+			<!-- Floating-style search form -->
+            <div class="table-responsive">
+                <table class="table table-borderless w-100 text-center bg-transparent">
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center flex-wrap bg-light bg-opacity-75 p-3 rounded shadow-sm">
+                                <div class="mx-2">
+                                    <label><b>First Name :</b></label>
+                                </div>
+                                <div class="mx-2">
+                                    <input type="text" class="form-control form-control-sm" name="firstName" placeholder="Enter First Name" value="<%=ServletUtility.getParameter("firstName", request)%>" style="width: 150px;">
+                                </div>
+                                <div class="mx-2">
+                                    <label><b>Last Name :</b></label>
+                                </div>
+                                <div class="mx-2">
+                                    <input type="text" class="form-control form-control-sm" name="lastName" placeholder="Enter Last Name" value="<%=ServletUtility.getParameter("lastName", request)%>" style="width: 150px;">
+                                </div>
+                                <div class="mx-2">
+                                    <label><b>Email Id :</b></label>
+                                </div>
+                                <div class="mx-2">
+                                    <input type="text" class="form-control form-control-sm" name="email" placeholder="Enter Email Id" value="<%=ServletUtility.getParameter("email", request)%>" style="width: 180px;">
+                                </div>
+                                <div class="mx-2">
+                                    <input type="submit" class="btn btn-sm btn-primary" name="operation" value="<%=FacultyListCtl.OP_SEARCH%>">
+                                    <input type="submit" class="btn btn-sm btn-outline-secondary ml-1" name="operation" value="<%=FacultyListCtl.OP_RESET%>">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+			<br>
 
-				<div class="col-md-4"></div>
-			</div>
-			<div class="row">
-				<div class="col-md-4"></div>
+			<!-- Data Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover w-100 text-center bg-white shadow-sm">
+                    <thead class="thead-light">
+                        <tr>
+                            <th><input type="checkbox" id="selectall" /> Select All</th>
+                            <th>S.No</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email Id</th>
+                            <th>College Name</th>
+                            <th>Course Name</th>
+                            <th>Subject Name</th>
+                            <th>Gender</th>
+                            <th>Mobile No</th>
+                            <th>Date of Birth</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
 
-				<%
-					if (!ServletUtility.getErrorMessage(request).equals("")) {
-				%>
-				<div class=" col-md-4 alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="red"><%=ServletUtility.getErrorMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-				<div class="col-md-4"></div>
-			</div>
-			<div class="row">
+                    <tbody>
+                        <%
+                            while (it.hasNext()) {
+                                FacultyDTO dto = it.next();
+                        %>
+                        <tr>
+                            <td><input type="checkbox" class="case" name="ids" value="<%=dto.getId()%>"></td>
+                            <td><%=index++%></td>
+                            <td class="text-capitalize"><%=dto.getFirstName()%></td>
+                            <td class="text-capitalize"><%=dto.getLastName()%></td>
+                            <td class="text-lowercase"><%=dto.getEmailId()%></td>
+                            <td class="text-capitalize"><%=dto.getCollegeName()%></td>
+                            <td class="text-capitalize"><%=dto.getCourseName()%></td>
+                            <td class="text-capitalize"><%=dto.getSubjectName()%></td>
+                            <td class="text-capitalize"><%=dto.getGender()%></td>
+                            <td><%=dto.getMobileNo()%></td>
+                            <%
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                                String date = sdf.format(dto.getDob());
+                            %>
+                            <td><%=date%></td>
+                            <td><a href="FacultyCtl?id=<%=dto.getId()%>" class="btn btn-link btn-sm p-0">Edit</a></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+            </div>
 
-				<div class="col-sm-2"></div>
-
-				<div class="col-sm-2">
-					<input type="text" class="form-control" name="firstName"
-						placeholder="Enter Name" class="p1"
-						value="<%=ServletUtility.getParameter("firstName", request)%>">
-				</div>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" name="login"
-						placeholder="Enter EmailId" class="p1"
-						value="<%=ServletUtility.getParameter("login", request)%>">
-				</div>
-				<div class="col-sm-3"><%=HTMLUtility.getList("collegeId", String.valueOf(dto.getCollegeId()), list1)%></div>
-				<div class="col-sm-2">
-					<input type="submit" class="btn btn-primary btn-md"
-						style="font-size: 17px" name="operation"
-						value="<%=FacultyListCtl.OP_SEARCH%>">&emsp; <input
-						type="submit" class="btn btn-warning btn-md"
-						style="font-size: 17px" name="operation"
-						value="<%=FacultyListCtl.OP_RESET%>">
-				</div>
-
-				<div class="col-sm-1"></div>
-			</div>
-
-			</br>
-			<div style="margin-bottom: 20px;" class="table-responsive">
-				<table class="table table-hover table-dark table-bordered">
-					<thead>
-						<tr style="background-color: #8C8C8C;">
-
-							<th width="10%"><input type="checkbox" id="select_all"
-								name="Select" class="text"> Select All</th>
-							<th class="text">S.NO</th>
-							<th class="text">FirstName</th>
-							<th class="text">LastName</th>
-							<th class="text">Email Id</th>
-							<th class="text">Date Of Birth</th>
-							<th class="text">College Name</th>
-							<th class="text">Course Name</th>
-							<th class="text">Subject Name</th>
-							<th class="text">Edit</th>
-
-
-						</tr>
-					</thead>
-					<%
-						while (it.hasNext()) {
-								dto = it.next();
-					%>
-
-					<tbody>
-						<tr>
-							<td align="center"><input type="checkbox" class="checkbox"
-								name="ids" value="<%=dto.getId()%>"></td>
-							<td align="center"><%=index++%></td>
-							<td align="center"><%=dto.getFirstName()%></td>
-							<td align="center"><%=dto.getLastName()%></td>
-							<td align="center"><%=dto.getEmailId()%></td>
-							<td align="center"><%=DataUtility.getDateString(dto.getDob())%></td>
-							<td align="center"><%=dto.getCollegeName()%></td>
-							<td align="center"><%=dto.getCourseName()%></td>
-							<td align="center"><%=dto.getSubjectName()%></td>
-							<td align="center"><a href="FacultyCtl?id=<%=dto.getId()%>">Edit</a></td>
-						</tr>
-					</tbody>
-					<%
-						}
-					%>
-				</table>
-			</div>
-
-			<table width="100%">
+			<table class="table w-100">
 				<tr>
-					<td><input type="submit" name="operation"
-						class="btn btn-dark btn-md" style="font-size: 17px"
-						value="<%=FacultyListCtl.OP_PREVIOUS%>"
-						<%=pageNo > 1 ? "" : "disabled"%>></td>
-					<td><input type="submit" name="operation"
-						class="btn btn-primary btn-md" style="font-size: 17px"
-						value="<%=FacultyListCtl.OP_NEW%>"></td>
-					<td><input type="submit" name="operation"
-						class="btn btn-danger btn-md" style="font-size: 17px"
-						value="<%=FacultyListCtl.OP_DELETE%>"></td>
-
-					<td align="right"><input type="submit" name="operation"
-						class="btn btn-dark btn-md" style="font-size: 17px"
-						style="padding: 5px;" value="<%=FacultyListCtl.OP_NEXT%>"
-						<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
+					<td width="25%"><input type="submit" class="btn btn-outline-primary" name="operation" value="<%=FacultyListCtl.OP_PREVIOUS%>" <%=pageNo > 1 ? "" : "disabled"%>></td>
+					<td width="25%" class="text-center"><input type="submit" class="btn btn-outline-success" name="operation" value="<%=FacultyListCtl.OP_NEW%>"></td>
+					<td width="25%" class="text-center"><input type="submit" class="btn btn-outline-danger" name="operation" value="<%=FacultyListCtl.OP_DELETE%>"></td>
+					<td width="25%" class="text-right"><input type="submit" class="btn btn-outline-primary" name="operation" value="<%=FacultyListCtl.OP_NEXT%>" <%=nextPageSize != 0 ? "" : "disabled"%>></td>
 				</tr>
-				<tr></tr>
 			</table>
-			</br>
 
 			<%
 				}
 				if (list.size() == 0) {
-					System.out.println("user list view list.size==0");
-			%><center>
-				<h1 class="text-primary font-weight-bold pt-3">Faculty List</h1>
-			</center>
-			</br>
-			<div class="row">
-				<div class="col-md-4"></div>
-
-				<%
-					if (!ServletUtility.getErrorMessage(request).equals("")) {
-				%>
-				<div class=" col-md-4 alert alert-danger alert-dismissible">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>
-						<font color="red"><%=ServletUtility.getErrorMessage(request)%></font>
-					</h4>
-				</div>
-				<%
-					}
-				%>
-				<div class="col-md-4"></div>
-			</div>
-			</br>
-			<div style="padding-left: 48%;">
-				<input type="submit" name="operation" class="btn btn-primary btn-md"
-					style="font-size: 17px" value="<%=FacultyListCtl.OP_BACK%>">
-			</div>
+			%>
+			<table class="table w-100">
+				<tr>
+					<td class="text-right"><input type="submit"
+						class="btn btn-warning btn-sm font-weight-bold" name="operation"
+						value="<%=FacultyListCtl.OP_BACK%>"></td>
+				</tr>
+			</table>
 			<%
 				}
 			%>
-			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
-				type="hidden" name="pageSize" value="<%=pageSize%>">
-
-
 		</form>
-
 	</div>
-	</br>
-	</br>
+	<%@include file="FooterView.jsp"%>
 </body>
-<%@include file="FooterView.jsp"%>
-
 </html>
