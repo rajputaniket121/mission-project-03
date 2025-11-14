@@ -30,6 +30,8 @@ import net.sf.jasperreports.engine.JasperReport;
 @WebServlet(name = "JasperCtl", urlPatterns = { "/ctl/JasperCtl" })
 public class JasperCtl extends BaseCtl {
 	private static final long serialVersionUID = 1L;
+	 ResourceBundle rb = ResourceBundle
+             .getBundle("in.co.rays.proj3.bundle.system");
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,8 +39,13 @@ public class JasperCtl extends BaseCtl {
 		try {
 			
 			/* Compilation of jrxml file */
+			String jasperFile = System.getenv("JASPER_REPORT");
+			if (jasperFile == null) {
+				jasperFile = rb.getString("JASPER_REPORT");
+			}
+			System.out.println(jasperFile);
 			JasperReport jasperReport = JasperCompileManager
-					.compileReport("E:\\Rays Techno\\Eclipse Workspace\\project\\project 3\\ORSProject03_Report.jrxml");
+					.compileReport(jasperFile);
 
 			HttpSession session = request.getSession(true);
 			UserDTO dto = (UserDTO) session.getAttribute("user");

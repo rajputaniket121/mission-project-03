@@ -39,7 +39,11 @@ public class JDBCDataSource {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            datasource.cpds.setJdbcUrl(rb.getString("url"));
+            String jdbcUrl = System.getenv("DATABASE_URL");
+			if (jdbcUrl == null) {
+			    jdbcUrl = rb.getString("url");
+			}
+            datasource.cpds.setJdbcUrl(jdbcUrl);
             datasource.cpds.setUser(rb.getString("username"));
             datasource.cpds.setPassword(rb.getString("password"));
             datasource.cpds.setInitialPoolSize(new Integer((String) rb
