@@ -15,10 +15,12 @@ public class HibDataSource {
 	private static SessionFactory sessionFactory = null;
 
 	public static SessionFactory getSessionFactory() {
+		System.out.println("get session factory");
 
 		if (sessionFactory == null) {
 			sessionFactory = new Configuration().configure().buildSessionFactory();
 		}
+		System.out.println("get session factory"+sessionFactory);
 		return sessionFactory;
 	}
 

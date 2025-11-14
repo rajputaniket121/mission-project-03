@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -370,4 +371,71 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
         }
         return pk + 1L;
     }
+    
+    
+    public HashMap<String, Object> findMarksheetReportByRollNo(String rollNo) throws ApplicationException {
+        log.debug("Model findMarksheetReportByRollNo Started");
+        Connection conn = null;
+        HashMap<String, Object> map = null;
+
+        String sql = "SELECT m.roll_no AS roll_no, m.name AS student_name, s.first_name, s.last_name, " +
+                     "CONCAT(s.first_name, ' ', s.last_name) AS full_name, s.gender, s.college_name AS college_name, " +
+                     "s.email AS student_email, s.mobile_no AS student_mobile, f.course_name AS course_name, " +
+                     "f.subject_name AS subject_name, f.college_name AS faculty_college, " +
+                     "CONCAT(f.first_name, ' ', f.last_name) AS faculty_name, m.physics AS physics_marks, " +
+                     "m.chemistry AS chemistry_marks, m.maths AS maths_marks, " +
+                     "(m.physics + m.chemistry + m.maths) AS total_marks, " +
+                     "ROUND((m.physics + m.chemistry + m.maths)/3, 2) AS percentage, " +
+                     "CASE WHEN (m.physics + m.chemistry + m.maths)/3 >= 60 THEN 'First Division' " +
+                     "WHEN (m.physics + m.chemistry + m.maths)/3 >= 45 THEN 'Second Division' " +
+                     "WHEN (m.physics + m.chemistry + m.maths)/3 >= 33 THEN 'Third Division' ELSE 'Fail' END AS division, " +
+                     "CASE WHEN (m.physics + m.chemistry + m.maths)/3 >= 33 THEN 'Pass' ELSE 'Fail' END AS result " +
+                     "FROM st_marksheet m " +
+                     "LEFT JOIN st_student s ON s.id = m.student_id " +
+                     "LEFT JOIN st_faculty f ON f.college_id = s.college_id " +
+                     "WHERE m.roll_no = ?";
+
+        try {
+            conn = JDBCDataSource.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, rollNo);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                map = new HashMap<>();
+                map.put("rollNo", rs.getString("roll_no"));
+                map.put("studentName", rs.getString("student_name"));
+                map.put("firstName", rs.getString("first_name"));
+                map.put("lastName", rs.getString("last_name"));
+                map.put("fullName", rs.getString("full_name"));
+                map.put("gender", rs.getString("gender"));
+                map.put("collegeName", rs.getString("college_name"));
+                map.put("email", rs.getString("student_email"));
+                map.put("mobile", rs.getString("student_mobile"));
+                map.put("courseName", rs.getString("course_name"));
+                map.put("subjectName", rs.getString("subject_name"));
+                map.put("facultyCollege", rs.getString("faculty_college"));
+                map.put("facultyName", rs.getString("faculty_name"));
+                map.put("physics", rs.getInt("physics_marks"));
+                map.put("chemistry", rs.getInt("chemistry_marks"));
+                map.put("maths", rs.getInt("maths_marks"));
+                map.put("totalMarks", rs.getInt("total_marks"));
+                map.put("percentage", rs.getFloat("percentage"));
+                map.put("division", rs.getString("division"));
+                map.put("result", rs.getString("result"));
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            log.error("Database Exception..", e);
+            throw new ApplicationException("Exception in findMarksheetReportByRollNo");
+        } finally {
+            JDBCDataSource.closeConnection(conn);
+        }
+
+        log.debug("Model findMarksheetReportByRollNo End");
+        return map;
+    }
+
 }

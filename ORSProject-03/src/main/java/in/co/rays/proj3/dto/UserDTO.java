@@ -1,7 +1,6 @@
 package in.co.rays.proj3.dto;
 
 
-import java.sql.Timestamp;
 import java.util.Date;
 /**
  * user JavaDto encapsulates user attributes
@@ -21,6 +20,12 @@ public class UserDTO extends BaseDTO {
 	 private String gender;
 	 
 	 
+	 
+	 
+	 public UserDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	 public String getFirstName() {
 		return firstName;
 	 }

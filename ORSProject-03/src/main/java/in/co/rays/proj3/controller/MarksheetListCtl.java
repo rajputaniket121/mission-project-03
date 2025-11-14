@@ -36,7 +36,7 @@ public class MarksheetListCtl extends BaseCtl {
 		MarksheetDTO dto = (MarksheetDTO) populateDTO(req);
 		MarksheetModelInt model = ModelFactory.getInstance().getMarksheetModel();
 		try {
-			List<MarksheetDTO> list= model.search(dto, pageNo, pageSize);
+			List<MarksheetDTO> list = model.search(dto, pageNo, pageSize);
 			List<MarksheetDTO> next= model.search(dto, pageNo+1, pageSize);
 			if(list.isEmpty() || list==null) {
 				ServletUtility.setErrorMessage("No Records found", req);

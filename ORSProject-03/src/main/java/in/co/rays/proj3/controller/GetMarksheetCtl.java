@@ -58,7 +58,6 @@ public class GetMarksheetCtl extends BaseCtl {
 		MarksheetDTO dto = (MarksheetDTO) populateDTO(request);
 
 		if (OP_GO.equalsIgnoreCase(op)) {
-//			System.out.println("aagya bhai ");
 			try {
 				dto = model.findByRollNo(dto.getRollNo());
 				if (dto != null) {

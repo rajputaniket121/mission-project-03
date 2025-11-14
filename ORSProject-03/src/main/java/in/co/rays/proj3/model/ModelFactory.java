@@ -3,15 +3,15 @@ package in.co.rays.proj3.model;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import in.co.rays.proj3.model.hibImpl.CollegeModelHibImp;
-import in.co.rays.proj3.model.hibImpl.CourseModelHibImp;
-import in.co.rays.proj3.model.hibImpl.FacultyModelHibImp;
-import in.co.rays.proj3.model.hibImpl.MarksheetModelHibImp;
-import in.co.rays.proj3.model.hibImpl.RoleModelHibImp;
-import in.co.rays.proj3.model.hibImpl.StudentModelHibImp;
-import in.co.rays.proj3.model.hibImpl.SubjectModelHibImp;
-import in.co.rays.proj3.model.hibImpl.TimetableModelHibImp;
-import in.co.rays.proj3.model.hibImpl.UserModelHibImp;
+import in.co.rays.proj3.model.hibImpl.CollegeModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.CourseModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.FacultyModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.MarksheetModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.RoleModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.StudentModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.SubjectModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.TimetableModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.UserModelHibImpl;
 import in.co.rays.proj3.model.jdbcImpl.CollegeModelJDBCImpl;
 import in.co.rays.proj3.model.jdbcImpl.CourseModelJDBCImpl;
 import in.co.rays.proj3.model.jdbcImpl.FacultyModelJDBCImpl;
@@ -50,7 +50,7 @@ public final class ModelFactory {
 		MarksheetModelInt marksheetModel = (MarksheetModelInt) modelCache.get("marksheetModel");
 		if (marksheetModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				marksheetModel = new MarksheetModelHibImp();
+				marksheetModel = new MarksheetModelHibImpl();
 			}
 			if ("JDBC".equals(DATABASE)) {
 				marksheetModel = new MarksheetModelJDBCImpl();
@@ -64,7 +64,7 @@ public final class ModelFactory {
 		CollegeModelInt collegeModel = (CollegeModelInt) modelCache.get("collegeModel");
 		if (collegeModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				collegeModel = new CollegeModelHibImp();
+				collegeModel = new CollegeModelHibImpl();
 
 			}
 			if ("JDBC".equals(DATABASE)) {
@@ -79,7 +79,7 @@ public final class ModelFactory {
 		RoleModelInt roleModel = (RoleModelInt) modelCache.get("roleModel");
 		if (roleModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				roleModel = new RoleModelHibImp();
+				roleModel = new RoleModelHibImpl();
 
 			}
 			if ("JDBC".equals(DATABASE)) {
@@ -95,7 +95,7 @@ public final class ModelFactory {
 		UserModelInt userModel = (UserModelInt) modelCache.get("userModel");
 		if (userModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				userModel = new UserModelHibImp();
+				userModel = new UserModelHibImpl();
 			}
 			if ("JDBC".equals(DATABASE)) {
 				userModel = new UserModelJDBCImpl();
@@ -110,7 +110,7 @@ public final class ModelFactory {
 		StudentModelInt studentModel = (StudentModelInt) modelCache.get("studentModel");
 		if (studentModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				studentModel = new StudentModelHibImp();
+				studentModel = new StudentModelHibImpl();
 			}
 			if ("JDBC".equals(DATABASE)) {
 				studentModel = new StudentModelJDBCImpl();
@@ -125,7 +125,7 @@ public final class ModelFactory {
 		CourseModelInt courseModel = (CourseModelInt) modelCache.get("courseModel");
 		if (courseModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				courseModel = new CourseModelHibImp();
+				courseModel = new CourseModelHibImpl();
 			}
 			if ("JDBC".equals(DATABASE)) {
 				courseModel = new CourseModelJDBCImpl();
@@ -142,7 +142,7 @@ public final class ModelFactory {
 
 		if (timetableModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				timetableModel = new TimetableModelHibImp();
+				timetableModel = new TimetableModelHibImpl();
 			}
 			if ("JDBC".equals(DATABASE)) {
 				timetableModel = new TimetableModelJDBCImpl();
@@ -157,7 +157,7 @@ public final class ModelFactory {
 		SubjectModelInt subjectModel = (SubjectModelInt) modelCache.get("subjectModel");
 		if (subjectModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				subjectModel = new SubjectModelHibImp();
+				subjectModel = new SubjectModelHibImpl();
 			}
 			if ("JDBC".equals(DATABASE)) {
 				subjectModel = new SubjectModelJDBCImpl();
@@ -172,7 +172,7 @@ public final class ModelFactory {
 		FacultyModelInt facultyModel = (FacultyModelInt) modelCache.get("facultyModel");
 		if (facultyModel == null) {
 			if ("Hibernate".equals(DATABASE)) {
-				facultyModel = new FacultyModelHibImp();
+				facultyModel = new FacultyModelHibImpl();
 			}
 			if ("JDBC".equals(DATABASE)) {
 				facultyModel = new FacultyModelJDBCImpl();

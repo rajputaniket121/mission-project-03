@@ -66,7 +66,7 @@
                                     <label><b>Course Name :</b></label>
                                 </div>
                                 <div class="mx-2">
-                                    <%=HTMLUtility.getList("courseId", String.valueOf(dto.getId()), courseList)%>
+                                   <%=HTMLUtility.getList("courseId", String.valueOf(dto.getId()), courseList)%>
                                 </div>
                                 <div class="mx-2">
                                     <input type="submit" class="btn btn-sm btn-primary" name="operation" value="<%=CourseListCtl.OP_SEARCH%>">

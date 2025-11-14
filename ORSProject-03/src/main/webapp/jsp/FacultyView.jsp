@@ -193,7 +193,7 @@
 						<label class="form-label"><strong>Course</strong> <span class="text-danger">*</span></label>
 						<div class="input-group input-group-sm">
 							<span class="input-group-text"><i class="fa fa-book text-muted"></i></span>
-							<%=HTMLUtility.getList("courseId", String.valueOf(dto.getCourseId()), courseList)%>
+							 <%=HTMLUtility.getList("courseId", String.valueOf(dto.getCourseId()), courseList)%>
 						</div>
 						<div class="text-danger small mt-1">
 							<%=ServletUtility.getErrorMessage("courseId", request)%>

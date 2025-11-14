@@ -145,7 +145,9 @@
             %>
             <table class="table w-100">
                 <tr>
-                    <td class="text-right"><input type="submit" class="btn btn-outline-secondary" name="operation" value="<%=MarksheetListCtl.OP_BACK%>"></td>
+                    <td class="text-right"><input type="submit"
+						class="btn btn-warning btn-sm font-weight-bold" name="operation"
+						value="<%=MarksheetListCtl.OP_BACK%>"></td>
                 </tr>
             </table>
             <%

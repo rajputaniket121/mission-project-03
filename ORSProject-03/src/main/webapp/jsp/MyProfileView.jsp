@@ -12,7 +12,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Profile</title>
 <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
+<!-- jQuery UI -->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(function() {
+		// Calculate today minus 18 years
+		var today = new Date();
+		var cutoff = new Date(today.getFullYear() - 18, today.getMonth(), today
+				.getDate());
 
+		$("#udate").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			yearRange : '1950:' + cutoff.getFullYear(), // dynamic upper limit
+			dateFormat : 'dd/mm/yy',
+			maxDate : cutoff
+		// users can't pick a date after this
+		});
+	});
+</script>
 <!-- Same background & card style as User View -->
 <style type="text/css">
 .p4 {
@@ -115,10 +136,12 @@
 					<div class="mb-3">
 						<label class="form-label"><strong>Date of Birth</strong> <span class="text-danger">*</span></label>
 						<div class="input-group input-group-sm">
-							<span class="input-group-text"><i class="fa fa-calendar text-muted"></i></span>
-							<input type="date" class="form-control" name="dob" id="udate" placeholder="Select Date of Birth"
-								value="<%=DataUtility.getDateString(dto.getDob())%>">
-						</div>
+								<span class="input-group-text"><i
+									class="fa fa-calendar text-muted"></i></span> <input type="text"
+									id="udate" name="dob" class="form-control"
+									placeholder="Enter Date Of Birth"
+									value="<%=DataUtility.getDateString(dto.getDob())%>">
+							</div>
 						<div class="text-danger small mt-1">
 							<%=ServletUtility.getErrorMessage("dob", request)%>
 						</div>
@@ -128,19 +151,16 @@
 					<div class="mb-3">
 						<label class="form-label"><strong>Gender</strong> <span class="text-danger">*</span></label>
 						<div class="input-group input-group-sm">
-							<span class="input-group-text"><i class="fa fa-venus-mars text-muted"></i></span>
-							<%
+								<span class="input-group-text"><i
+									class="fa fa-venus-mars text-muted"></i></span>
+								<%
 								HashMap<String, String> map = new HashMap<String, String>();
-								map.put("Female", "Female");
 								map.put("Male", "Male");
-
+								map.put("Female", "Female");
 								String htmlList = HTMLUtility.getList("gender", dto.getGender(), map);
-							%>
-							<select class="form-select" name="gender">
-								<option value="">Select Gender</option>
-								<%=htmlList%>
-							</select>
-						</div>
+								out.print(htmlList);
+								%>
+							</div>
 						<div class="text-danger small mt-1">
 							<%=ServletUtility.getErrorMessage("gender", request)%>
 						</div>
