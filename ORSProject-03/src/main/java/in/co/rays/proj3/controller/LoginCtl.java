@@ -109,7 +109,6 @@ public class LoginCtl extends BaseCtl {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String op = request.getParameter("operation");
-		System.out.println(";;;"+op);
 		
 		HttpSession session = request.getSession(true);
 		
@@ -134,7 +133,6 @@ public class LoginCtl extends BaseCtl {
 						ServletUtility.redirect(ORSView.WELCOME_CTL, request, response);
 						return;
 					} else {
-						System.out.println();
 						if (rdto.getId() == 1) {
 							ServletUtility.redirect(uri, request, response);
 						} else {

@@ -11,7 +11,6 @@ public class HibDataSource {
     private static SessionFactory sessionFactory = null;
 
     public static SessionFactory getSessionFactory() {
-        System.out.println("get session factory");
 
         if (sessionFactory == null) {
 
@@ -27,8 +26,6 @@ public class HibDataSource {
             sessionFactory = new Configuration().configure()
             		.setProperty("hibernate.connection.url", jdbcUrl).buildSessionFactory();
         }
-
-        System.out.println("get session factory " + sessionFactory);
         return sessionFactory;
     }
 

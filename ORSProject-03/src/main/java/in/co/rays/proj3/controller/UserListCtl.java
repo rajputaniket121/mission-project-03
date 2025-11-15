@@ -78,7 +78,6 @@ public class UserListCtl extends BaseCtl {
 		UserDTO dto = (UserDTO) populateDTO(req);
 		UserModelInt model = ModelFactory.getInstance().getUserModel();
 		try {
-			System.out.println("Not working in userlist");
 			List<UserDTO> list = model.search(dto, pageNo, pageSize);
 			List<UserDTO> next = model.search(dto, pageNo + 1, pageSize);
 			if (list.isEmpty() || list == null) {
