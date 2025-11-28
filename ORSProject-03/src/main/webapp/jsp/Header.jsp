@@ -15,7 +15,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-
 <script>
 $(function() {
 	$("#selectall").click(function() {
@@ -29,16 +28,13 @@ $(function() {
 });
 </script>
 <style type="text/css">
-/* Make the text white */
+/* Keep your custom styling for dropdown toggle text and caret */
 .nav-link.dropdown-toggle {
   color: black !important;
 }
-
-/* Make only the arrow (caret) blue */
 .nav-link.dropdown-toggle::after {
-  border-top-color: #007bff !important; /* Bootstrap blue */
+  border-top-color: #007bff !important;
 }
-
 </style>
 </head>
 <body>

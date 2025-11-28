@@ -5,7 +5,6 @@
 <title>Welcome Page</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/resources/demos/style.css">
 
 
 <style>
@@ -13,12 +12,6 @@
 	background-image:
 		url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg');
 	background-size: cover;
-}
-
-.cl {
-	font-family: Lucida Calligraphy;
-	font-family: Monotype Corsiva;
-	font-family: Footlight MT Light;
 }
 </style>
 

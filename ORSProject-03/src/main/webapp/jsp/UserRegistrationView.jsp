@@ -76,15 +76,13 @@
 				<div class="card-body py-3">
 					<h5 class="text-center text-success font-weight-bold mb-3">User
 						Registration</h5>
-
 					<div class="row mb-2">
 						<div class="col-md-12">
 							<jsp:useBean id="dto" class="in.co.rays.proj3.dto.UserDTO"
 								scope="request" />
-
 							<%
-							if (!ServletUtility.getSuccessMessage(request).equals("")) {
-							%>
+                        if (!ServletUtility.getSuccessMessage(request).equals("")) {
+                        %>
 							<div
 								class="alert alert-success alert-dismissible fade show p-2 mb-2"
 								role="alert">
@@ -95,12 +93,11 @@
 								</button>
 							</div>
 							<%
-							}
-							%>
-
+                        }
+                        %>
 							<%
-							if (!ServletUtility.getErrorMessage(request).equals("")) {
-							%>
+                        if (!ServletUtility.getErrorMessage(request).equals("")) {
+                        %>
 							<div
 								class="alert alert-danger alert-dismissible fade show p-2 mb-2"
 								role="alert">
@@ -111,9 +108,8 @@
 								</button>
 							</div>
 							<%
-							}
-							%>
-
+                        }
+                        %>
 							<input type="hidden" name="id" value="<%=dto.getId()%>">
 							<input type="hidden" name="createdBy"
 								value="<%=dto.getCreatedBy()%>"> <input type="hidden"
@@ -124,137 +120,154 @@
 								value="<%=DataUtility.getTimestamp(dto.getModifiedDateTime())%>">
 						</div>
 					</div>
-
 					<div class="row">
 						<!-- First Name -->
 						<div class="col-md-6 mb-2">
 							<label><strong>First Name</strong> <span
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-user-alt text-muted"></i></span> <input type="text"
-									class="form-control" name="firstName"
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-user-alt text-muted"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control" name="firstName"
 									placeholder="Enter your first name"
 									value="<%=DataUtility.getStringData(dto.getFirstName())%>">
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("firstName", request)%></div>
 						</div>
-
 						<!-- Last Name -->
 						<div class="col-md-6 mb-2">
 							<label><strong>Last Name</strong> <span
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-user-circle text-muted"></i></span> <input type="text"
-									class="form-control" name="lastName"
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-user-circle text-muted"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control" name="lastName"
 									placeholder="Enter your last name"
 									value="<%=DataUtility.getStringData(dto.getLastName())%>">
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("lastName", request)%></div>
 						</div>
-
 						<!-- Password -->
 						<div class="col-md-6 mb-2">
 							<label><strong>Password</strong> <span
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-key text-muted"></i></span> <input type="password"
-									class="form-control" name="password"
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-key text-muted"></i>
+									</div>
+								</div>
+								<input type="password" class="form-control" name="password"
 									placeholder="Enter your password"
 									value="<%=DataUtility.getStringData(dto.getPassword())%>">
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("password", request)%></div>
 						</div>
-
 						<!-- Confirm Password -->
 						<div class="col-md-6 mb-2">
 							<label><strong>Confirm Password</strong> <span
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-key text-muted"></i></span> <input type="password"
-									class="form-control" name="confirmPassword"
-									placeholder="Re-enter your password"
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-key text-muted"></i>
+									</div>
+								</div>
+								<input type="password" class="form-control"
+									name="confirmPassword" placeholder="Re-enter your password"
 									value="<%=DataUtility.getStringData(dto.getConfirmPassword())%>">
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("confirmPassword", request)%></div>
 						</div>
-
 						<!-- Email -->
 						<div class="col-md-6 mb-2">
 							<label><strong>Email Id</strong> <span
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-envelope text-muted"></i></span> <input type="text"
-									class="form-control" name="emailId"
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-envelope text-muted"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control" name="emailId"
 									placeholder="Enter your email address"
 									value="<%=DataUtility.getStringData(dto.getLogin())%>">
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("emailId", request)%></div>
 						</div>
-
 						<!-- Mobile No -->
 						<div class="col-md-6 mb-2">
 							<label><strong>Mobile No</strong> <span
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-phone-square text-muted"></i></span> <input type="text"
-									class="form-control" id="mobileNo" name="mobileNo"
-									maxlength="10" placeholder="Enter your 10-digit mobile number"
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-phone-square text-muted"></i>
+									</div>
+								</div>
+								<input type="text" class="form-control" id="mobileNo"
+									name="mobileNo" maxlength="10"
+									placeholder="Enter your 10-digit mobile number"
 									value="<%=DataUtility.getStringData(dto.getMobileNo())%>">
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("mobileNo", request)%></div>
 						</div>
-
 						<!-- Gender -->
 						<div class="col-md-6 mb-2">
 							<label><strong>Gender</strong> <span class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-venus-mars text-muted"></i></span>
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-venus-mars text-muted"></i>
+									</div>
+								</div>
 								<%
-								HashMap map = new HashMap();
-								map.put("Male", "Male");
-								map.put("Female", "Female");
-								String htmlList = HTMLUtility.getList("gender", dto.getGender(), map);
-								out.print(htmlList);
-								%>
+                            HashMap map = new HashMap();
+                            map.put("Male", "Male");
+                            map.put("Female", "Female");
+                            String htmlList = HTMLUtility.getList("gender", dto.getGender(), map);
+                            out.print(htmlList);
+                            %>
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("gender", request)%></div>
 						</div>
-
 						<!-- DOB -->
 						<div class="col-md-6 mb-3">
 							<label><strong>Date of Birth</strong> <span
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fas fa-calendar text-muted"></i></span> <input type="text"
-									id="datepicker" name="dob" class="form-control"
-									placeholder="Select your date of birth" readonly
-									value="<%=DataUtility.getDateString(dto.getDob())%>">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										<i class="fa fa-calendar text-muted"></i>
+									</div>
+								</div>
+								<input type="text" id="datepicker" name="dob"
+									class="form-control" placeholder="Select your date of birth"
+									readonly value="<%=DataUtility.getDateString(dto.getDob())%>">
 							</div>
 							<div class="text-danger small"><%=ServletUtility.getErrorMessage("dob", request)%></div>
 						</div>
 					</div>
-
 					<!-- Buttons -->
 					<div class="d-flex justify-content-center mb-2">
 						<input type="submit" name="operation"
 							class="btn btn-success btn-sm px-4"
-							value="<%=UserRegistrationCtl.OP_SIGN_UP%>"> &nbsp; <input
+							value="<%=UserRegistrationCtl.OP_SIGN_UP%>"> <input
 							type="submit" name="operation"
-							class="btn btn-secondary btn-sm px-4"
+							class="btn btn-secondary btn-sm px-4 ml-2"
 							value="<%=UserRegistrationCtl.OP_RESET%>">
 					</div>
 				</div>
 			</div>
 		</form>
 	</main>
+
 
 	<div class="footer mt-auto py-2">
 		<%@include file="FooterView.jsp"%>

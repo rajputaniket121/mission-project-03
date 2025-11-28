@@ -33,7 +33,6 @@ public class UserModelHibImpl implements UserModelInt{
 		Session session = HibDataSource.getSession();
 		Transaction tx = null;
 		try {
-			int pk = 0;
 			tx = session.beginTransaction();
 			session.save(dto);
 			tx.commit();
