@@ -31,5 +31,6 @@
 		<mapping resource="in/co/rays/proj3/hbm/MarksheetDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/TimetableDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/FacultyDTO.hbm.xml" />
+		<mapping resource="in/co/rays/proj3/hbm/DoctorDTO.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

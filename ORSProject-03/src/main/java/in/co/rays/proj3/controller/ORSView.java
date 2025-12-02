@@ -37,8 +37,7 @@ public interface ORSView {
 	public String TIMETABLE_LIST_VIEW = PAGE_FOLDER + "/TimeTableListView.jsp";
 	public String SUBJECT_VIEW = PAGE_FOLDER + "/SubjectView.jsp";
 	public String SUBJECT_LIST_VIEW = PAGE_FOLDER + "/SubjectListView.jsp";
-	public String PRODUCT_VIEW = PAGE_FOLDER + "/ProductView.jsp";
-	public String PRODUCT_LIST_VIEW = PAGE_FOLDER + "/ProductListView.jsp";
+	
 
 
 	public String ERROR_CTL = APP_CONTEXT + "/ErrorCtl";
@@ -65,8 +64,6 @@ public interface ORSView {
 	public String SUBJECT_LIST_CTL = APP_CONTEXT + "/ctl/SubjectListCtl";
 	public String TIMETABLE_CTL = APP_CONTEXT + "/ctl/TimeTableCtl";
 	public String TIMETABLE_LIST_CTL = APP_CONTEXT + "/ctl/TimeTableListCtl";
-	public String PRODUCT_CTL = APP_CONTEXT + "/ctl/ProductCtl";
-	public String PRODUCT_LIST_CTL = APP_CONTEXT + "/ctl/ProductListCtl";
 
 	public String GET_MARKSHEET_CTL = APP_CONTEXT + "/ctl/GetMarksheetCtl";
 	public String CHANGE_PASSWORD_CTL = APP_CONTEXT + "/ctl/ChangePasswordCtl";
@@ -74,5 +71,10 @@ public interface ORSView {
 	public String FORGET_PASSWORD_CTL = APP_CONTEXT + "/ForgetPasswordCtl";
 	public String MARKSHEET_MERIT_LIST_CTL = APP_CONTEXT + "/ctl/MarksheetMeritListCtl";
 	public String JASPER_CTL = APP_CONTEXT +  "/ctl/JasperCtl";
+	
+	public String DOCTOR_VIEW = PAGE_FOLDER + "/DoctorView.jsp";
+	public String DOCTOR_LIST_VIEW = PAGE_FOLDER + "/DoctorListView.jsp";
+	public String DOCTOR_CTL = APP_CONTEXT + "/ctl/DoctorCtl";
+	public String DOCTOR_LIST_CTL = APP_CONTEXT + "/ctl/DoctorListCtl";
 
 }

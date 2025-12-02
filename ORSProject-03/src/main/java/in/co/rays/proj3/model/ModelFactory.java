@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import in.co.rays.proj3.model.hibImpl.CollegeModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CourseModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.DoctorModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.FacultyModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.MarksheetModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.RoleModelHibImpl;
@@ -14,6 +15,7 @@ import in.co.rays.proj3.model.hibImpl.TimetableModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.UserModelHibImpl;
 import in.co.rays.proj3.model.jdbcImpl.CollegeModelJDBCImpl;
 import in.co.rays.proj3.model.jdbcImpl.CourseModelJDBCImpl;
+import in.co.rays.proj3.model.jdbcImpl.DoctorModelJDBCImpl;
 import in.co.rays.proj3.model.jdbcImpl.FacultyModelJDBCImpl;
 import in.co.rays.proj3.model.jdbcImpl.MarksheetModelJDBCImpl;
 import in.co.rays.proj3.model.jdbcImpl.RoleModelJDBCImpl;
@@ -181,5 +183,20 @@ public final class ModelFactory {
 		}
 
 		return facultyModel;
+	}
+	
+	public DoctorModelInt getDoctorModel() {
+		DoctorModelInt doctorModel = (DoctorModelInt) modelCache.get("doctorModel");
+		if (doctorModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				doctorModel = new DoctorModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				doctorModel = new DoctorModelJDBCImpl();
+			}
+			modelCache.put("doctorModel", doctorModel);
+		}
+
+		return doctorModel;
 	}
 }

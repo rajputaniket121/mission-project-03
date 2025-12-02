@@ -212,7 +212,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 				}
 
 				if (dto.getMobile() != null && dto.getMobile().length() > 0) {
-					criteria.add(Restrictions.eq("mobile", dto.getMobile()));
+					criteria.add(Restrictions.like("mobile", dto.getMobile()+"%"));
 				}
 
 				if (dto.getExperties() != null && dto.getExperties().length() > 0) {
