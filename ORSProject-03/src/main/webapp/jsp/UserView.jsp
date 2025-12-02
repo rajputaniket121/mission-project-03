@@ -46,12 +46,17 @@
 	justify-content: center;
 	padding-top: 70px;
 	padding-bottom: 40px;
-	overflow: auto;
+	overflow: visible !important;
+}
+.ui-datepicker {
+    z-index: 999999 !important;
+    font-size: 14px !important;
 }
 
 .grad-card {
 	background: rgba(255, 255, 255, 0.92);
 }
+
 </style>
 </head>
 <body class="p4 d-flex flex-column">

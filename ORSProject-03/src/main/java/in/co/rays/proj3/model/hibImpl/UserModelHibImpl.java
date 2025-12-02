@@ -186,7 +186,7 @@ public class UserModelHibImpl implements UserModelInt{
 				if (dto.getGender() != null && dto.getGender().length() > 0) {
 					criteria.add(Restrictions.like("gender", dto.getGender() + "%"));
 				}
-				if (dto.getDob() != null && dto.getDob().getDate() > 0) {
+				if (dto.getDob() != null && dto.getDob().getTime() > 0) {
 					criteria.add(Restrictions.eq("dob", dto.getDob()));
 				}
 				if (dto.getRoleId() > 0) {

@@ -128,7 +128,7 @@
                             <td><%=date%></td>
                             <td class="text-capitalize"><%=dto.getExamTime()%></td>
                             <td class="text-capitalize"><%=dto.getDescription()%></td>
-                            <td><a href="TimetableCtl?id=<%=dto.getId()%>" class="btn btn-link btn-sm p-0">Edit</a></td>
+                            <td><a href="<%=ORSView.TIMETABLE_CTL%>?id=<%=dto.getId()%>" class="btn btn-link btn-sm p-0">Edit</a></td>
                         </tr>
                         <%
                             }
