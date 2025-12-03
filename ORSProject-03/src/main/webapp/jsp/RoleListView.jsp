@@ -59,6 +59,9 @@
                         <td>
                             <div class="d-flex justify-content-center align-items-center flex-wrap bg-light bg-opacity-75 p-3 rounded shadow-sm">
                                 <div class="mx-2">
+                                    <label><b>Role Name :</b></label>
+                                </div>
+                                <div class="mx-2">
                                     <%=HTMLUtility.getList("id", String.valueOf(dto.getId()), roleList)%>
                                 </div>
                                 <div class="mx-2">

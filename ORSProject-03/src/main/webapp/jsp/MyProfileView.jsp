@@ -12,195 +12,195 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Profile</title>
 <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
-<!-- jQuery UI -->
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-	$(function() {
-		// Calculate today minus 18 years
-		var today = new Date();
-		var cutoff = new Date(today.getFullYear() - 18, today.getMonth(), today
-				.getDate());
-
-		$("#udate").datepicker({
-			changeMonth : true,
-			changeYear : true,
-			yearRange : '1950:' + cutoff.getFullYear(), // dynamic upper limit
-			dateFormat : 'dd/mm/yy',
-			maxDate : cutoff
-		// users can't pick a date after this
-		});
-	});
+$(function() {
+    var today = new Date();
+    var cutoff = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    $("#udate").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1950:' + cutoff.getFullYear(),
+        dateFormat: 'dd/mm/yy',
+        maxDate: cutoff
+    });
+});
 </script>
-<!-- Same background & card style as User View -->
-<style type="text/css">
-.p4 {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg');
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding-top: 70px;
-	padding-bottom: 40px;
-	overflow: auto;
-}
 
+<style type="text/css">
+html, body {
+    height: 100%;
+    margin: 0;
+}
+.p4 {
+    background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100%;
+    padding-top: 70px;
+    padding-bottom: 60px;
+}
 .grad-card {
-	background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 6px;
+}
+.page-wrapper {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 80px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 </style>
-<!-- Bootstrap CSS (assumed already included via Header.jsp or globally) -->
-<!-- If not, add Bootstrap 5 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css  " rel="stylesheet">
 </head>
-<body class="p4 d-flex flex-column">
-	<div class="header">
-		<%@ include file="Header.jsp"%>
-	</div>
+<body>
+<div class="page-wrapper p4">
 
-	<main class="container flex-grow-1 d-flex align-items-center justify-content-center">
-		<form action="<%=ORSView.MY_PROFILE_CTL%>" method="post" class="w-100" style="max-width: 600px;">
-			<jsp:useBean id="dto" class="in.co.rays.proj3.dto.UserDTO" scope="request" />
-			<% long id = DataUtility.getLong(request.getParameter("id")); %>
+    <div class="header">
+        <%@ include file="Header.jsp" %>
+    </div>
 
-			<div class="card grad-card shadow-sm">
-				<div class="card-body py-3">
-					<h5 class="text-center text-success fw-bold mb-3">My Profile</h5>
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
 
-					<%
-                        String successMsg = ServletUtility.getSuccessMessage(request);
-                        if (!successMsg.equals("")) {
-                    %>
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						<%=successMsg%>
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>
-					<%
-                        }
-                        String errorMsg = ServletUtility.getErrorMessage(request);
-                        if (!errorMsg.equals("")) {
-                    %>
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<%=errorMsg%>
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>
-					<%
-                        }
-                    %>
+                    <form action="<%=ORSView.MY_PROFILE_CTL%>" method="post" class="w-100">
+                        <jsp:useBean id="dto" class="in.co.rays.proj3.dto.UserDTO" scope="request" />
 
-					<!-- Login Id -->
-					<div class="mb-3">
-						<label class="form-label"><strong>Login Id</strong> <span class="text-danger">*</span></label>
-						<div class="input-group input-group-sm">
-							<span class="input-group-text"><i class="fa fa-envelope text-muted"></i></span>
-							<input type="text" class="form-control" name="login" placeholder="Enter Email ID"
-								value="<%=DataUtility.getStringData(dto.getLogin())%>">
-						</div>
-						<div class="text-danger small mt-1">
-							<%=ServletUtility.getErrorMessage("login", request)%>
-						</div>
-					</div>
+                        <div class="card grad-card shadow-sm">
+                            <div class="card-body">
 
-					<!-- First Name -->
-					<div class="mb-3">
-						<label class="form-label"><strong>First Name</strong> <span class="text-danger">*</span></label>
-						<div class="input-group input-group-sm">
-							<span class="input-group-text"><i class="fa fa-user text-muted"></i></span>
-							<input type="text" class="form-control" name="firstName" placeholder="Enter First Name"
-								value="<%=DataUtility.getStringData(dto.getFirstName())%>">
-						</div>
-						<div class="text-danger small mt-1">
-							<%=ServletUtility.getErrorMessage("firstName", request)%>
-						</div>
-					</div>
+                                <h5 class="text-center text-success font-weight-bold mb-3">My Profile</h5>
 
-					<!-- Last Name -->
-					<div class="mb-3">
-						<label class="form-label"><strong>Last Name</strong> <span class="text-danger">*</span></label>
-						<div class="input-group input-group-sm">
-							<span class="input-group-text"><i class="fa fa-user text-muted"></i></span>
-							<input type="text" class="form-control" name="lastName" placeholder="Enter Last Name"
-								value="<%=DataUtility.getStringData(dto.getLastName())%>">
-						</div>
-						<div class="text-danger small mt-1">
-							<%=ServletUtility.getErrorMessage("lastName", request)%>
-						</div>
-					</div>
+                                <%
+                                    String successMsg = ServletUtility.getSuccessMessage(request);
+                                    if (successMsg != null && !successMsg.trim().equals("")) {
+                                %>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <%= successMsg %>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <%
+                                    }
+                                    String errorMsg = ServletUtility.getErrorMessage(request);
+                                    if (errorMsg != null && !errorMsg.trim().equals("")) {
+                                %>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <%= errorMsg %>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <%
+                                    }
+                                %>
 
-					<!-- Date of Birth -->
-					<div class="mb-3">
-						<label class="form-label"><strong>Date of Birth</strong> <span class="text-danger">*</span></label>
-						<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fa fa-calendar text-muted"></i></span> <input type="text"
-									id="udate" name="dob" class="form-control"
-									placeholder="Enter Date Of Birth"
-									value="<%=DataUtility.getDateString(dto.getDob())%>">
-							</div>
-						<div class="text-danger small mt-1">
-							<%=ServletUtility.getErrorMessage("dob", request)%>
-						</div>
-					</div>
+                                <div class="form-group">
+                                    <label><strong>Login Id</strong> <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-envelope text-muted"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="login" placeholder="Enter Email ID"
+                                               value="<%=DataUtility.getStringData(dto.getLogin())%>">
+                                    </div>
+                                    <small class="text-danger"><%=ServletUtility.getErrorMessage("login", request)%></small>
+                                </div>
 
-					<!-- Gender -->
-					<div class="mb-3">
-						<label class="form-label"><strong>Gender</strong> <span class="text-danger">*</span></label>
-						<div class="input-group input-group-sm">
-								<span class="input-group-text"><i
-									class="fa fa-venus-mars text-muted"></i></span>
-								<%
-								HashMap<String, String> map = new HashMap<String, String>();
-								map.put("Male", "Male");
-								map.put("Female", "Female");
-								String htmlList = HTMLUtility.getList("gender", dto.getGender(), map);
-								out.print(htmlList);
-								%>
-							</div>
-						<div class="text-danger small mt-1">
-							<%=ServletUtility.getErrorMessage("gender", request)%>
-						</div>
-					</div>
+                                <div class="form-group">
+                                    <label><strong>First Name</strong> <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user text-muted"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="firstName" placeholder="Enter First Name"
+                                               value="<%=DataUtility.getStringData(dto.getFirstName())%>">
+                                    </div>
+                                    <small class="text-danger"><%=ServletUtility.getErrorMessage("firstName", request)%></small>
+                                </div>
 
-					<!-- Mobile No -->
-					<div class="mb-3">
-						<label class="form-label"><strong>Mobile No</strong> <span class="text-danger">*</span></label>
-						<div class="input-group input-group-sm">
-							<span class="input-group-text"><i class="fa fa-phone text-muted"></i></span>
-							<input type="text" class="form-control" name="mobileNo" maxlength="10" placeholder="Enter Mobile No."
-								value="<%=DataUtility.getStringData(dto.getMobileNo())%>">
-						</div>
-						<div class="text-danger small mt-1">
-							<%=ServletUtility.getErrorMessage("mobileNo", request)%>
-						</div>
-					</div>
+                                <div class="form-group">
+                                    <label><strong>Last Name</strong> <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-user text-muted"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="lastName" placeholder="Enter Last Name"
+                                               value="<%=DataUtility.getStringData(dto.getLastName())%>">
+                                    </div>
+                                    <small class="text-danger"><%=ServletUtility.getErrorMessage("lastName", request)%></small>
+                                </div>
 
-					<!-- Buttons -->
-					<div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-2">
-						<input type="submit" name="operation" class="btn btn-success btn-sm px-4"
-							value="<%=BaseCtl.OP_SAVE%>">
-						<input type="submit" name="operation" class="btn btn-primary btn-sm px-4"
-							value="<%=MyProfileCtl.OP_CHANGE_PASSWORD%>">
-					</div>
+                                <div class="form-group">
+                                    <label><strong>Date of Birth</strong> <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-calendar text-muted"></i></span>
+                                        </div>
+                                        <input type="text" id="udate" name="dob" class="form-control" placeholder="Enter Date Of Birth"
+                                               value="<%=DataUtility.getDateString(dto.getDob())%>">
+                                    </div>
+                                    <small class="text-danger"><%=ServletUtility.getErrorMessage("dob", request)%></small>
+                                </div>
 
-					<!-- Forget Password Link -->
-					<div class="text-center mt-3">
-						<a href="<%=ORSView.FORGET_PASSWORD_CTL%>" class="text-decoration-none"><b>Forget my password?</b></a>
-					</div>
-				</div>
-			</div>
-		</form>
-	</main>
+                                <div class="form-group">
+                                    <label><strong>Gender</strong> <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-venus-mars text-muted"></i></span>
+                                        </div>
+                                        <%
+                                            HashMap<String, String> map = new HashMap<String, String>();
+                                            map.put("Male", "Male");
+                                            map.put("Female", "Female");
+                                            String htmlList = HTMLUtility.getList("gender", dto.getGender(), map);
+                                            out.print(htmlList);
+                                        %>
+                                    </div>
+                                    <small class="text-danger"><%=ServletUtility.getErrorMessage("gender", request)%></small>
+                                </div>
 
-	<div class="footer mt-auto py-2">
-		<%@include file="FooterView.jsp"%>
-	</div>
+                                <div class="form-group">
+                                    <label><strong>Mobile No</strong> <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-phone text-muted"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="mobileNo" maxlength="10" placeholder="Enter Mobile No."
+                                               value="<%=DataUtility.getStringData(dto.getMobileNo())%>">
+                                    </div>
+                                    <small class="text-danger"><%=ServletUtility.getErrorMessage("mobileNo", request)%></small>
+                                </div>
 
-	<!-- Bootstrap JS (for dismissible alerts) -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js  "></script>
+                                <div class="text-center">
+                                    <input type="submit" name="operation" class="btn btn-success btn-sm px-4" value="<%=BaseCtl.OP_SAVE%>">
+                                    <input type="submit" name="operation" class="btn btn-primary btn-sm px-4" value="<%=MyProfileCtl.OP_CHANGE_PASSWORD%>">
+                                </div>
+
+                                <div class="text-center mt-3">
+                                    <a href="<%=ORSView.FORGET_PASSWORD_CTL%>"><b>Forget my password?</b></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="footer">
+        <%@ include file="FooterView.jsp" %>
+    </div>
+
+</div>
 </body>
 </html>

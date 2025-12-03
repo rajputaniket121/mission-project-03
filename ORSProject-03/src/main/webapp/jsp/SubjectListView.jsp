@@ -13,8 +13,6 @@
 <head>
     <title>Subject List</title>
     <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
-    <!-- Bootstrap 4 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css    ">
 </head>
 <body class="p-4"
     style="background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg'); 

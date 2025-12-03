@@ -69,32 +69,50 @@
 						<td>
 							<div
 								class="d-flex justify-content-center align-items-center flex-wrap bg-light bg-opacity-75 p-3 rounded shadow-sm">
-								<div class="mx-2">
-									<input type="text" class="form-control form-control-sm"
+
+								<!-- First Name -->
+								<div class="mx-2 d-flex align-items-center">
+									<label class="mb-0 mr-1 font-weight-bold">First Name:</label> <input
+										type="text" class="form-control form-control-sm"
 										name="firstName" placeholder="Enter First Name"
 										value="<%=ServletUtility.getParameter("firstName", request)%>"
 										style="width: 180px;">
 								</div>
-								<div class="mx-2">
-									<input type="text" class="form-control form-control-sm"
-										name="login" placeholder="Enter Login ID"
+
+								<!-- Login -->
+								<div class="mx-2 d-flex align-items-center">
+									<label class="mb-0 mr-1 font-weight-bold">Login:</label> <input
+										type="text" class="form-control form-control-sm" name="login"
+										placeholder="Enter Login ID"
 										value="<%=ServletUtility.getParameter("login", request)%>"
 										style="width: 180px;">
 								</div>
-								<div class="mx-2">
-									<%=HTMLUtility.getList("roleId", String.valueOf(dto.getRoleId()), roleList)%>
+
+								<!-- Role -->
+								<div class="mx-2 d-flex align-items-center">
+									<label class="mb-0 mr-1 font-weight-bold">Role:</label>
+									<%=HTMLUtility.getList(
+                                "roleId",
+                                String.valueOf(dto.getRoleId()),
+                                roleList)%>
 								</div>
+
+								<!-- Buttons -->
 								<div class="mx-2">
-									<input type="submit" class="btn btn-sm btn-primary btn-sm font-weight-bold"
+									<input type="submit"
+										class="btn btn-sm btn-primary btn-sm font-weight-bold"
 										name="operation" value="<%=UserListCtl.OP_SEARCH%>"> <input
-										type="submit" class="btn btn-sm btn-outline-secondary btn-sm font-weight-bold ml-1"
+										type="submit"
+										class="btn btn-sm btn-outline-secondary btn-sm font-weight-bold ml-1"
 										name="operation" value="<%=UserListCtl.OP_RESET%>">
 								</div>
+
 							</div>
 						</td>
 					</tr>
 				</table>
 			</div>
+
 
 			<!-- Data Table -->
 			<div class="table-responsive">
@@ -149,18 +167,18 @@
 			<table class="table w-100">
 				<tr>
 					<td width="25%"><input type="submit"
-						class="btn btn-outline-primary btn-sm font-weight-bold" name="operation"
-						value="<%=UserListCtl.OP_PREVIOUS%>"
+						class="btn btn-outline-primary btn-sm font-weight-bold"
+						name="operation" value="<%=UserListCtl.OP_PREVIOUS%>"
 						<%=pageNo > 1 ? "" : "disabled"%>></td>
 					<td width="25%" class="text-center"><input type="submit"
-						class="btn btn-outline-success btn-sm font-weight-bold" name="operation"
-						value="<%=UserListCtl.OP_NEW%>"></td>
+						class="btn btn-outline-success btn-sm font-weight-bold"
+						name="operation" value="<%=UserListCtl.OP_NEW%>"></td>
 					<td width="25%" class="text-center"><input type="submit"
-						class="btn btn-outline-danger btn-sm font-weight-bold" name="operation"
-						value="<%=UserListCtl.OP_DELETE%>"></td>
+						class="btn btn-outline-danger btn-sm font-weight-bold"
+						name="operation" value="<%=UserListCtl.OP_DELETE%>"></td>
 					<td width="25%" class="text-right"><input type="submit"
-						class="btn btn-outline-primary btn-sm font-weight-bold" name="operation"
-						value="<%=UserListCtl.OP_NEXT%>"
+						class="btn btn-outline-primary btn-sm font-weight-bold"
+						name="operation" value="<%=UserListCtl.OP_NEXT%>"
 						<%=nextListSize != 0 ? "" : "disabled"%>></td>
 				</tr>
 			</table>
