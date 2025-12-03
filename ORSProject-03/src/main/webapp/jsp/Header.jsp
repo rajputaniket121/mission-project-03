@@ -45,7 +45,7 @@ $(function() {
     String welcomeMsg = "Hi, " + (userLoggedIn ? userDto.getFirstName() + " (" + role + ")" : "Guest");
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container-fluid">
+    
         <a class="navbar-brand" href="<%=ORSView.WELCOME_CTL%>">
             <img src="<%=ORSView.APP_CONTEXT%>/img/custom.png" alt="Logo" height="42">
         </a>
@@ -176,7 +176,7 @@ $(function() {
                 </li>
             </ul>
         </div>
-    </div>
+   
 </nav>
 </body>
 </html>
