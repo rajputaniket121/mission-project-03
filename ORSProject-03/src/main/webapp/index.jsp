@@ -28,7 +28,7 @@ body {
 
         <h1>
             <a href="<%=ORSView.WELCOME_CTL%>" style="color: white;">
-                <font size="8px">Online Result System Aniket</font>
+                <font size="8px">Online Result System</font>
             </a>
         </h1>
     </div>
