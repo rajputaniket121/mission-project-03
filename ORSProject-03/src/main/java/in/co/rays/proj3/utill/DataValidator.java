@@ -210,7 +210,7 @@ public class DataValidator {
     	
     	int age = today.getYear() - enterDate.getYear();
 
-    	if(age > 18 && isNotNull(val)){
+    	if(age >= 18 && isNotNull(val)){
     		return true;
     	}else{
     		return false;							

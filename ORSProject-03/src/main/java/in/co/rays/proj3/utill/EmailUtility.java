@@ -25,7 +25,7 @@ public class EmailUtility {
 	/**
 	 * Create Resource Bundle to read properties file
 	 */
-	static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.project_3.bundle.system");
+	static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.proj3.bundle.system");
 
 	/**
 	 * Email Server
