@@ -5,24 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style type="text/css">
-
+/*  FIXED FOOTER */
 .footer {
-   position: fixed;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   color: white;
-   text-align: center;
- background-image: linear-gradient(to bottom right, #fcfcfc, #555555);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to right, #f8f9fa, #6c757d);
+    text-align: center;
+    padding: 6px;
 }
-
 </style>
 </head>
 <body >
-<div class="footer">
-<center>
-
-<h5><font color="black">&#169; RAYS Technologies</font></h5></center>
+<!-- FOOTER (COMBINED) -->
+<div class="footer container-fluid">
+    <h6 class="text-dark mb-0">&copy; RAYS Technologies</h6>
 </div>
 </body>
 

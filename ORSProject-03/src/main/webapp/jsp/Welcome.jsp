@@ -27,7 +27,7 @@
 			</h1>
 		</center>
 	</div>
-	<div class="footer">
+	<div>
 		<%@include file="FooterView.jsp"%>
 	</div>
 </body>

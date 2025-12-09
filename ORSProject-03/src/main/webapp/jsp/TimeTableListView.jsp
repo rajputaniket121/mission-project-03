@@ -13,7 +13,16 @@
 <title>Timetable List</title>
 <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
     <!-- Bootstrap 4 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css    ">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+.footer {
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+</style>
+    
 </head>
 <body class="p-4"
     style="background-image: url('<%=ORSView.APP_CONTEXT%>/img/Linkme.jpg'); 
@@ -161,6 +170,8 @@
 
 		</form>
 	</div>
-	<%@include file="FooterView.jsp"%>
+	<div class="footer">
+		<%@include file="FooterView.jsp"%>
+	</div>
 </body>
 </html>

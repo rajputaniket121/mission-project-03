@@ -19,6 +19,15 @@
 <!-- Bootstrap 4 -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<style>
+.footer {
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+</style>
+	
 </head>
 
 <body class="p-4"
@@ -198,6 +207,8 @@
 		</form>
 	</div>
 
-	<%@include file="FooterView.jsp"%>
+	<div>
+		<%@include file="FooterView.jsp"%>
+	</div>
 </body>
 </html>

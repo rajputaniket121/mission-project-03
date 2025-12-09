@@ -25,13 +25,6 @@
 	padding-top: 70px;
 	padding-bottom: 80px;
 }
-
-.footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-}
 </style>
 
 </head>
@@ -221,7 +214,7 @@
 		</form>
 	</div>
 
-	<div class="footer">
+	<div>
 		<%@include file="FooterView.jsp"%>
 	</div>
 
