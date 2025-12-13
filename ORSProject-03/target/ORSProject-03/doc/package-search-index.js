@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"in.co.rays.proj3.controller"},{"l":"in.co.rays.proj3.dto"},{"l":"in.co.rays.proj3.exception"},{"l":"in.co.rays.proj3.model"},{"l":"in.co.rays.proj3.model.hibImpl"},{"l":"in.co.rays.proj3.model.jdbcImpl"},{"l":"in.co.rays.proj3.utill"}]
