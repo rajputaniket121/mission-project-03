@@ -137,8 +137,9 @@ i.css {
 
 
 	</div>
-
+<div>
+		<%@include file="FooterView.jsp"%>
+	</div>
 </body>
-<%@include file="FooterView.jsp"%>
 
 </html>

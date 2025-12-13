@@ -15,12 +15,12 @@
 <title>Student View</title>
 <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 
-<!-- ✅ Include jQuery UI for Datepicker (like UserView.jsp) -->
+<!-- Include jQuery UI for Datepicker (like UserView.jsp) -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!-- ✅ Datepicker Logic for DOB (restrict under 18) -->
+<!-- Datepicker Logic for DOB (restrict under 18) -->
 <script>
     $(function() {
         var today = new Date();
@@ -234,11 +234,8 @@
 		</form>
 	</main>
 
-	<div class="footer mt-auto py-2">
+	<div>
 		<%@include file="FooterView.jsp"%>
 	</div>
-
-	<!-- Bootstrap JS (for alerts, etc.) -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

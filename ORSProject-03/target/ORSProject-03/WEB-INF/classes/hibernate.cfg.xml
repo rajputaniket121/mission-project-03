@@ -5,7 +5,6 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/orsproject03</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">root</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -32,5 +31,6 @@
 		<mapping resource="in/co/rays/proj3/hbm/MarksheetDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/TimetableDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/FacultyDTO.hbm.xml" />
+		<mapping resource="in/co/rays/proj3/hbm/DoctorDTO.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

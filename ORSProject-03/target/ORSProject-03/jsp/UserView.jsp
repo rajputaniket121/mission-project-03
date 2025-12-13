@@ -46,12 +46,17 @@
 	justify-content: center;
 	padding-top: 70px;
 	padding-bottom: 40px;
-	overflow: auto;
+	overflow: visible !important;
+}
+.ui-datepicker {
+    z-index: 999999 !important;
+    font-size: 14px !important;
 }
 
 .grad-card {
 	background: rgba(255, 255, 255, 0.92);
 }
+
 </style>
 </head>
 <body class="p4 d-flex flex-column">
@@ -224,7 +229,7 @@
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
 								<span class="input-group-text"><i
-									class="fa fa-phone-square text-muted"></i></span> <input type="text"
+									class="fa fa-phone text-muted"></i></span> <input type="text"
 									class="form-control" maxlength="10" name="mobileNo"
 									placeholder="Enter Mobile No."
 									value="<%=DataUtility.getStringData(dto.getMobileNo())%>">
@@ -259,7 +264,7 @@
 			</div>
 		</form>
 	</main>
-	<div class="footer mt-auto py-2">
+	<div>
 		<%@include file="FooterView.jsp"%>
 	</div>
 </body>

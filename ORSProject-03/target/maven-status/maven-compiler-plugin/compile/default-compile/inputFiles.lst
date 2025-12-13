@@ -4,6 +4,8 @@ E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\i
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\CollegeListCtl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\CourseCtl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\CourseListCtl.java
+E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\DoctorCtl.java
+E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\DoctorListCtl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\ErrorCtl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\FacultyCtl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\controller\FacultyListCtl.java
@@ -32,6 +34,7 @@ E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\i
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\dto\BaseDTO.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\dto\CollegeDTO.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\dto\CourseDTO.java
+E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\dto\DoctorDTO.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\dto\DropdownList.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\dto\FacultyDTO.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\dto\MarksheetDTO.java
@@ -46,9 +49,11 @@ E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\i
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\exception\RecordNotFoundException.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\CollegeModelInt.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\CourseModelInt.java
+E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\DoctorModelInt.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\FacultyModelInt.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\hibImpl\CollegeModelHibImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\hibImpl\CourseModelHibImpl.java
+E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\hibImpl\DoctorModelHibImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\hibImpl\FacultyModelHibImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\hibImpl\MarksheetModelHibImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\hibImpl\RoleModelHibImpl.java
@@ -58,6 +63,7 @@ E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\i
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\hibImpl\UserModelHibImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\jdbcImpl\CollegeModelJDBCImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\jdbcImpl\CourseModelJDBCImpl.java
+E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\jdbcImpl\DoctorModelJDBCImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\jdbcImpl\FacultyModelJDBCImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\jdbcImpl\MarksheetModelJDBCImpl.java
 E:\Rays Techno\Eclipse Workspace\project\project 3\ORSProject-03\src\main\java\in\co\rays\proj3\model\jdbcImpl\RoleModelJDBCImpl.java

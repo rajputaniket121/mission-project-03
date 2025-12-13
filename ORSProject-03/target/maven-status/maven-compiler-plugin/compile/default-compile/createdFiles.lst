@@ -14,9 +14,11 @@ in\co\rays\proj3\controller\BaseCtl.class
 in\co\rays\proj3\utill\JDBCDataSource.class
 in\co\rays\proj3\model\jdbcImpl\MarksheetModelJDBCImpl.class
 in\co\rays\proj3\controller\MarksheetCtl.class
+in\co\rays\proj3\model\DoctorModelInt.class
 in\co\rays\proj3\model\RoleModelInt.class
 in\co\rays\proj3\model\hibImpl\UserModelHibImpl.class
 in\co\rays\proj3\model\UserModelInt.class
+in\co\rays\proj3\controller\DoctorListCtl.class
 in\co\rays\proj3\dto\DropdownList.class
 in\co\rays\proj3\model\hibImpl\StudentModelHibImpl.class
 in\co\rays\proj3\controller\GetMarksheetCtl.class
@@ -32,6 +34,7 @@ in\co\rays\proj3\controller\CollegeCtl.class
 in\co\rays\proj3\controller\CourseCtl.class
 in\co\rays\proj3\model\hibImpl\SubjectModelHibImpl.class
 in\co\rays\proj3\controller\SubjectListCtl.class
+in\co\rays\proj3\dto\DoctorDTO.class
 in\co\rays\proj3\model\jdbcImpl\SubjectModelJDBCImpl.class
 in\co\rays\proj3\dto\UserDTO.class
 in\co\rays\proj3\model\jdbcImpl\StudentModelJDBCImpl.class
@@ -45,6 +48,7 @@ in\co\rays\proj3\model\jdbcImpl\TimetableModelJDBCImpl.class
 in\co\rays\proj3\model\jdbcImpl\RoleModelJDBCImpl.class
 in\co\rays\proj3\utill\PropertyReader.class
 in\co\rays\proj3\controller\CollegeListCtl.class
+in\co\rays\proj3\model\jdbcImpl\DoctorModelJDBCImpl.class
 in\co\rays\proj3\model\StudentModelInt.class
 in\co\rays\proj3\utill\EmailBuilder.class
 in\co\rays\proj3\controller\LoginCtl.class
@@ -62,6 +66,7 @@ in\co\rays\proj3\model\hibImpl\MarksheetModelHibImpl.class
 in\co\rays\proj3\utill\DataValidator.class
 in\co\rays\proj3\model\jdbcImpl\CourseModelJDBCImpl.class
 in\co\rays\proj3\controller\WelcomeCtl.class
+in\co\rays\proj3\model\hibImpl\DoctorModelHibImpl.class
 in\co\rays\proj3\model\hibImpl\FacultyModelHibImpl.class
 in\co\rays\proj3\utill\EmailUtility$1.class
 in\co\rays\proj3\model\hibImpl\CourseModelHibImpl.class
@@ -73,6 +78,7 @@ in\co\rays\proj3\utill\EmailMessage.class
 in\co\rays\proj3\model\jdbcImpl\UserModelJDBCImpl.class
 in\co\rays\proj3\model\hibImpl\TimetableModelHibImpl.class
 in\co\rays\proj3\model\jdbcImpl\CollegeModelJDBCImpl.class
+in\co\rays\proj3\controller\DoctorCtl.class
 in\co\rays\proj3\utill\EmailUtility.class
 in\co\rays\proj3\dto\TimetableDTO.class
 in\co\rays\proj3\controller\CourseListCtl.class

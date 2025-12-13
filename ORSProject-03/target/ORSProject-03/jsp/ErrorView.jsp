@@ -61,7 +61,7 @@
 		</div>
 	</main>
 
-	<div class="footer mt-auto py-2">
+	<div>
 		<%@include file="FooterView.jsp"%>
 	</div>
 
