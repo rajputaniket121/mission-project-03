@@ -1,2 +1,10 @@
 project_3/
-ORSProject03_Report.jrxml
+
+# Ignore Maven build output
+ORSProject-03/target/
+ORSProject-03/*.war
+
+# Eclipse IDE files
+ORSProject-03/.project
+ORSProject-03/.classpath
+ORSProject-03/.settings/
