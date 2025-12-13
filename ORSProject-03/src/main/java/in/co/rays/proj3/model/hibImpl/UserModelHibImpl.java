@@ -193,7 +193,6 @@ public class UserModelHibImpl implements UserModelInt{
 					criteria.add(Restrictions.eq("roleId", dto.getRoleId()));
 				}
 			}
-			// if pageSize is greater than 0
 			if (pageSize > 0) {
 				pageNo = (pageNo - 1) * pageSize;
 				criteria.setFirstResult(pageNo);

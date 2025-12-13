@@ -229,7 +229,7 @@
 								class="text-danger">*</span></label>
 							<div class="input-group input-group-sm">
 								<span class="input-group-text"><i
-									class="fa fa-phone-square text-muted"></i></span> <input type="text"
+									class="fa fa-phone text-muted"></i></span> <input type="text"
 									class="form-control" maxlength="10" name="mobileNo"
 									placeholder="Enter Mobile No."
 									value="<%=DataUtility.getStringData(dto.getMobileNo())%>">

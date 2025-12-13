@@ -61,7 +61,7 @@ $(function() {
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Marksheet</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<%=ORSView.MARKSHEET_MERIT_LIST_CTL%>">
-                                    <i class="fa fa-file-alt mr-2"></i>Marksheet Merit List
+                                    <i class="fa fa-award mr-2"></i>Marksheet Merit List
                                 </a>
                             </div>
                         </li>
@@ -113,7 +113,7 @@ $(function() {
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Course</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<%=ORSView.COURSE_CTL%>"><i class="fa fa-book mr-2"></i>Add Course</a>
-                                <a class="dropdown-item" href="<%=ORSView.COURSE_LIST_CTL%>"><i class="fa fa-list-ul mr-2"></i>Course List</a>
+                                <a class="dropdown-item" href="<%=ORSView.COURSE_LIST_CTL%>"><i class="fa fa-list mr-2"></i>Course List</a>
                             </div>
                         </li>
                         <!-- Student -->
@@ -128,7 +128,7 @@ $(function() {
                         <li class="nav-item dropdown px-1">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Faculty</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="<%=ORSView.FACULTY_CTL%>"><i class="fa fa-chalkboard-teacher mr-2"></i>Add Faculty</a>
+                                <a class="dropdown-item" href="<%=ORSView.FACULTY_CTL%>"><i class="fa fa-user-plus mr-2"></i>Add Faculty</a>
                                 <a class="dropdown-item" href="<%=ORSView.FACULTY_LIST_CTL%>"><i class="fa fa-users mr-2"></i>Faculty List</a>
                             </div>
                         </li>
@@ -145,15 +145,15 @@ $(function() {
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Subject</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="<%=ORSView.SUBJECT_CTL%>"><i class="fa fa-book-open mr-2"></i>Add Subject</a>
-                                <a class="dropdown-item" href="<%=ORSView.SUBJECT_LIST_CTL%>"><i class="fa fa-list-alt mr-2"></i>Subject List</a>
+                                <a class="dropdown-item" href="<%=ORSView.SUBJECT_LIST_CTL%>"><i class="fa fa-list mr-2"></i>Subject List</a>
                             </div>
                         </li>
                         <!-- Doctor -->
                         <li class="nav-item dropdown px-1">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Doctor</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="<%=ORSView.DOCTOR_CTL%>"><i class="fa fa-book-open mr-2"></i>Add Doctor</a>
-                                <a class="dropdown-item" href="<%=ORSView.DOCTOR_LIST_CTL%>"><i class="fa fa-list-alt mr-2"></i>Doctor List</a>
+                                <a class="dropdown-item" href="<%=ORSView.DOCTOR_CTL%>"><i class="fa fa-user-plus mr-2"></i>Add Doctor</a>
+                                <a class="dropdown-item" href="<%=ORSView.DOCTOR_LIST_CTL%>"><i class="fa fa-list mr-2"></i>Doctor List</a>
                             </div>
                         </li>
                     <% } %>

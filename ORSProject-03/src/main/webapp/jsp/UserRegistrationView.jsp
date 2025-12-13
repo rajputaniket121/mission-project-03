@@ -208,7 +208,7 @@
 							<div class="input-group input-group-sm">
 								<div class="input-group-prepend">
 									<div class="input-group-text">
-										<i class="fa fa-phone-square text-muted"></i>
+										<i class="fa fa-phone text-muted"></i>
 									</div>
 								</div>
 								<input type="text" class="form-control" id="mobileNo"
