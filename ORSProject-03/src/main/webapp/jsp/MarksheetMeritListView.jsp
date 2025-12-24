@@ -55,7 +55,7 @@
 					<!-- Empty div for spacing -->
 					<h5 class="text-center text-success fw-bold mb-0 flex-grow-1">Marksheet
 						Merit List</h5>
-					<a href="<%=ORSView.JASPER_CTL%>">
+					<a href="<%=ORSView.JASPER_CTL%>" target="blank">
 					<button class="btn btn-outline-primary btn-sm px-3">
 						<i class="fas fa-print me-1"></i>Print
 					</button>
