@@ -2,6 +2,9 @@ package in.co.rays.proj3.model.hibImpl;
 
 import java.util.List;
 
+import in.co.rays.proj3.dto.StudentDTO;
+import in.co.rays.proj3.model.ModelFactory;
+import in.co.rays.proj3.model.StudentModelInt;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -24,9 +27,14 @@ import in.co.rays.proj3.utill.HibDataSource;
 public class MarksheetModelHibImpl implements MarksheetModelInt {
 
 	public long add(MarksheetDTO dto) throws ApplicationException, DuplicateRecordException {
-		MarksheetDTO existDto = null;
-		existDto = findByRollNo(dto.getRollNo());
-		if (existDto != null) {
+
+		// get Student Name
+		StudentModelInt sModel = ModelFactory.getInstance().getStudentModel();
+		StudentDTO studentDTO = sModel.findByPK(dto.getStudentId());
+		dto.setName(studentDTO.getFirstName() + " " + studentDTO.getLastName());
+
+		MarksheetDTO duplicateMarksheet = findByRollNo(dto.getRollNo());
+		if (duplicateMarksheet != null) {
 			throw new DuplicateRecordException("Roll No already exist");
 		}
 		Session session = HibDataSource.getSession();
@@ -70,9 +78,13 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 	public void update(MarksheetDTO dto) throws ApplicationException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
-		MarksheetDTO existDto = findByRollNo(dto.getRollNo());
+		StudentModelInt sModel = ModelFactory.getInstance().getStudentModel();
+		StudentDTO studentDTO = sModel.findByPK(dto.getStudentId());
+		dto.setName(studentDTO.getFirstName() + " " + studentDTO.getLastName());
+
+		MarksheetDTO duplicateMarksheet = findByRollNo(dto.getRollNo());
 		// Check if updated Roll No already exist
-		if (existDto != null && existDto.getId() != dto.getId()) {
+		if (duplicateMarksheet != null && duplicateMarksheet.getId() != dto.getId()) {
 			 throw new DuplicateRecordException("Roll No is already exist");
 		}
 

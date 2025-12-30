@@ -14,19 +14,28 @@
 
 <link rel="icon" type="image/png" href="<%=ORSView.APP_CONTEXT%>/img/logo.png" sizes="16x16" />
 
-<script>
-$(function() {
-    var today = new Date();
-    var cutoff = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-    $("#datepicker").datepicker({
-        changeMonth : true,
-        changeYear : true,
-        yearRange : '1950:' + cutoff.getFullYear(),
-        dateFormat : 'dd/mm/yy',
-        maxDate : cutoff
-    });
-});
-</script>
+    <!-- jQuery UI -->
+    <link rel="stylesheet"
+          href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            // Calculate today minus 18 years
+            var today = new Date();
+            var cutoff = new Date(today.getFullYear() - 18, today.getMonth(), today
+                .getDate());
+
+            $("#udate").datepicker({
+                changeMonth : true,
+                changeYear : true,
+                yearRange : '1950:' + cutoff.getFullYear(), // dynamic upper limit
+                dateFormat : 'dd/mm/yy',
+                maxDate : cutoff
+                // users can't pick a date after this
+            });
+        });
+    </script>
 
 <style>
 html, body {
@@ -160,7 +169,7 @@ html, body {
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-calendar text-muted"></i></span>
                                         </div>
-                                        <input type="text" id="datepicker" name="dob" class="form-control"
+                                        <input type="text" id="udate" name="dob" class="form-control"
                                                placeholder="Select your date of birth" readonly
                                                value="<%=DataUtility.getDateString(dto.getDob())%>">
                                     </div>
