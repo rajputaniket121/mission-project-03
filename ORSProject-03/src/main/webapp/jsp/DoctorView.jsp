@@ -101,7 +101,8 @@ html, body {
 
                                 <h5 class="text-center text-success font-weight-bold mb-3">
                                     <%
-                                        if (dto.getId() != null && dto.getId() > 0) {
+                                    long id = DataUtility.getLong(request.getParameter("id"));
+                                        if (dto != null && id > 0) {
                                     %>Update<%
                                         } else {
                                     %>Add<%
@@ -212,7 +213,7 @@ html, body {
                                 <!-- Buttons -->
                                 <div class="text-center mt-3">
                                     <%
-                                        if (dto.getId() != null && dto.getId() > 0) {
+                                        if (dto != null && id > 0) {
                                     %>
                                         <input type="submit" name="operation"
                                                class="btn btn-success btn-sm px-4"
