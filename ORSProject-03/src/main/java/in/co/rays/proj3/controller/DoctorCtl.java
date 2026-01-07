@@ -32,7 +32,7 @@ public class DoctorCtl extends BaseCtl {
 
     private static final Logger log = Logger.getLogger(DoctorCtl.class.getName());
 
-    /**
+    /**	
      * Preloads specialties (experties) for doctor form dropdown.
      *
      * @param request the HttpServletRequest object
