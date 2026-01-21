@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import in.co.rays.proj3.dto.FacultyDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.FacultyModelInt;
@@ -25,7 +25,7 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
     private static Logger log = Logger.getLogger(FacultyModelJDBCImpl.class);
 
     @Override
-    public long add(FacultyDTO dto) throws ApplicationException, DuplicateRecordException {
+    public long add(FacultyDTO dto) throws DatabaseException, DuplicateRecordException {
         log.debug("Model add Started");
         Connection conn = null;
         long pk = 0L;
@@ -67,10 +67,10 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Add rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in add Faculty");
+            throw new DatabaseException("Exception : Exception in add Faculty");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -79,11 +79,11 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
     }
 
     @Override
-    public void delete(FacultyDTO dto) throws ApplicationException {
+    public void delete(FacultyDTO dto) throws DatabaseException {
         delete(dto.getId());
     }
 
-    public void delete(long id) throws ApplicationException {
+    public void delete(long id) throws DatabaseException {
         log.debug("Model delete Started");
         Connection conn = null;
         try {
@@ -100,10 +100,10 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Delete rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Delete Faculty");
+            throw new DatabaseException("Exception : Exception in Delete Faculty");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -111,7 +111,7 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
     }
 
     @Override
-    public void update(FacultyDTO dto) throws ApplicationException, DatabaseException, DuplicateRecordException {
+    public void update(FacultyDTO dto) throws DatabaseException, DatabaseException, DuplicateRecordException {
         log.debug("Model update Started");
         Connection conn = null;
         FacultyDTO exist = findByEmailId(dto.getEmailId());
@@ -151,10 +151,10 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Update rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Update Faculty");
+            throw new DatabaseException("Exception : Exception in Update Faculty");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -162,25 +162,25 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
     }
 
     @Override
-    public List<FacultyDTO> list() throws ApplicationException {
+    public List<FacultyDTO> list() throws DatabaseException {
         log.debug("Model list Started");
         return search(null, 0, 0);
     }
 
     @Override
-    public List<FacultyDTO> list(int pageNo, int pageSize) throws ApplicationException {
+    public List<FacultyDTO> list(int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model list Started");
         return search(null, pageNo, pageSize);
     }
 
     @Override
-    public List<FacultyDTO> search(FacultyDTO dto) throws ApplicationException {
+    public List<FacultyDTO> search(FacultyDTO dto) throws DatabaseException {
         log.debug("Model search Started");
         return search(dto, 0, 0);
     }
 
     @Override
-    public List<FacultyDTO> search(FacultyDTO dto, int pageNo, int pageSize) throws ApplicationException {
+    public List<FacultyDTO> search(FacultyDTO dto, int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model search Started");
         Connection conn = null;
         StringBuffer sql = new StringBuffer("select * from st_faculty where 1 = 1");
@@ -264,7 +264,7 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in search Faculty");
+            throw new DatabaseException("Exception : Exception in search Faculty");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -273,7 +273,7 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
     }
 
     @Override
-    public FacultyDTO findByPK(long pk) throws ApplicationException {
+    public FacultyDTO findByPK(long pk) throws DatabaseException {
         log.debug("Model findByPK Started");
         Connection conn = null;
         FacultyDTO dto = null;
@@ -308,7 +308,7 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in FindByPk Faculty");
+            throw new DatabaseException("Exception : Exception in FindByPk Faculty");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -317,7 +317,7 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
     }
 
     @Override
-    public FacultyDTO findByEmailId(String emailId) throws ApplicationException {
+    public FacultyDTO findByEmailId(String emailId) throws DatabaseException {
         log.debug("Model findByEmailId Started");
         Connection conn = null;
         FacultyDTO dto = null;
@@ -352,7 +352,7 @@ public class FacultyModelJDBCImpl implements FacultyModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in FindByEmailId Faculty");
+            throw new DatabaseException("Exception : Exception in FindByEmailId Faculty");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }

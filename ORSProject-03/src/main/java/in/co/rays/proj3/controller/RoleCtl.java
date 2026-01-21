@@ -59,10 +59,14 @@ public class RoleCtl extends BaseCtl{
 				RoleDTO dto = model.findByPK(id);
 				ServletUtility.setDto(dto, req);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
-				ServletUtility.handleException(e, req, resp);
-				return;
-			}
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
+                return;
+            }
     	}
         ServletUtility.forward(getView(), req, resp);
 	}
@@ -97,9 +101,13 @@ public class RoleCtl extends BaseCtl{
            }catch(DuplicateRecordException dre) {
                ServletUtility.setDto(dto, req);
                ServletUtility.setErrorMessage("Role Already Exist !!!", req);
-           }catch(ApplicationException ae) {
-               ae.printStackTrace();
-               ServletUtility.handleException(ae, req, resp);
+           }catch (ApplicationException e) {
+               e.printStackTrace();
+               if(e.getClass().toString().equals(e.toString())) {
+               	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+               }else {
+               	ServletUtility.handleException(e, req, resp);
+               }
                return;
            }
        }

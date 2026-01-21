@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.co.rays.proj3.dto.CollegeDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.CollegeModelInt;
 import in.co.rays.proj3.utill.JDBCDataSource;
@@ -16,7 +16,7 @@ import in.co.rays.proj3.utill.JDBCDataSource;
 public class CollegeModelJDBCImpl implements CollegeModelInt {
 
     @Override
-    public long add(CollegeDTO dto) throws ApplicationException, DuplicateRecordException {
+    public long add(CollegeDTO dto) throws DatabaseException, DuplicateRecordException {
         Connection conn = null;
         long pk = 0L;
         CollegeDTO exist = fingByName(dto.getName());
@@ -46,10 +46,10 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Add rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in add College");
+            throw new DatabaseException("Exception : Exception in add College");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -57,11 +57,11 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
     }
 
     @Override
-    public void delete(CollegeDTO dto) throws ApplicationException {
+    public void delete(CollegeDTO dto) throws DatabaseException {
         delete(dto.getId());
     }
 
-    public void delete(long id) throws ApplicationException {
+    public void delete(long id) throws DatabaseException {
         Connection conn = null;
         try {
             conn = JDBCDataSource.getConnection();
@@ -76,17 +76,17 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Delete rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in delete College");
+            throw new DatabaseException("Exception : Exception in delete College");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
     }
 
     @Override
-    public void update(CollegeDTO dto) throws ApplicationException, DuplicateRecordException {
+    public void update(CollegeDTO dto) throws DatabaseException, DuplicateRecordException {
         Connection conn = null;
         CollegeDTO exist = fingByName(dto.getName());
         if (exist != null && exist.getId() != dto.getId()) {
@@ -115,32 +115,32 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Update rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Update College");
+            throw new DatabaseException("Exception : Exception in Update College");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
     }
 
     @Override
-    public List<CollegeDTO> list() throws ApplicationException {
+    public List<CollegeDTO> list() throws DatabaseException {
         return search(null, 0, 0);
     }
 
     @Override
-    public List<CollegeDTO> list(int pageNo, int pageSize) throws ApplicationException {
+    public List<CollegeDTO> list(int pageNo, int pageSize) throws DatabaseException {
         return search(null, pageNo, pageSize);
     }
 
     @Override
-    public List<CollegeDTO> search(CollegeDTO dto) throws ApplicationException {
+    public List<CollegeDTO> search(CollegeDTO dto) throws DatabaseException {
         return search(dto, 0, 0);
     }
 
     @Override
-    public List<CollegeDTO> search(CollegeDTO dto, int pageNo, int pageSize) throws ApplicationException {
+    public List<CollegeDTO> search(CollegeDTO dto, int pageNo, int pageSize) throws DatabaseException {
         Connection conn = null;
         StringBuffer sql = new StringBuffer("select * from st_college where 1 = 1");
         List<CollegeDTO> collegeList = new ArrayList<CollegeDTO>();
@@ -194,7 +194,7 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in search College");
+            throw new DatabaseException("Exception : Exception in search College");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -202,7 +202,7 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
     }
 
     @Override
-    public CollegeDTO findByPK(long pk) throws ApplicationException {
+    public CollegeDTO findByPK(long pk) throws DatabaseException {
         Connection conn = null;
         CollegeDTO dto = null;
         StringBuffer sql = new StringBuffer("select * from st_college where id = ?");
@@ -228,7 +228,7 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in FindByPk College");
+            throw new DatabaseException("Exception : Exception in FindByPk College");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -236,7 +236,7 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
     }
 
     @Override
-    public CollegeDTO fingByName(String name) throws ApplicationException {
+    public CollegeDTO fingByName(String name) throws DatabaseException {
         Connection conn = null;
         CollegeDTO dto = null;
         StringBuffer sql = new StringBuffer("select * from st_college where name = ?");
@@ -262,14 +262,14 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in FindByName College");
+            throw new DatabaseException("Exception : Exception in FindByName College");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
         return dto;
     }
 
-    private long getNextPK() throws ApplicationException {
+    private long getNextPK() throws DatabaseException {
         Connection conn = null;
         long pk = 0L;
         try {
@@ -282,7 +282,7 @@ public class CollegeModelJDBCImpl implements CollegeModelInt {
             pstmt.close();
             rs.close();
         } catch (Exception e) {
-            throw new ApplicationException("Exception : Exception In Getting pk");
+            throw new DatabaseException("Exception : Exception In Getting pk");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }

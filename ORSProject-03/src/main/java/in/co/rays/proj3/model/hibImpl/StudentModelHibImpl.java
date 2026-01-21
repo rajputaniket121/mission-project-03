@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.StudentDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.StudentModelInt;
 import in.co.rays.proj3.utill.HibDataSource;
@@ -21,7 +21,7 @@ import in.co.rays.proj3.utill.HibDataSource;
  */
 public class StudentModelHibImpl implements StudentModelInt {
 
-	public long add(StudentDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(StudentDTO dto) throws DatabaseException, DuplicateRecordException {
 		StudentDTO existDto = null;
 		existDto = findByEmailId(dto.getEmail());
 		if (existDto != null) {
@@ -39,7 +39,7 @@ public class StudentModelHibImpl implements StudentModelInt {
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in Student Add " + e.getMessage());
+			throw new DatabaseException("Exception in Student Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -47,7 +47,7 @@ public class StudentModelHibImpl implements StudentModelInt {
 
 	}
 
-	public void delete(StudentDTO dto) throws ApplicationException {
+	public void delete(StudentDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -59,13 +59,13 @@ public class StudentModelHibImpl implements StudentModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Student Delete" + e.getMessage());
+			throw new DatabaseException("Exception in Student Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(StudentDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(StudentDTO dto) throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		StudentDTO existDto = findByEmailId(dto.getEmail());
@@ -83,13 +83,13 @@ public class StudentModelHibImpl implements StudentModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Student update" + e.getMessage());
+			throw new DatabaseException("Exception in Student update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public StudentDTO findByPK(long pk) throws ApplicationException {
+	public StudentDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		StudentDTO dto = null;
 		try {
@@ -97,7 +97,7 @@ public class StudentModelHibImpl implements StudentModelInt {
 			dto = (StudentDTO) session.get(StudentDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting Student by pk");
+			throw new DatabaseException("Exception : Exception in getting Student by pk");
 		} finally {
 			session.close();
 		}
@@ -105,7 +105,7 @@ public class StudentModelHibImpl implements StudentModelInt {
 		return dto;
 	}
 
-	public StudentDTO findByEmailId(String emailId) throws ApplicationException {
+	public StudentDTO findByEmailId(String emailId) throws DatabaseException {
 		Session session = null;
 		StudentDTO dto = null;
 		try {
@@ -118,7 +118,7 @@ public class StudentModelHibImpl implements StudentModelInt {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Student by Email " + e.getMessage());
+			throw new DatabaseException("Exception in getting Student by Email " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -127,11 +127,11 @@ public class StudentModelHibImpl implements StudentModelInt {
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -145,7 +145,7 @@ public class StudentModelHibImpl implements StudentModelInt {
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Students list");
+			throw new DatabaseException("Exception : Exception in  Students list");
 		} finally {
 			session.close();
 		}
@@ -153,11 +153,11 @@ public class StudentModelHibImpl implements StudentModelInt {
 		return list;
 	}
 
-	public List search(StudentDTO dto) throws ApplicationException {
+	public List search(StudentDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(StudentDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(StudentDTO dto, int pageNo, int pageSize) throws DatabaseException {
 	    Session session = null;
 	    List list = null;
 	    try {
@@ -195,7 +195,7 @@ public class StudentModelHibImpl implements StudentModelInt {
 	        }
 	        list = criteria.list();
 	    } catch (HibernateException e) {
-	        throw new ApplicationException("Exception in student search");
+	        throw new DatabaseException("Exception in student search");
 	    } finally {
 	        session.close();
 	    }

@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import in.co.rays.proj3.dto.BaseDTO;
 import in.co.rays.proj3.dto.DoctorDTO;
 import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.DoctorModelInt;
 import in.co.rays.proj3.model.ModelFactory;
@@ -153,9 +154,17 @@ public class DoctorCtl extends BaseCtl {
             try {
                 DoctorDTO dto = model.findByPK(id);
                 ServletUtility.setDto(dto, req);
-            } catch (ApplicationException e) {
+            }catch (DatabaseException e) {
                 e.printStackTrace();
-                ServletUtility.handleException(e, req, resp);
+                ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                return;
+            }catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
                 return;
             }
         }
@@ -187,9 +196,13 @@ public class DoctorCtl extends BaseCtl {
             } catch (DuplicateRecordException dre) {
                 ServletUtility.setDto(bean, req);
                 ServletUtility.setErrorMessage("Doctor Already Exist !!!", req);
-            } catch (ApplicationException ae) {
-                ae.printStackTrace();
-                ServletUtility.handleException(ae, req, resp);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
                 return;
             }
         } else if (OP_RESET.equalsIgnoreCase(op)) {
@@ -204,9 +217,13 @@ public class DoctorCtl extends BaseCtl {
             } catch (DuplicateRecordException dre) {
                 ServletUtility.setDto(dto, req);
                 ServletUtility.setErrorMessage("Doctor Already Exist !!!", req);
-            } catch (ApplicationException ae) {
-                ae.printStackTrace();
-                ServletUtility.handleException(ae, req, resp);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
                 return;
             }
         } else if (OP_CANCEL.equalsIgnoreCase(op)) {

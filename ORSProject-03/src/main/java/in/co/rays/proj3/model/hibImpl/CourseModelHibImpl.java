@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.CourseDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.CourseModelInt;
 import in.co.rays.proj3.utill.HibDataSource;
@@ -21,7 +21,7 @@ import in.co.rays.proj3.utill.HibDataSource;
  */
 public class CourseModelHibImpl implements CourseModelInt {
 
-	public long add(CourseDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(CourseDTO dto) throws DatabaseException, DuplicateRecordException {
 		CourseDTO existDto = null;
 		existDto = findByName(dto.getCourseName());
 		if (existDto != null) {
@@ -39,7 +39,7 @@ public class CourseModelHibImpl implements CourseModelInt {
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in Course Add " + e.getMessage());
+			throw new DatabaseException("Exception in Course Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -47,7 +47,7 @@ public class CourseModelHibImpl implements CourseModelInt {
 
 	}
 
-	public void delete(CourseDTO dto) throws ApplicationException {
+	public void delete(CourseDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -59,13 +59,13 @@ public class CourseModelHibImpl implements CourseModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Course Delete" + e.getMessage());
+			throw new DatabaseException("Exception in Course Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(CourseDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(CourseDTO dto) throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		CourseDTO existDto = findByName(dto.getCourseName());
@@ -83,13 +83,13 @@ public class CourseModelHibImpl implements CourseModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Course update" + e.getMessage());
+			throw new DatabaseException("Exception in Course update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public CourseDTO findByPK(long pk) throws ApplicationException {
+	public CourseDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		CourseDTO dto = null;
 		try {
@@ -97,7 +97,7 @@ public class CourseModelHibImpl implements CourseModelInt {
 			dto = (CourseDTO) session.get(CourseDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting Course by pk");
+			throw new DatabaseException("Exception : Exception in getting Course by pk");
 		} finally {
 			session.close();
 		}
@@ -105,7 +105,7 @@ public class CourseModelHibImpl implements CourseModelInt {
 		return dto;
 	}
 
-	public CourseDTO findByName(String name) throws ApplicationException {
+	public CourseDTO findByName(String name) throws DatabaseException {
 		Session session = null;
 		CourseDTO dto = null;
 		try {
@@ -118,7 +118,7 @@ public class CourseModelHibImpl implements CourseModelInt {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Course by Name " + e.getMessage());
+			throw new DatabaseException("Exception in getting Course by Name " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -127,11 +127,11 @@ public class CourseModelHibImpl implements CourseModelInt {
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 	    Session session = null;
 	    List list = null;
 	    try {
@@ -144,7 +144,7 @@ public class CourseModelHibImpl implements CourseModelInt {
 	        }
 	        list = criteria.list();
 	    } catch (HibernateException e) {
-	        throw new ApplicationException("Exception : Exception in Courses list");
+	        throw new DatabaseException("Exception : Exception in Courses list");
 	    } finally {
 	        session.close();
 	    }
@@ -152,11 +152,11 @@ public class CourseModelHibImpl implements CourseModelInt {
 	    return list;
 	}
 
-	public List search(CourseDTO dto) throws ApplicationException {
+	public List search(CourseDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(CourseDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(CourseDTO dto, int pageNo, int pageSize) throws DatabaseException {
 	    Session session = null;
 	    List list = null;
 	    try {
@@ -182,7 +182,7 @@ public class CourseModelHibImpl implements CourseModelInt {
 	        }
 	        list = criteria.list();
 	    } catch (HibernateException e) {
-	        throw new ApplicationException("Exception in course search");
+	        throw new DatabaseException("Exception in course search");
 	    } finally {
 	        session.close();
 	    }

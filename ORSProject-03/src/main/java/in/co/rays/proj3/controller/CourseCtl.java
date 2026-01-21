@@ -88,9 +88,13 @@ public class CourseCtl extends BaseCtl {
                 log.debug("Fetching course details for id: " + id);
                 CourseDTO dto = model.findByPK(id);
                 ServletUtility.setDto(dto, request);
-            } catch (ApplicationException e) {
-                log.error("Error in getting course details", e);
-                ServletUtility.handleException(e, request, response);
+            }catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
                 return;
             }
         }
@@ -126,14 +130,18 @@ public class CourseCtl extends BaseCtl {
                     ServletUtility.setSuccessMessage("Course is successfully added", request);
                     ServletUtility.setDto(dto, request);
                 }
-            } catch (ApplicationException e) {
-                log.error("Application exception in course operation", e);
-                ServletUtility.handleException(e, request, response);
-                return;
-            } catch (DuplicateRecordException e) {
+            }  catch (DuplicateRecordException e) {
                 log.warn("Duplicate course found: " + dto.getCourseName());
                 ServletUtility.setDto(dto, request);
                 ServletUtility.setErrorMessage("Course Name already exists", request);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
+                return;
             }
         } else if(OP_DELETE.equalsIgnoreCase(op)) {
             CourseDTO dto = (CourseDTO) populateDTO(request);
@@ -144,8 +152,12 @@ public class CourseCtl extends BaseCtl {
                 ServletUtility.redirect(ORSView.COURSE_LIST_CTL, request, response);
                 return;
             } catch (ApplicationException e) {
-                log.error("Error in deleting course", e);
-                ServletUtility.handleException(e, request, response);
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
                 return;
             }
         } else if(OP_CANCEL.equalsIgnoreCase(op)) {

@@ -11,6 +11,7 @@ import java.util.List;
 import in.co.rays.proj3.dto.UserDTO;
 import in.co.rays.proj3.exception.ApplicationException;
 import in.co.rays.proj3.exception.DatabaseException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.exception.RecordNotFoundException;
 import in.co.rays.proj3.model.UserModelInt;
@@ -22,7 +23,7 @@ import in.co.rays.proj3.utill.JDBCDataSource;
 public class UserModelJDBCImpl implements UserModelInt {
 
 	@Override
-	public long add(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(UserDTO dto) throws DatabaseException, DuplicateRecordException {
 		Connection conn = null;
 		Long pk = 0l;
 		UserDTO exist = findByLogin(dto.getLogin());
@@ -55,10 +56,10 @@ public class UserModelJDBCImpl implements UserModelInt {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
+				throw new DatabaseException("Exception : Add rollback exception " + ex.getMessage());
 			}
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in add User");
+			throw new DatabaseException("Exception : Exception in add User");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -66,7 +67,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 	}
 
 	@Override
-	public void delete(UserDTO dto) throws ApplicationException {
+	public void delete(UserDTO dto) throws DatabaseException {
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -81,10 +82,10 @@ public class UserModelJDBCImpl implements UserModelInt {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+				throw new DatabaseException("Exception : Delete rollback exception " + ex.getMessage());
 			}
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in delete User");
+			throw new DatabaseException("Exception : Exception in delete User");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -92,7 +93,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 	}
 
 	@Override
-	public void update(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(UserDTO dto) throws DatabaseException, DuplicateRecordException {
 		Connection conn = null;
 		UserDTO exist = findByLogin(dto.getLogin());
 		if(exist!=null && exist.getId() != dto.getId()) {
@@ -124,10 +125,10 @@ public class UserModelJDBCImpl implements UserModelInt {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
+				throw new DatabaseException("Exception : Update rollback exception " + ex.getMessage());
 			}
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in Update User");
+			throw new DatabaseException("Exception : Exception in Update User");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -135,7 +136,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 	}
 
 	@Override
-	public UserDTO findByPK(long pk) throws ApplicationException {
+	public UserDTO findByPK(long pk) throws DatabaseException {
 		Connection conn = null;
 		UserDTO dto = null;
 		StringBuffer sql = new StringBuffer("select * from st_user where id = ?");
@@ -164,7 +165,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in FindByPk User");
+			throw new DatabaseException("Exception : Exception in FindByPk User");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -172,7 +173,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 	}
 
 	@Override
-	public UserDTO findByLogin(String login) throws ApplicationException {
+	public UserDTO findByLogin(String login) throws DatabaseException {
 		Connection conn = null;
 		UserDTO dto = null;
 		StringBuffer sql = new StringBuffer("select * from st_user where login = ?");
@@ -201,7 +202,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in FindByLogin User");
+			throw new DatabaseException("Exception : Exception in FindByLogin User");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -209,17 +210,17 @@ public class UserModelJDBCImpl implements UserModelInt {
 	}
 
 	@Override
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return search(null, 0, 0);
 	}
 
 	@Override
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		return search(null, pageNo, pageSize);
 	}
 
 	@Override
-	public List search(UserDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(UserDTO dto, int pageNo, int pageSize) throws DatabaseException {
 		Connection conn = null;
 		StringBuffer sql = new StringBuffer("select * from st_user where 1 = 1");
 		List<UserDTO> userList = new ArrayList<UserDTO>();
@@ -284,7 +285,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in search User");
+			throw new DatabaseException("Exception : Exception in search User");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -292,7 +293,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 	}
 
 	@Override
-	public List search(UserDTO dto) throws ApplicationException {
+	public List search(UserDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
@@ -309,7 +310,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 			update(beanExist);
 			flag = true;
 		} catch (DuplicateRecordException e) {
-			throw new ApplicationException("Issue in change password");
+			throw new DatabaseException("Issue in change password");
 		}
 	} else {
 		throw new RecordNotFoundException("Old Password is Invalid");
@@ -335,7 +336,7 @@ public class UserModelJDBCImpl implements UserModelInt {
 }
 
 @Override
-public boolean forgetPassword(String login) throws RecordNotFoundException, ApplicationException {
+public boolean forgetPassword(String login) throws RecordNotFoundException, DatabaseException {
 	UserDTO userData = findByLogin(login);
 	boolean flag = false;
 
@@ -361,13 +362,13 @@ public boolean forgetPassword(String login) throws RecordNotFoundException, Appl
 		EmailUtility.sendMail(msg);
 		flag = true;
 	} catch (Exception e) {
-		throw new ApplicationException("Please check your internet connection..!!");
+		throw new DatabaseException("Please check your internet connection..!!");
 	}
 	return flag;
 	}
 
 	@Override
-	public UserDTO authenticate(String login, String password) throws ApplicationException {
+	public UserDTO authenticate(String login, String password) throws DatabaseException {
 		Connection conn = null;
 		UserDTO dto = null;
 		StringBuffer sql = new StringBuffer("select * from st_user where login = ? and password = ?");
@@ -397,7 +398,7 @@ public boolean forgetPassword(String login) throws RecordNotFoundException, Appl
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in Authenticate User");
+			throw new DatabaseException("Exception : Exception in Authenticate User");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -461,47 +462,7 @@ public boolean forgetPassword(String login) throws RecordNotFoundException, Appl
 	}
 
 	@Override
-	public List getRoles(UserDTO dto) throws ApplicationException {
-//		StringBuffer sql = new StringBuffer("SELECT * FROM ST_USER WHERE role_Id=?");
-//		Connection conn = null;
-//		List list = new ArrayList();
-//		try {
-//
-//			conn = JDBCDataSource.getConnection();
-//			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-//			pstmt.setLong(1, dto.getRoleId());
-//			ResultSet rs = pstmt.executeQuery();
-//			while (rs.next()) {
-//				dto = new UserDTO();
-//				dto.setId(rs.getLong(1));
-//				dto.setFirstName(rs.getString(2));
-//				dto.setLastName(rs.getString(3));
-//				dto.setLogin(rs.getString(4));
-//				dto.setPassword(rs.getString(5));
-//				dto.setConfirmPassword(rs.getString(6));
-//				dto.setDob(rs.getDate(7));
-//				dto.setMobileNo(rs.getString(8));
-//				dto.setUnSuccessfullLogin(rs.getInt(9));
-//				dto.setGender(rs.getString(10));
-//				dto.setRoleId(rs.getLong(11));
-//				dto.setLastLogin(rs.getTimestamp(12));
-//				dto.setLoginIP(rs.getString(13));
-//				dto.setRegisteredIP(rs.getString(14));
-//				dto.setLock(rs.getString(15));
-//				dto.setCreatedBy(rs.getString(16));
-//				dto.setModifiedBy(rs.getString(17));
-//				dto.setCreatedDateTime(rs.getTimestamp(18));
-//				dto.setModifiedDateTime(rs.getTimestamp(19));
-//				list.add(dto);
-//			}
-//			rs.close();
-//		} catch (Exception e) {
-//			throw new ApplicationException("Exception : Exception in get roles");
-//
-//		} finally {
-//			JDBCDataSource.closeConnection(conn);
-//		}
-//		return list;
+	public List getRoles(UserDTO dto) throws DatabaseException {
 		return null;
 	}
 	

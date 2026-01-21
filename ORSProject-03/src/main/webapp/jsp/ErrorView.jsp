@@ -31,20 +31,15 @@
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css  " rel="stylesheet">
 </head>
-<body class="p4 d-flex flex-column">
-	<div class="header">
-		<%@ include file="Header.jsp"%>
-	</div>
+<body class="p4 p-0">
 
 	<main class="container flex-grow-1 d-flex align-items-center justify-content-center">
 		<div class="card grad-card shadow-sm text-center w-100">
-			<div class="card-body py-4">
-				<img src="<%=ORSView.APP_CONTEXT%>/img/500.jpg" class="img-fluid mb-4" style="max-width: 550px; height: auto;">
+			<div class="card-body py-1">
+				<img src="<%=ORSView.APP_CONTEXT%>/img/500.jpg" class="img-fluid mb-2" style="max-width: 500px; height: auto;">
 
-				<h2 class="text-danger fw-bold mb-3">Oops! Something went wrong</h2>
-				<p class="text-danger fs-5">Requested resource is not available</p>
-				
-				<div class="col-md-6 mx-auto mt-4">
+				<h2 class="text-danger fw-bold ">Oops! Something went wrong</h2>
+				<div class="col-md-6 mx-auto">
 					<h5 class="fw-bold">Try:</h5>
 					<ul class="text-start">
 						<li>Check the network cables, modem, and router</li>
@@ -60,10 +55,6 @@
 			</div>
 		</div>
 	</main>
-
-	<div>
-		<%@include file="FooterView.jsp"%>
-	</div>
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js  "></script>

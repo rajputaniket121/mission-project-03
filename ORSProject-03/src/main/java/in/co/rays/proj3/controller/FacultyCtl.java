@@ -155,10 +155,14 @@ public class FacultyCtl extends BaseCtl{
 	    			FacultyDTO dto = model.findByPK(id);
 					ServletUtility.setDto(dto, req);
 				} catch (ApplicationException e) {
-					e.printStackTrace();
-					ServletUtility.handleException(e, req, resp);
-					return;
-				}
+	                e.printStackTrace();
+	                if(e.getClass().toString().equals(e.toString())) {
+	                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+	                }else {
+	                	ServletUtility.handleException(e, req, resp);
+	                }
+	                return;
+	            }
 	    	}
 	        ServletUtility.forward(getView(), req, resp);
 	    }
@@ -176,9 +180,14 @@ public class FacultyCtl extends BaseCtl{
 	            }catch(DuplicateRecordException dre) {
 	                ServletUtility.setDto(dto, req);
 	                ServletUtility.setErrorMessage("Faculty Already Exist !!!", req);
-	            }catch(ApplicationException ae) {
-	                ae.printStackTrace();
-	                ServletUtility.handleException(ae, req, resp);
+	            }catch (ApplicationException e) {
+	                e.printStackTrace();
+	                if(e.getClass().toString().equals(e.toString())) {
+	                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+	                }else {
+	                	ServletUtility.handleException(e, req, resp);
+	                }
+	                return;
 	            }
 	            ServletUtility.forward(getView(), req, resp);
 	        }else if(OP_RESET.equalsIgnoreCase(op)) {
@@ -197,10 +206,7 @@ public class FacultyCtl extends BaseCtl{
 		               ae.printStackTrace();
 		               ServletUtility.handleException(ae, req, resp);
 		               return;
-		           } catch (DatabaseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		           }
 		       }
 		       else if(OP_CANCEL.equalsIgnoreCase(op)) {
 		       	 ServletUtility.redirect(ORSView.FACULTY_LIST_CTL, req, resp);

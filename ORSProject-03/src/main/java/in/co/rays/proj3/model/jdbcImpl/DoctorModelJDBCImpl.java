@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import in.co.rays.proj3.dto.DoctorDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.DoctorModelInt;
@@ -20,7 +20,7 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 	private static Logger log = Logger.getLogger(DoctorModelJDBCImpl.class.getName());
 
 	@Override
-	public long add(DoctorDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(DoctorDTO dto) throws DatabaseException, DuplicateRecordException {
 		log.info("DoctorModel add started");
 		Connection conn = null;
 		long pk = 0;
@@ -58,10 +58,10 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Add rollback failed");
+				throw new DatabaseException("Add rollback failed");
 			}
 			log.severe("Exception in add Doctor");
-			throw new ApplicationException("Exception in add Doctor");
+			throw new DatabaseException("Exception in add Doctor");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -69,7 +69,7 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 	}
 
 	@Override
-	public void delete(DoctorDTO dto) throws ApplicationException {
+	public void delete(DoctorDTO dto) throws DatabaseException {
 		log.info("DoctorModel delete started");
 		Connection conn = null;
 
@@ -91,17 +91,17 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Delete rollback failed");
+				throw new DatabaseException("Delete rollback failed");
 			}
 			log.severe("Exception in delete Doctor");
-			throw new ApplicationException("Exception in delete Doctor");
+			throw new DatabaseException("Exception in delete Doctor");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 	}
 
 	@Override
-	public void update(DoctorDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(DoctorDTO dto) throws DatabaseException, DuplicateRecordException {
 		log.info("DoctorModel update started");
 		Connection conn = null;
 
@@ -137,22 +137,22 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Update rollback failed");
+				throw new DatabaseException("Update rollback failed");
 			}
 			log.severe("Exception in update Doctor");
-			throw new ApplicationException("Exception in update Doctor");
+			throw new DatabaseException("Exception in update Doctor");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 	}
 
 	@Override
-	public List<DoctorDTO> list() throws ApplicationException {
+	public List<DoctorDTO> list() throws DatabaseException {
 		return search(null, 0, 0);
 	}
 
 	@Override
-	public List<DoctorDTO> search(DoctorDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List<DoctorDTO> search(DoctorDTO dto, int pageNo, int pageSize) throws DatabaseException {
 		log.info("DoctorModel search started");
 		Connection conn = null;
 
@@ -208,7 +208,7 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 
 		} catch (Exception e) {
 			log.severe("Exception in search Doctor");
-			throw new ApplicationException("Exception in search Doctor");
+			throw new DatabaseException("Exception in search Doctor");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -216,7 +216,7 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 	}
 
 	@Override
-	public DoctorDTO findByPK(long pk) throws ApplicationException {
+	public DoctorDTO findByPK(long pk) throws DatabaseException {
 		log.info("DoctorModel findByPK started");
 		Connection conn = null;
 		DoctorDTO dto = null;
@@ -247,7 +247,7 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 
 		} catch (Exception e) {
 			log.severe("Exception in findByPK Doctor");
-			throw new ApplicationException("Exception in findByPK Doctor");
+			throw new DatabaseException("Exception in findByPK Doctor");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -255,7 +255,7 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 	}
 
 	@Override
-	public DoctorDTO findByName(String name) throws ApplicationException {
+	public DoctorDTO findByName(String name) throws DatabaseException {
 		log.info("DoctorModel findByName started");
 		Connection conn = null;
 		DoctorDTO dto = null;
@@ -286,7 +286,7 @@ public class DoctorModelJDBCImpl implements DoctorModelInt {
 
 		} catch (Exception e) {
 			log.severe("Exception in findByName Doctor");
-			throw new ApplicationException("Exception in findByName Doctor");
+			throw new DatabaseException("Exception in findByName Doctor");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

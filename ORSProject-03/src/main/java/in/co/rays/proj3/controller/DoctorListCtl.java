@@ -102,7 +102,10 @@ public class DoctorListCtl extends BaseCtl {
             e.printStackTrace();
             ServletUtility.handleException(e, req, resp);
             return;
-        }
+        }catch (Exception e) {
+			ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+			return;
+		}
 
         ServletUtility.forward(getView(), req, resp);
     }
@@ -183,7 +186,10 @@ public class DoctorListCtl extends BaseCtl {
             e.printStackTrace();
             ServletUtility.handleException(e, req, resp);
             return;
-        }
+        }catch (Exception e) {
+			ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+			return;
+		}
 
         ServletUtility.forward(getView(), req, resp);
     }

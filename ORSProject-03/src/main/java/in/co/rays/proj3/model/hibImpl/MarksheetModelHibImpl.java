@@ -13,7 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.MarksheetDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.MarksheetModelInt;
 import in.co.rays.proj3.utill.HibDataSource;
@@ -26,7 +26,7 @@ import in.co.rays.proj3.utill.HibDataSource;
  */
 public class MarksheetModelHibImpl implements MarksheetModelInt {
 
-	public long add(MarksheetDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(MarksheetDTO dto) throws DatabaseException, DuplicateRecordException {
 
 		// get Student Name
 		StudentModelInt sModel = ModelFactory.getInstance().getStudentModel();
@@ -49,7 +49,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in Marksheet Add " + e.getMessage());
+			throw new DatabaseException("Exception in Marksheet Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -57,7 +57,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 
 	}
 
-	public void delete(MarksheetDTO dto) throws ApplicationException {
+	public void delete(MarksheetDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -69,13 +69,13 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Marksheet Delete" + e.getMessage());
+			throw new DatabaseException("Exception in Marksheet Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(MarksheetDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(MarksheetDTO dto) throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		StudentModelInt sModel = ModelFactory.getInstance().getStudentModel();
@@ -97,13 +97,13 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Marksheet update" + e.getMessage());
+			throw new DatabaseException("Exception in Marksheet update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public MarksheetDTO findByPK(long pk) throws ApplicationException {
+	public MarksheetDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		MarksheetDTO dto = null;
 		try {
@@ -111,7 +111,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 			dto = (MarksheetDTO) session.get(MarksheetDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting Marksheet by pk");
+			throw new DatabaseException("Exception : Exception in getting Marksheet by pk");
 		} finally {
 			session.close();
 		}
@@ -119,7 +119,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 		return dto;
 	}
 
-	public MarksheetDTO findByRollNo(String rollNo) throws ApplicationException {
+	public MarksheetDTO findByRollNo(String rollNo) throws DatabaseException {
 		Session session = null;
 		MarksheetDTO dto = null;
 		try {
@@ -132,7 +132,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Marksheet by Roll No " + e.getMessage());
+			throw new DatabaseException("Exception in getting Marksheet by Roll No " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -141,11 +141,11 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -159,7 +159,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Marksheet list");
+			throw new DatabaseException("Exception : Exception in  Marksheet list");
 		} finally {
 			session.close();
 		}
@@ -167,11 +167,11 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 		return list;
 	}
 
-	public List search(MarksheetDTO dto) throws ApplicationException {
+	public List search(MarksheetDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(MarksheetDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(MarksheetDTO dto, int pageNo, int pageSize) throws DatabaseException {
 	    Session session = null;
 	    List list = null;
 	    try {
@@ -206,7 +206,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 	        list = criteria.list();
 	    } catch (HibernateException e) {
 	        e.printStackTrace();
-	        throw new ApplicationException("Exception in Marksheet Search " + e.getMessage());
+	        throw new DatabaseException("Exception in Marksheet Search " + e.getMessage());
 	    } finally {
 	        if (session != null) {
 	            session.close();
@@ -215,7 +215,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 	    return list;
 	}
 
-	public List getMeritList(int pageNo, int pageSize) throws ApplicationException {
+	public List getMeritList(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -228,7 +228,7 @@ public class MarksheetModelHibImpl implements MarksheetModelInt {
 			}
 			list = q.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception in getting Merit List " + e.getMessage());
+			throw new DatabaseException("Exception in getting Merit List " + e.getMessage());
 		} finally {
 			session.close();
 		}

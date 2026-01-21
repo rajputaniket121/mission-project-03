@@ -41,10 +41,14 @@ public class MarksheetMeritListCtl extends BaseCtl {
 			ServletUtility.forward(getView(), request, response);
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
-			ServletUtility.handleException(e, request, response);
-			return;
-		}
+            e.printStackTrace();
+            if(e.getClass().toString().equals(e.toString())) {
+            	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+            }else {
+            	ServletUtility.handleException(e, request, response);
+            }
+            return;
+        }
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -78,11 +78,14 @@ public class ForgetPasswordCtl extends BaseCtl {
 				ServletUtility.setErrorMessage(e.getMessage(), request);
 				log.error(e);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
-				log.error(e);
-				ServletUtility.handleException(e, request, response);
-				return;
-			}
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
+                return;
+            }
 			ServletUtility.setDto(dto, request);
 			ServletUtility.forward(getView(), request, response);
 

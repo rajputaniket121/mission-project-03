@@ -46,10 +46,14 @@ public class FacultyListCtl extends BaseCtl{
 			ServletUtility.setPageSize(pageSize, req);
 			req.setAttribute("nextListSize", next.size());
 		} catch (ApplicationException e) {
-			e.printStackTrace();
-			ServletUtility.handleException(e, req, resp);
-			return;
-		}
+            e.printStackTrace();
+            if(e.getClass().toString().equals(e.toString())) {
+            	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+            }else {
+            	ServletUtility.handleException(e, req, resp);
+            }
+            return;
+        }
 		ServletUtility.forward(getView(), req, resp);
 	}
 	
@@ -122,10 +126,14 @@ public class FacultyListCtl extends BaseCtl{
 			ServletUtility.setPageSize(pageSize, req);
 			req.setAttribute("nextListSize", next.size());
 		} catch (ApplicationException e) {
-			e.printStackTrace();
-			ServletUtility.handleException(e, req, resp);
-			return;
-		}
+            e.printStackTrace();
+            if(e.getClass().toString().equals(e.toString())) {
+            	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+            }else {
+            	ServletUtility.handleException(e, req, resp);
+            }
+            return;
+        }
 		ServletUtility.forward(getView(), req, resp);
 	}
 	

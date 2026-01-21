@@ -117,10 +117,14 @@ public class StudentCtl extends  BaseCtl{
     			StudentDTO dto = model.findByPK(id);
 				ServletUtility.setDto(dto, req);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
-				ServletUtility.handleException(e, req, resp);
-				return;
-			}
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
+                return;
+            }
     	}
         ServletUtility.forward(getView(), req, resp);
     }
@@ -138,9 +142,14 @@ public class StudentCtl extends  BaseCtl{
             }catch(DuplicateRecordException dre) {
                 ServletUtility.setDto(dto, req);
                 ServletUtility.setErrorMessage("Email Already Exist !!!", req);
-            }catch(ApplicationException ae) {
-                ae.printStackTrace();
-                ServletUtility.handleException(ae, req, resp);
+            }catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
+                return;
             }
         }else if(OP_RESET.equalsIgnoreCase(op)) {
             ServletUtility.redirect(ORSView.STUDENT_CTL, req, resp);
@@ -154,11 +163,15 @@ public class StudentCtl extends  BaseCtl{
 	           }catch(DuplicateRecordException dre) {
 	               ServletUtility.setDto(dto, req);
 	               ServletUtility.setErrorMessage("Email Already Exist !!!", req);
-	           }catch(ApplicationException ae) {
-	               ae.printStackTrace();
-	               ServletUtility.handleException(ae, req, resp);
-	               return;
-	           }
+	           }catch (ApplicationException e) {
+	                e.printStackTrace();
+	                if(e.getClass().toString().equals(e.toString())) {
+	                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+	                }else {
+	                	ServletUtility.handleException(e, req, resp);
+	                }
+	                return;
+	            }
 	       }
 	       else if(OP_CANCEL.equalsIgnoreCase(op)) {
 	       	 ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, req, resp);

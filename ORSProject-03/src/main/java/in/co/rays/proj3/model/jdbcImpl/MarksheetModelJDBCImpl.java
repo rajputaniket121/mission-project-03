@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import in.co.rays.proj3.dto.MarksheetDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.MarksheetModelInt;
@@ -26,7 +26,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     private static Logger log = Logger.getLogger(MarksheetModelJDBCImpl.class);
 
     @Override
-    public long add(MarksheetDTO dto) throws ApplicationException, DuplicateRecordException {
+    public long add(MarksheetDTO dto) throws DatabaseException, DuplicateRecordException {
         log.debug("Model add Started");
         Connection conn = null;
         long pk = 0L;
@@ -60,10 +60,10 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Add rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in add Marksheet");
+            throw new DatabaseException("Exception : Exception in add Marksheet");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -72,11 +72,11 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     }
 
     @Override
-    public void delete(MarksheetDTO dto) throws ApplicationException {
+    public void delete(MarksheetDTO dto) throws DatabaseException {
         delete(dto.getId());
     }
 
-    public void delete(long id) throws ApplicationException {
+    public void delete(long id) throws DatabaseException {
         log.debug("Model delete Started");
         Connection conn = null;
         try {
@@ -93,10 +93,10 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Delete rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Delete Marksheet");
+            throw new DatabaseException("Exception : Exception in Delete Marksheet");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -104,7 +104,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     }
 
     @Override
-    public void update(MarksheetDTO dto) throws ApplicationException, DuplicateRecordException {
+    public void update(MarksheetDTO dto) throws DatabaseException, DuplicateRecordException {
         log.debug("Model update Started");
         Connection conn = null;
         MarksheetDTO exist = findByRollNo(dto.getRollNo());
@@ -137,10 +137,10 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Update rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Update Marksheet");
+            throw new DatabaseException("Exception : Exception in Update Marksheet");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -148,25 +148,25 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     }
 
     @Override
-    public List<MarksheetDTO> list() throws ApplicationException {
+    public List<MarksheetDTO> list() throws DatabaseException {
         log.debug("Model list Started");
         return search(null, 0, 0);
     }
 
     @Override
-    public List<MarksheetDTO> list(int pageNo, int pageSize) throws ApplicationException {
+    public List<MarksheetDTO> list(int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model list Started");
         return search(null, pageNo, pageSize);
     }
 
     @Override
-    public List<MarksheetDTO> search(MarksheetDTO dto) throws ApplicationException {
+    public List<MarksheetDTO> search(MarksheetDTO dto) throws DatabaseException {
         log.debug("Model search Started");
         return search(dto, 0, 0);
     }
 
     @Override
-    public List<MarksheetDTO> search(MarksheetDTO dto, int pageNo, int pageSize) throws ApplicationException {
+    public List<MarksheetDTO> search(MarksheetDTO dto, int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model search Started");
         Connection conn = null;
         StringBuffer sql = new StringBuffer("select * from st_marksheet where 1 = 1");
@@ -226,7 +226,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in search Marksheet");
+            throw new DatabaseException("Exception : Exception in search Marksheet");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -235,7 +235,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     }
 
     @Override
-    public MarksheetDTO findByPK(long pk) throws ApplicationException {
+    public MarksheetDTO findByPK(long pk) throws DatabaseException {
         log.debug("Model fingByPK Started");
         Connection conn = null;
         MarksheetDTO dto = null;
@@ -264,7 +264,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in fingByPK Marksheet");
+            throw new DatabaseException("Exception : Exception in fingByPK Marksheet");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -273,7 +273,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     }
 
     @Override
-    public MarksheetDTO findByRollNo(String rollNo) throws ApplicationException {
+    public MarksheetDTO findByRollNo(String rollNo) throws DatabaseException {
         log.debug("Model findByRollNo Started");
         Connection conn = null;
         MarksheetDTO dto = null;
@@ -302,7 +302,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in findByRollNo Marksheet");
+            throw new DatabaseException("Exception : Exception in findByRollNo Marksheet");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -311,7 +311,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     }
 
     @Override
-    public List<MarksheetDTO> getMeritList(int pageNo, int pageSize) throws ApplicationException {
+    public List<MarksheetDTO> getMeritList(int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model getMeritList Started");
         ArrayList<MarksheetDTO> list = new ArrayList<MarksheetDTO>();
         StringBuffer sql = new StringBuffer(
@@ -342,7 +342,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
             pstmt.close();
         } catch (Exception e) {
             log.error("Database Exception..", e);
-            throw new ApplicationException("Exception in getting merit list of Marksheet");
+            throw new DatabaseException("Exception in getting merit list of Marksheet");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -373,7 +373,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
     }
     
     
-    public HashMap<String, Object> findMarksheetReportByRollNo(String rollNo) throws ApplicationException {
+    public HashMap<String, Object> findMarksheetReportByRollNo(String rollNo) throws DatabaseException {
         log.debug("Model findMarksheetReportByRollNo Started");
         Connection conn = null;
         HashMap<String, Object> map = null;
@@ -429,7 +429,7 @@ public class MarksheetModelJDBCImpl implements MarksheetModelInt {
             pstmt.close();
         } catch (Exception e) {
             log.error("Database Exception..", e);
-            throw new ApplicationException("Exception in findMarksheetReportByRollNo");
+            throw new DatabaseException("Exception in findMarksheetReportByRollNo");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }

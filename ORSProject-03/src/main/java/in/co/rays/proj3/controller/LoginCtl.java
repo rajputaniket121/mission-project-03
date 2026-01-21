@@ -19,13 +19,13 @@ import in.co.rays.proj3.model.RoleModelInt;
 import in.co.rays.proj3.model.UserModelInt;
 import in.co.rays.proj3.utill.DataUtility;
 import in.co.rays.proj3.utill.DataValidator;
+import in.co.rays.proj3.utill.HibDataSource;
 import in.co.rays.proj3.utill.PropertyReader;
 import in.co.rays.proj3.utill.ServletUtility;
 
-
-
 /**
  * login functionality controller. perform login operation
+ * 
  * @author Aniket Rajput
  *
  */
@@ -71,19 +71,18 @@ public class LoginCtl extends BaseCtl {
 
 	}
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		System.out.println(request.getParameter("login"));
-		
+
 		String op = request.getParameter("operation");
-		
+
 		UserModelInt model = ModelFactory.getInstance().getUserModel();
-		
+
 		HttpSession session = request.getSession(true);
-		
+
 		long id = DataUtility.getLong(request.getParameter("id"));
-		
+
 		if (OP_LOG_OUT.equals(op)) {
 			session = request.getSession();
 			session.invalidate();
@@ -97,26 +96,30 @@ public class LoginCtl extends BaseCtl {
 				dto = model.findByPK(id);
 				ServletUtility.setDto(dto, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
-				ServletUtility.handleException(e, request, response);
-				return;
-			}
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
+                return;
+            }
 
 		}
 		ServletUtility.forward(getView(), request, response);
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		String op = request.getParameter("operation");
-		
+
 		HttpSession session = request.getSession(true);
-		
+
 		UserModelInt userModel = ModelFactory.getInstance().getUserModel();
 		RoleModelInt model1 = ModelFactory.getInstance().getRoleModel();
-		
-		//long id = DataUtility.getLong(request.getParameter("id"));
-		
+
+		// long id = DataUtility.getLong(request.getParameter("id"));
+
 		if (OP_SIGN_IN.equalsIgnoreCase(op)) {
 			UserDTO dto = (UserDTO) populateDTO(request);
 			try {
@@ -149,10 +152,13 @@ public class LoginCtl extends BaseCtl {
 				}
 
 			} catch (ApplicationException e) {
-				log.error(e);
-				ServletUtility.handleException(e, request, response);
-				return;
-			}
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
+                return;
+            }
 
 		} else if (OP_SIGN_UP.equalsIgnoreCase(op)) {
 

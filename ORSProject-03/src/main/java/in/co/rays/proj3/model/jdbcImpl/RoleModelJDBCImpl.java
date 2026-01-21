@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.co.rays.proj3.dto.RoleDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.RoleModelInt;
@@ -16,7 +16,7 @@ import in.co.rays.proj3.utill.JDBCDataSource;
 public class RoleModelJDBCImpl implements RoleModelInt{
 	
 	@Override
-	public long add(RoleDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(RoleDTO dto) throws DatabaseException, DuplicateRecordException {
 		Connection conn = null;
 		Long pk = 0l;
 		RoleDTO exist = findByName(dto.getName());
@@ -43,10 +43,10 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
+				throw new DatabaseException("Exception : Add rollback exception " + ex.getMessage());
 			}
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in add Role");
+			throw new DatabaseException("Exception : Exception in add Role");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -54,7 +54,7 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 	}
 	
 	@Override
-	public void update(RoleDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(RoleDTO dto) throws DatabaseException, DuplicateRecordException {
 		Connection conn = null;
 		RoleDTO exist = findByName(dto.getName());
 		if (exist != null && exist.getId() != dto.getId()) {
@@ -80,17 +80,17 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
+				throw new DatabaseException("Exception : Update rollback exception " + ex.getMessage());
 			}
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in Update Role");
+			throw new DatabaseException("Exception : Exception in Update Role");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 	}
 	
 	@Override
-	public void delete(RoleDTO dto) throws ApplicationException {
+	public void delete(RoleDTO dto) throws DatabaseException {
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -105,17 +105,17 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 			try {
 				conn.rollback();
 			} catch (Exception ex) {
-				throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+				throw new DatabaseException("Exception : Delete rollback exception " + ex.getMessage());
 			}
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in delete Role");
+			throw new DatabaseException("Exception : Exception in delete Role");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
 	}
 	
 	@Override
-	public RoleDTO findByPK(long pk) throws ApplicationException {
+	public RoleDTO findByPK(long pk) throws DatabaseException {
 		Connection conn = null;
 		RoleDTO dto = null;
 		StringBuffer sql = new StringBuffer("select * from st_role where id = ?");
@@ -138,7 +138,7 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in FindByPk Role");
+			throw new DatabaseException("Exception : Exception in FindByPk Role");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -146,7 +146,7 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 	}
 	
 	@Override
-	public RoleDTO findByName(String name) throws ApplicationException {
+	public RoleDTO findByName(String name) throws DatabaseException {
 		Connection conn = null;
 		RoleDTO dto = null;
 		StringBuffer sql = new StringBuffer("select * from st_role where name = ?");
@@ -169,7 +169,7 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in findByName Role");
+			throw new DatabaseException("Exception : Exception in findByName Role");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
@@ -177,12 +177,12 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 	}
 	
 	@Override
-	public List<RoleDTO> list() throws ApplicationException {
+	public List<RoleDTO> list() throws DatabaseException {
 		return search(null, 0, 0);
 	}
 
 	@Override
-	public List<RoleDTO> search(RoleDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List<RoleDTO> search(RoleDTO dto, int pageNo, int pageSize) throws DatabaseException {
 		Connection conn = null;
 		StringBuffer sql = new StringBuffer("select * from st_role where 1 = 1");
 		List<RoleDTO> roleList = new ArrayList<RoleDTO>();
@@ -224,7 +224,7 @@ public class RoleModelJDBCImpl implements RoleModelInt{
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception : Exception in search Role");
+			throw new DatabaseException("Exception : Exception in search Role");
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}

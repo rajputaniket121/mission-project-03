@@ -160,12 +160,15 @@ public class UserRegistrationCtl extends BaseCtl {
 				ServletUtility.setDto(dto, request);
 				ServletUtility.setErrorMessage("Login id already exists", request);
 				ServletUtility.forward(getView(), request, response);
-			} catch (ApplicationException e) {
-
-				ServletUtility.handleException(e, request, response);
-				return;
-			}
-			ServletUtility.setSuccessMessage("Registration successfully", request);
+			}catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
+                return;
+            }
 			ServletUtility.forward(ORSView.USER_REGISTRATION_VIEW, request, response);
 		} else if (OP_RESET.equalsIgnoreCase(op)) {
 

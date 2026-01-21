@@ -114,10 +114,15 @@ public class MyProfileCtl extends BaseCtl {
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setDto(dto, req);
 				ServletUtility.setErrorMessage("Duplicate Login Id ", req);
-			}catch(ApplicationException ae) {
-				ae.printStackTrace();
-				ServletUtility.handleException(ae, req, resp);
-			}
+			}catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
+                return;
+            }
 		} else if (MyProfileCtl.OP_CHANGE_PASSWORD.equalsIgnoreCase(op)){
 			ServletUtility.redirect(ORSView.CHANGE_PASSWORD_CTL, req, resp);
 			return;

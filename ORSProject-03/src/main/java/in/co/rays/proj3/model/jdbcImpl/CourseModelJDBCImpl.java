@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import in.co.rays.proj3.dto.CourseDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.CourseModelInt;
@@ -25,7 +25,7 @@ public class CourseModelJDBCImpl implements CourseModelInt {
     private static Logger log = Logger.getLogger(CourseModelJDBCImpl.class);
 
     @Override
-    public long add(CourseDTO dto) throws ApplicationException, DuplicateRecordException {
+    public long add(CourseDTO dto) throws DatabaseException, DuplicateRecordException {
         log.debug("Model add Started");
         Connection conn = null;
         long pk = 0L;
@@ -56,10 +56,10 @@ public class CourseModelJDBCImpl implements CourseModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Add rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in add Course");
+            throw new DatabaseException("Exception : Exception in add Course");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -68,11 +68,11 @@ public class CourseModelJDBCImpl implements CourseModelInt {
     }
 
     @Override
-    public void delete(CourseDTO dto) throws ApplicationException {
+    public void delete(CourseDTO dto) throws DatabaseException {
         delete(dto.getId());
     }
 
-    public void delete(long id) throws ApplicationException {
+    public void delete(long id) throws DatabaseException {
         log.debug("Model delete Started");
         Connection conn = null;
         try {
@@ -89,10 +89,10 @@ public class CourseModelJDBCImpl implements CourseModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Delete rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in delete Course");
+            throw new DatabaseException("Exception : Exception in delete Course");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -100,7 +100,7 @@ public class CourseModelJDBCImpl implements CourseModelInt {
     }
 
     @Override
-    public void update(CourseDTO dto) throws ApplicationException, DuplicateRecordException {
+    public void update(CourseDTO dto) throws DatabaseException, DuplicateRecordException {
         log.debug("Model update Started");
         Connection conn = null;
         CourseDTO exist = findByName(dto.getCourseName());
@@ -130,10 +130,10 @@ public class CourseModelJDBCImpl implements CourseModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Update rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Update Course");
+            throw new DatabaseException("Exception : Exception in Update Course");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -141,25 +141,25 @@ public class CourseModelJDBCImpl implements CourseModelInt {
     }
 
     @Override
-    public List<CourseDTO> list() throws ApplicationException {
+    public List<CourseDTO> list() throws DatabaseException {
         log.debug("Model list Started");
         return search(null, 0, 0);
     }
 
     @Override
-    public List<CourseDTO> list(int pageNo, int pageSize) throws ApplicationException {
+    public List<CourseDTO> list(int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model list Started");
         return search(null, pageNo, pageSize);
     }
 
     @Override
-    public List<CourseDTO> search(CourseDTO dto) throws ApplicationException {
+    public List<CourseDTO> search(CourseDTO dto) throws DatabaseException {
         log.debug("Model search Started");
         return search(dto, 0, 0);
     }
 
     @Override
-    public List<CourseDTO> search(CourseDTO dto, int pageNo, int pageSize) throws ApplicationException {
+    public List<CourseDTO> search(CourseDTO dto, int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model search Started");
         Connection conn = null;
         StringBuffer sql = new StringBuffer("select * from st_course where 1 = 1");
@@ -207,7 +207,7 @@ public class CourseModelJDBCImpl implements CourseModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in search Course");
+            throw new DatabaseException("Exception : Exception in search Course");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -216,7 +216,7 @@ public class CourseModelJDBCImpl implements CourseModelInt {
     }
 
     @Override
-    public CourseDTO findByPK(long pk) throws ApplicationException {
+    public CourseDTO findByPK(long pk) throws DatabaseException {
         log.debug("Model findByPK Started");
         Connection conn = null;
         CourseDTO dto = null;
@@ -242,7 +242,7 @@ public class CourseModelJDBCImpl implements CourseModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in FindByPk Course");
+            throw new DatabaseException("Exception : Exception in FindByPk Course");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -251,7 +251,7 @@ public class CourseModelJDBCImpl implements CourseModelInt {
     }
 
     @Override
-    public CourseDTO findByName(String name) throws ApplicationException {
+    public CourseDTO findByName(String name) throws DatabaseException {
         log.debug("Model findByName Started");
         Connection conn = null;
         CourseDTO dto = null;
@@ -277,7 +277,7 @@ public class CourseModelJDBCImpl implements CourseModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in findByName Course");
+            throw new DatabaseException("Exception : Exception in findByName Course");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }

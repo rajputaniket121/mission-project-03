@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import in.co.rays.proj3.dto.TimetableDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.TimetableModelInt;
@@ -26,7 +26,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     private static Logger log = Logger.getLogger(TimetableModelJDBCImpl.class);
 
     @Override
-    public long add(TimetableDTO dto) throws ApplicationException, DuplicateRecordException {
+    public long add(TimetableDTO dto) throws DatabaseException, DuplicateRecordException {
         log.debug("Model add Started");
         Connection conn = null;
         long pk = 0L;
@@ -58,10 +58,10 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Add rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Add rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in add Timetable");    
+            throw new DatabaseException("Exception : Exception in add Timetable");    
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -70,11 +70,11 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     }
 
     @Override
-    public void delete(TimetableDTO dto) throws ApplicationException {
+    public void delete(TimetableDTO dto) throws DatabaseException {
         delete(dto.getId());
     }
 
-    public void delete(long id) throws ApplicationException {
+    public void delete(long id) throws DatabaseException {
         log.debug("Model delete Started");
         Connection conn = null;
         try {
@@ -91,10 +91,10 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Delete rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Delete rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Delete Timetable");
+            throw new DatabaseException("Exception : Exception in Delete Timetable");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -102,7 +102,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     }
 
     @Override
-    public void update(TimetableDTO dto) throws ApplicationException, DatabaseException, DuplicateRecordException {
+    public void update(TimetableDTO dto) throws DatabaseException, DatabaseException, DuplicateRecordException {
         log.debug("Model update Started");
         Connection conn = null;
         
@@ -133,10 +133,10 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
             try {
                 conn.rollback();
             } catch (Exception ex) {
-                throw new ApplicationException("Exception : Update rollback exception " + ex.getMessage());
+                throw new DatabaseException("Exception : Update rollback exception " + ex.getMessage());
             }
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in Update TimeTable");
+            throw new DatabaseException("Exception : Exception in Update TimeTable");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -144,25 +144,25 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     }
 
     @Override
-    public List<TimetableDTO> list() throws ApplicationException {
+    public List<TimetableDTO> list() throws DatabaseException {
         log.debug("Model list Started");
         return search(null, 0, 0);
     }
 
     @Override
-    public List<TimetableDTO> list(int pageNo, int pageSize) throws ApplicationException {
+    public List<TimetableDTO> list(int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model list Started");
         return search(null, pageNo, pageSize);
     }
 
     @Override
-    public List<TimetableDTO> search(TimetableDTO dto) throws ApplicationException {
+    public List<TimetableDTO> search(TimetableDTO dto) throws DatabaseException {
         log.debug("Model search Started");
         return search(dto, 0, 0);
     }
 
     @Override
-    public List<TimetableDTO> search(TimetableDTO dto, int pageNo, int pageSize) throws ApplicationException {
+    public List<TimetableDTO> search(TimetableDTO dto, int pageNo, int pageSize) throws DatabaseException {
         log.debug("Model search Started");
         Connection conn = null;
         StringBuffer sql = new StringBuffer("select * from st_timetable where 1 = 1");
@@ -230,7 +230,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in search Timetable");
+            throw new DatabaseException("Exception : Exception in search Timetable");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -239,7 +239,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     }
 
     @Override
-    public TimetableDTO findByPK(long pk) throws ApplicationException {
+    public TimetableDTO findByPK(long pk) throws DatabaseException {
         log.debug("Model findByPK Started");
         Connection conn = null;
         TimetableDTO dto = null;
@@ -270,7 +270,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
         } catch (Exception e) {
             log.error("Database Exception..", e);
             e.printStackTrace();
-            throw new ApplicationException("Exception : Exception in FindByPK Timetable");
+            throw new DatabaseException("Exception : Exception in FindByPK Timetable");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }
@@ -279,7 +279,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     }
 
     @Override
-    public TimetableDTO checkByCourseName(long courseId, Date examDate) throws ApplicationException, DuplicateRecordException {
+    public TimetableDTO checkByCourseName(long courseId, Date examDate) throws DatabaseException, DuplicateRecordException {
         log.debug("Model checkByCourseName Started");
         StringBuffer sql = new StringBuffer("select * from st_timetable where course_id = ? and exam_date = ?");
         TimetableDTO dto = null;
@@ -312,7 +312,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
             pstmt.close();
         } catch (Exception e) {
             log.error("Database Exception..", e);
-            throw new ApplicationException("Exception : Exception in get Timetable");
+            throw new DatabaseException("Exception : Exception in get Timetable");
 
         } finally {
             JDBCDataSource.closeConnection(conn);
@@ -322,7 +322,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     }
 
     @Override
-    public TimetableDTO checkBySubjectName(long courseId, long subjectId, Date examDate) throws ApplicationException, DuplicateRecordException {
+    public TimetableDTO checkBySubjectName(long courseId, long subjectId, Date examDate) throws DatabaseException, DuplicateRecordException {
         log.debug("Model checkBySubjectName Started");
         StringBuffer sql = new StringBuffer(
                 "select * from st_timetable where course_id = ? and subject_id = ? and exam_date = ?");
@@ -357,7 +357,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
             pstmt.close();
         } catch (Exception e) {
             log.error("Database Exception..", e);
-            throw new ApplicationException("Exception : Exception in get Timetable");
+            throw new DatabaseException("Exception : Exception in get Timetable");
 
         } finally {
             JDBCDataSource.closeConnection(conn);
@@ -367,7 +367,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
     }
 
     @Override
-    public TimetableDTO checkBySemester(long courseId, long subjectId, String semester, Date examDate) throws ApplicationException, DuplicateRecordException {
+    public TimetableDTO checkBySemester(long courseId, long subjectId, String semester, Date examDate) throws DatabaseException, DuplicateRecordException {
         log.debug("Model checkBysemester Started");
         StringBuffer sql = new StringBuffer(
                 "select * from st_timetable where course_id = ? and subject_id = ? and semester = ? and exam_date = ?");
@@ -403,7 +403,7 @@ public class TimetableModelJDBCImpl implements TimetableModelInt {
             pstmt.close();
         } catch (Exception e) {
             log.error("Database Exception..", e);
-            throw new ApplicationException("Exception : Exception in get Timetable");
+            throw new DatabaseException("Exception : Exception in get Timetable");
         } finally {
             JDBCDataSource.closeConnection(conn);
         }

@@ -61,9 +61,25 @@ public class ServletUtility {
      */
     public static void handleException(Exception e, HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
+    	System.out.println("inside exception");
         request.setAttribute("exception", e);
         response.sendRedirect(ORSView.ERROR_CTL);
-
+    }
+    
+    /**
+     * Redirect to Application Error Handler Page
+     *
+     * @param e
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public static void handleExceptionDBDown(Exception e, HttpServletRequest request,
+            HttpServletResponse response,String view) throws IOException, ServletException {
+    	  request.setAttribute(BaseCtl.MSG_ERROR, "Database connection was lost. Please try again.");
+    	  HibDataSource.rebuildSessionFactory();
+        forward(view, request, response);
     }
 
     /**

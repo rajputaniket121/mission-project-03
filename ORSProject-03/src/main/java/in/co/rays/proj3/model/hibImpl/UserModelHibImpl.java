@@ -14,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.UserDTO;
 import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.exception.RecordNotFoundException;
 import in.co.rays.proj3.model.UserModelInt;
@@ -24,7 +25,7 @@ import in.co.rays.proj3.utill.HibDataSource;
 
 public class UserModelHibImpl implements UserModelInt{
 
-	public long add(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(UserDTO dto) throws DatabaseException, DuplicateRecordException {
 		UserDTO existDto = null;
 		existDto = findByLogin(dto.getLogin());
 		if (existDto != null) {
@@ -42,7 +43,7 @@ public class UserModelHibImpl implements UserModelInt{
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in User Add " + e.getMessage());
+			throw new DatabaseException("Exception in User Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -50,7 +51,7 @@ public class UserModelHibImpl implements UserModelInt{
 
 	}
 
-	public void delete(UserDTO dto) throws ApplicationException {
+	public void delete(UserDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -62,13 +63,13 @@ public class UserModelHibImpl implements UserModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in User Delete" + e.getMessage());
+			throw new DatabaseException("Exception in User Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(UserDTO dto) throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		UserDTO existDto = findByLogin(dto.getLogin());
@@ -86,13 +87,13 @@ public class UserModelHibImpl implements UserModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in User update" + e.getMessage());
+			throw new DatabaseException("Exception in User update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public UserDTO findByPK(long pk) throws ApplicationException {
+	public UserDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		UserDTO dto = null;
 		try {
@@ -100,7 +101,7 @@ public class UserModelHibImpl implements UserModelInt{
 			dto = (UserDTO) session.get(UserDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting User by pk");
+			throw new DatabaseException("Exception : Exception in getting User by pk");
 		} finally {
 			session.close();
 		}
@@ -108,7 +109,7 @@ public class UserModelHibImpl implements UserModelInt{
 		return dto;
 	}
 
-	public UserDTO findByLogin(String login) throws ApplicationException {
+	public UserDTO findByLogin(String login) throws DatabaseException {
 		Session session = null;
 		UserDTO dto = null;
 		try {
@@ -121,7 +122,7 @@ public class UserModelHibImpl implements UserModelInt{
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting User by Login " + e.getMessage());
+			throw new DatabaseException("Exception in getting User by Login " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -130,11 +131,11 @@ public class UserModelHibImpl implements UserModelInt{
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -148,7 +149,7 @@ public class UserModelHibImpl implements UserModelInt{
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Users list");
+			throw new DatabaseException("Exception : Exception in  Users list");
 		} finally {
 			session.close();
 		}
@@ -156,11 +157,11 @@ public class UserModelHibImpl implements UserModelInt{
 		return list;
 	}
 
-	public List search(UserDTO dto) throws ApplicationException {
+	public List search(UserDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(UserDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(UserDTO dto, int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		ArrayList<UserDTO> list = null;
 		try {
@@ -200,7 +201,7 @@ public class UserModelHibImpl implements UserModelInt{
 			}
 			list = (ArrayList<UserDTO>) criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception in user search");
+			throw new DatabaseException("Exception in user search");
 		} finally {
 			session.close();
 		}
@@ -208,24 +209,46 @@ public class UserModelHibImpl implements UserModelInt{
 		return list;
 	}
 
-	public UserDTO authenticate(String login, String password) throws ApplicationException {
-		Session session = null;
-		UserDTO dto = null;
-		session = HibDataSource.getSession();
-		Query q = session.createQuery("from UserDTO where login = ? and password = ?");
-		q.setString(0, login);
-		q.setString(1, password);
-		List list = q.list();
-		if (list.size() > 0) {
-			dto = (UserDTO) list.get(0);
-		} else {
-			dto = null;
+	public UserDTO authenticate(String login, String password) throws DatabaseException {
 
-		}
-		return dto;
+	    Session session = null;
+	    UserDTO dto = null;
+
+	    try {
+	        session = HibDataSource.getSession();
+
+	        Query q = session.createQuery(
+	                "from UserDTO where login = ? and password = ?"
+	        );
+	        q.setString(0, login);
+	        q.setString(1, password);
+
+	        List list = q.list();
+
+	        if (list != null && list.size() > 0) {
+	            dto = (UserDTO) list.get(0);
+	            System.out.println(dto);
+	        }
+
+	        return dto;
+
+	    } catch (org.hibernate.exception.JDBCConnectionException e) {
+	        e.printStackTrace();
+	        throw new DatabaseException(
+	                "Database connection was lost. Please try again."
+	        );
+
+	    } catch (Exception e) {
+
+	        throw new DatabaseException("Error during authentication");
+
+	    } finally {
+	        HibDataSource.closeSession(session);
+	    }
 	}
 
-	public List getRoles(UserDTO dto) throws ApplicationException {
+
+	public List getRoles(UserDTO dto) throws DatabaseException {
 		return null;
 	}
 
@@ -239,7 +262,7 @@ public class UserModelHibImpl implements UserModelInt{
 				update(dtoExist);
 			} catch (DuplicateRecordException e) {
 
-				throw new ApplicationException("LoginId is already exist");
+				throw new DatabaseException("LoginId is already exist");
 			}
 			flag = true;
 		} else {
@@ -322,7 +345,7 @@ public class UserModelHibImpl implements UserModelInt{
 		return true;
 	}
 
-	public long registerUser(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long registerUser(UserDTO dto) throws DuplicateRecordException, ApplicationException {
 		long pk = add(dto);
 
 		HashMap<String, String> map = new HashMap<String, String>();

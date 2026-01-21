@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.SubjectDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.SubjectModelInt;
 import in.co.rays.proj3.utill.HibDataSource;
@@ -22,7 +22,7 @@ import in.co.rays.proj3.utill.HibDataSource;
  */
 public class SubjectModelHibImpl implements SubjectModelInt {
 
-	public long add(SubjectDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(SubjectDTO dto) throws DatabaseException, DuplicateRecordException {
 		SubjectDTO existDto = null;
 		existDto = findByName(dto.getName());
 		if (existDto != null) {
@@ -40,7 +40,7 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in Subject Add " + e.getMessage());
+			throw new DatabaseException("Exception in Subject Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -48,7 +48,7 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 
 	}
 
-	public void delete(SubjectDTO dto) throws ApplicationException {
+	public void delete(SubjectDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -60,13 +60,13 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Subject Delete" + e.getMessage());
+			throw new DatabaseException("Exception in Subject Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(SubjectDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(SubjectDTO dto) throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		SubjectDTO existDto = findByName(dto.getName());
@@ -84,13 +84,13 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Subject update" + e.getMessage());
+			throw new DatabaseException("Exception in Subject update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public SubjectDTO findByPK(long pk) throws ApplicationException {
+	public SubjectDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		SubjectDTO dto = null;
 		try {
@@ -98,7 +98,7 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 			dto = (SubjectDTO) session.get(SubjectDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting Subject by pk");
+			throw new DatabaseException("Exception : Exception in getting Subject by pk");
 		} finally {
 			session.close();
 		}
@@ -106,7 +106,7 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 		return dto;
 	}
 
-	public SubjectDTO findByName(String name) throws ApplicationException {
+	public SubjectDTO findByName(String name) throws DatabaseException {
 		Session session = null;
 		SubjectDTO dto = null;
 		try {
@@ -119,7 +119,7 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Subject by Name " + e.getMessage());
+			throw new DatabaseException("Exception in getting Subject by Name " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -128,11 +128,11 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -146,7 +146,7 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Subjects list");
+			throw new DatabaseException("Exception : Exception in  Subjects list");
 		} finally {
 			session.close();
 		}
@@ -154,11 +154,11 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 		return list;
 	}
 
-	public List search(SubjectDTO dto) throws ApplicationException {
+	public List search(SubjectDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(SubjectDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(SubjectDTO dto, int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -187,7 +187,7 @@ public class SubjectModelHibImpl implements SubjectModelInt {
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception in subject search");
+			throw new DatabaseException("Exception in subject search");
 		} finally {
 			session.close();
 		}

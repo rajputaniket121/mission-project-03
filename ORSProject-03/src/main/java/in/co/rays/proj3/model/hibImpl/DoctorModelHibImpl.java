@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import in.co.rays.proj3.dto.DoctorDTO;
 import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.DoctorModelInt;
 import in.co.rays.proj3.utill.HibDataSource;
@@ -24,7 +25,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 	private static Logger log = Logger.getLogger(DoctorModelHibImpl.class.getName());
 
 	@Override
-	public long add(DoctorDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(DoctorDTO dto) throws DatabaseException, DuplicateRecordException {
 		log.info("DoctorModelHibImpl add started");
 
 		DoctorDTO existDto = findByName(dto.getName());
@@ -46,7 +47,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 				tx.rollback();
 			}
 			log.severe("Exception in Doctor add");
-			throw new ApplicationException("Exception in Doctor add " + e.getMessage());
+			throw new DatabaseException("Exception in Doctor add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -55,7 +56,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 	}
 
 	@Override
-	public void delete(DoctorDTO dto) throws ApplicationException {
+	public void delete(DoctorDTO dto) throws DatabaseException {
 		log.info("DoctorModelHibImpl delete started");
 
 		Session session = null;
@@ -73,14 +74,14 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 				tx.rollback();
 			}
 			log.severe("Exception in Doctor delete");
-			throw new ApplicationException("Exception in Doctor delete " + e.getMessage());
+			throw new DatabaseException("Exception in Doctor delete " + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
 	@Override
-	public void update(DoctorDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(DoctorDTO dto) throws DatabaseException, DuplicateRecordException {
 		log.info("DoctorModelHibImpl update started");
 
 		DoctorDTO existDto = findByName(dto.getName());
@@ -103,14 +104,14 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 				tx.rollback();
 			}
 			log.severe("Exception in Doctor update");
-			throw new ApplicationException("Exception in Doctor update " + e.getMessage());
+			throw new DatabaseException("Exception in Doctor update " + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
 	@Override
-	public DoctorDTO findByPK(long pk) throws ApplicationException {
+	public DoctorDTO findByPK(long pk) throws DatabaseException {
 		log.info("DoctorModelHibImpl findByPK started");
 
 		Session session = null;
@@ -122,7 +123,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 
 		} catch (HibernateException e) {
 			log.severe("Exception in findByPK Doctor");
-			throw new ApplicationException("Exception in getting Doctor by PK");
+			throw new DatabaseException("Exception in getting Doctor by PK");
 		} finally {
 			session.close();
 		}
@@ -131,7 +132,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 	}
 
 	@Override
-	public DoctorDTO findByName(String name) throws ApplicationException {
+	public DoctorDTO findByName(String name) throws DatabaseException {
 		log.info("DoctorModelHibImpl findByName started");
 
 		Session session = null;
@@ -149,7 +150,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 
 		} catch (HibernateException e) {
 			log.severe("Exception in findByName Doctor");
-			throw new ApplicationException("Exception in findByName Doctor " + e.getMessage());
+			throw new DatabaseException("Exception in findByName Doctor " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -158,11 +159,11 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 	}
 
 	@Override
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		log.info("DoctorModelHibImpl list started");
 
 		Session session = null;
@@ -182,7 +183,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 
 		} catch (HibernateException e) {
 			log.severe("Exception in Doctor list");
-			throw new ApplicationException("Exception in Doctor list");
+			throw new DatabaseException("Exception in Doctor list");
 		} finally {
 			session.close();
 		}
@@ -191,7 +192,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 	}
 
 	@Override
-	public List search(DoctorDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(DoctorDTO dto, int pageNo, int pageSize) throws DatabaseException {
 		log.info("DoctorModelHibImpl search started");
 
 		Session session = null;
@@ -229,7 +230,7 @@ public class DoctorModelHibImpl implements DoctorModelInt {
 
 		} catch (HibernateException e) {
 			log.severe("Exception in Doctor search");
-			throw new ApplicationException("Exception in Doctor search");
+			throw new DatabaseException("Exception in Doctor search");
 		} finally {
 			session.close();
 		}

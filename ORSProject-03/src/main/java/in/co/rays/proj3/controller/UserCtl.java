@@ -160,7 +160,11 @@ public class UserCtl extends BaseCtl {
                 ServletUtility.setDto(bean, req);
             } catch (ApplicationException e) {
                 e.printStackTrace();
-                ServletUtility.handleException(e, req, resp);
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
                 return;
             }
         }
@@ -182,9 +186,13 @@ public class UserCtl extends BaseCtl {
             } catch (DuplicateRecordException dre) {
                 ServletUtility.setDto(bean, req);
                 ServletUtility.setErrorMessage("Login Id Already Exist !!!", req);
-            } catch (ApplicationException ae) {
-                ae.printStackTrace();
-                ServletUtility.handleException(ae, req, resp);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
                 return;
             }
 
@@ -200,9 +208,13 @@ public class UserCtl extends BaseCtl {
             } catch (DuplicateRecordException dre) {
                 ServletUtility.setDto(bean, req);
                 ServletUtility.setErrorMessage("Login Id Already Exist !!!", req);
-            } catch (ApplicationException ae) {
-                ae.printStackTrace();
-                ServletUtility.handleException(ae, req, resp);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
+                }else {
+                	ServletUtility.handleException(e, req, resp);
+                }
                 return;
             }
         } else if (OP_CANCEL.equalsIgnoreCase(op)) {

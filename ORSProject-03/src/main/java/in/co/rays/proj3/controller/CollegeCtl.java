@@ -109,8 +109,12 @@ public class CollegeCtl extends BaseCtl {
                 CollegeDTO bean = model.findByPK(id);
                 ServletUtility.setDto(bean, request);
             } catch (ApplicationException e) {
-                log.error("Error in getting college details", e);
-                ServletUtility.handleException(e, request, response);
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
                 return;
             }
         }
@@ -137,14 +141,18 @@ public class CollegeCtl extends BaseCtl {
                 long pk = model.add(bean);
                 log.info("College added successfully with id: " + pk);
                 ServletUtility.setSuccessMessage("College is successfully added", request);
-            } catch (ApplicationException e) {
-                log.error("Application exception in college operation", e);
-                ServletUtility.handleException(e, request, response);
-                return;
             } catch (DuplicateRecordException e) {
                 log.warn("Duplicate college found: " + bean.getName());
                 ServletUtility.setDto(bean, request);
                 ServletUtility.setErrorMessage("College Name already exists", request);
+            }catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
+                return;
             }
         } else if(RoleCtl.OP_RESET.equalsIgnoreCase(op)){
             ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
@@ -156,14 +164,18 @@ public class CollegeCtl extends BaseCtl {
                 model.update(bean);
                 log.info("College updated successfully: " + bean.getName());
                 ServletUtility.setSuccessMessage("College is successfully updated", request);
-            } catch (ApplicationException e) {
-                log.error("Application exception in college operation", e);
-                ServletUtility.handleException(e, request, response);
-                return;
             } catch (DuplicateRecordException e) {
                 log.warn("Duplicate college found: " + bean.getName());
                 ServletUtility.setDto(bean, request);
                 ServletUtility.setErrorMessage("College Name already exists", request);
+            }catch (ApplicationException e) {
+                e.printStackTrace();
+                if(e.getClass().toString().equals(e.toString())) {
+                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
+                }else {
+                	ServletUtility.handleException(e, request, response);
+                }
+                return;
             }
         } else if(OP_CANCEL.equalsIgnoreCase(op)) {
             log.debug("Operation cancelled, redirecting to college list");

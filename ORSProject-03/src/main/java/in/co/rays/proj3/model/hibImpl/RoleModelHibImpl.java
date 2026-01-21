@@ -10,14 +10,14 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.RoleDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.RoleModelInt;
 import in.co.rays.proj3.utill.HibDataSource;
 
 public class RoleModelHibImpl implements RoleModelInt{
 
-	public long add(RoleDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(RoleDTO dto) throws DatabaseException, DuplicateRecordException {
 		RoleDTO existDto = null;
 		existDto = findByName(dto.getName());
 		if (existDto != null) {
@@ -35,7 +35,7 @@ public class RoleModelHibImpl implements RoleModelInt{
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in Role Add " + e.getMessage());
+			throw new DatabaseException("Exception in Role Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -43,7 +43,7 @@ public class RoleModelHibImpl implements RoleModelInt{
 
 	}
 
-	public void delete(RoleDTO dto) throws ApplicationException {
+	public void delete(RoleDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -55,13 +55,13 @@ public class RoleModelHibImpl implements RoleModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Role Delete" + e.getMessage());
+			throw new DatabaseException("Exception in Role Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(RoleDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(RoleDTO dto) throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		RoleDTO existDto = findByName(dto.getName());
@@ -79,13 +79,13 @@ public class RoleModelHibImpl implements RoleModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Role update" + e.getMessage());
+			throw new DatabaseException("Exception in Role update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public RoleDTO findByPK(long pk) throws ApplicationException {
+	public RoleDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		RoleDTO dto = null;
 		try {
@@ -93,7 +93,7 @@ public class RoleModelHibImpl implements RoleModelInt{
 			dto = (RoleDTO) session.get(RoleDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting Role by pk");
+			throw new DatabaseException("Exception : Exception in getting Role by pk");
 		} finally {
 			session.close();
 		}
@@ -101,7 +101,7 @@ public class RoleModelHibImpl implements RoleModelInt{
 		return dto;
 	}
 
-	public RoleDTO findByName(String name) throws ApplicationException {
+	public RoleDTO findByName(String name) throws DatabaseException {
 		Session session = null;
 		RoleDTO dto = null;
 		try {
@@ -114,7 +114,7 @@ public class RoleModelHibImpl implements RoleModelInt{
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Role by Name " + e.getMessage());
+			throw new DatabaseException("Exception in getting Role by Name " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -123,11 +123,11 @@ public class RoleModelHibImpl implements RoleModelInt{
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -141,7 +141,7 @@ public class RoleModelHibImpl implements RoleModelInt{
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Roles list");
+			throw new DatabaseException("Exception : Exception in  Roles list");
 		} finally {
 			session.close();
 		}
@@ -149,11 +149,11 @@ public class RoleModelHibImpl implements RoleModelInt{
 		return list;
 	}
 
-	public List search(RoleDTO dto) throws ApplicationException {
+	public List search(RoleDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(RoleDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(RoleDTO dto, int pageNo, int pageSize) throws DatabaseException {
 	    Session session = null;
 	    List list = null;
 	    try {
@@ -176,7 +176,7 @@ public class RoleModelHibImpl implements RoleModelInt{
 	        }
 	        list = criteria.list();
 	    } catch (HibernateException e) {
-	        throw new ApplicationException("Exception in role search");
+	        throw new DatabaseException("Exception in role search");
 	    } finally {
 	        session.close();
 	    }

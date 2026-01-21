@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.TimetableDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.TimetableModelInt;
@@ -24,7 +24,7 @@ import in.co.rays.proj3.utill.HibDataSource;
  */
 public class TimetableModelHibImpl implements TimetableModelInt {
 
-	public long add(TimetableDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(TimetableDTO dto) throws DatabaseException, DuplicateRecordException {
 		TimetableDTO existDto = null;
 		existDto = checkBySemester(dto.getCourseId(), dto.getSubjectId(), dto.getSemester(), dto.getExamDate());
 		if (existDto != null) {
@@ -42,7 +42,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in Timetable Add " + e.getMessage());
+			throw new DatabaseException("Exception in Timetable Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -50,7 +50,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 
 	}
 
-	public void delete(TimetableDTO dto) throws ApplicationException {
+	public void delete(TimetableDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -62,13 +62,13 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Timetable Delete" + e.getMessage());
+			throw new DatabaseException("Exception in Timetable Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(TimetableDTO dto) throws ApplicationException, DuplicateRecordException, DatabaseException {
+	public void update(TimetableDTO dto) throws DatabaseException, DuplicateRecordException, DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		TimetableDTO existDto = checkBySemester(dto.getCourseId(), dto.getSubjectId(), dto.getSemester(), dto.getExamDate());
@@ -86,13 +86,13 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Timetable update" + e.getMessage());
+			throw new DatabaseException("Exception in Timetable update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public TimetableDTO findByPK(long pk) throws ApplicationException {
+	public TimetableDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		TimetableDTO dto = null;
 		try {
@@ -100,7 +100,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 			dto = (TimetableDTO) session.get(TimetableDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting Timetable by pk");
+			throw new DatabaseException("Exception : Exception in getting Timetable by pk");
 		} finally {
 			session.close();
 		}
@@ -109,7 +109,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 	}
 
 	public TimetableDTO checkByCourseName(long courseId, Date examDate)
-			throws ApplicationException, DuplicateRecordException {
+			throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		TimetableDTO dto = null;
 		try {
@@ -123,7 +123,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Timetable by Course Name " + e.getMessage());
+			throw new DatabaseException("Exception in getting Timetable by Course Name " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -133,7 +133,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 	}
 
 	public TimetableDTO checkBySubjectName(long courseId, long subjectId, Date examDate)
-			throws ApplicationException, DuplicateRecordException {
+			throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		TimetableDTO dto = null;
 		try {
@@ -148,7 +148,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Timetable by Subject Name " + e.getMessage());
+			throw new DatabaseException("Exception in getting Timetable by Subject Name " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -158,7 +158,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 	}
 
 	public TimetableDTO checkBySemester(long courseId, long subjectId, String semester, Date examDate)
-			throws ApplicationException, DuplicateRecordException {
+			throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		TimetableDTO dto = null;
 		try {
@@ -174,7 +174,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Timetable by Semester " + e.getMessage());
+			throw new DatabaseException("Exception in getting Timetable by Semester " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -183,11 +183,11 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -201,7 +201,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Timetable list");
+			throw new DatabaseException("Exception : Exception in  Timetable list");
 		} finally {
 			session.close();
 		}
@@ -209,11 +209,11 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 		return list;
 	}
 
-	public List search(TimetableDTO dto) throws ApplicationException {
+	public List search(TimetableDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(TimetableDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(TimetableDTO dto, int pageNo, int pageSize) throws DatabaseException {
 	    Session session = null;
 	    List list = null;
 	    try {
@@ -254,7 +254,7 @@ public class TimetableModelHibImpl implements TimetableModelInt {
 	        }
 	        list = criteria.list();
 	    } catch (HibernateException e) {
-	        throw new ApplicationException("Exception in timetable search");
+	        throw new DatabaseException("Exception in timetable search");
 	    } finally {
 	        session.close();
 	    }

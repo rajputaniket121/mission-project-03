@@ -9,14 +9,14 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.CollegeDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.CollegeModelInt;
 import in.co.rays.proj3.utill.HibDataSource;
 
 public class CollegeModelHibImpl implements CollegeModelInt{
 
-	public long add(CollegeDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(CollegeDTO dto) throws DatabaseException, DuplicateRecordException {
 		CollegeDTO existDto = null;
 		existDto = fingByName(dto.getName());
 		if (existDto != null) {
@@ -34,7 +34,7 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in College Add " + e.getMessage());
+			throw new DatabaseException("Exception in College Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -42,7 +42,7 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 
 	}
 
-	public void delete(CollegeDTO dto) throws ApplicationException {
+	public void delete(CollegeDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -54,13 +54,13 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in College Delete" + e.getMessage());
+			throw new DatabaseException("Exception in College Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(CollegeDTO dto) throws ApplicationException, DuplicateRecordException {
+	public void update(CollegeDTO dto) throws DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		CollegeDTO existDto = fingByName(dto.getName());
@@ -78,13 +78,13 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in College update" + e.getMessage());
+			throw new DatabaseException("Exception in College update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public CollegeDTO findByPK(long pk) throws ApplicationException {
+	public CollegeDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		CollegeDTO dto = null;
 		try {
@@ -92,7 +92,7 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 			dto = (CollegeDTO) session.get(CollegeDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting College by pk");
+			throw new DatabaseException("Exception : Exception in getting College by pk");
 		} finally {
 			session.close();
 		}
@@ -100,7 +100,7 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 		return dto;
 	}
 
-	public CollegeDTO fingByName(String name) throws ApplicationException {
+	public CollegeDTO fingByName(String name) throws DatabaseException {
 		Session session = null;
 		CollegeDTO dto = null;
 		try {
@@ -113,7 +113,7 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting College by Name " + e.getMessage());
+			throw new DatabaseException("Exception in getting College by Name " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -122,11 +122,11 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -140,7 +140,7 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Colleges list");
+			throw new DatabaseException("Exception : Exception in  Colleges list");
 		} finally {
 			session.close();
 		}
@@ -148,11 +148,11 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 		return list;
 	}
 
-	public List search(CollegeDTO dto) throws ApplicationException {
+	public List search(CollegeDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(CollegeDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(CollegeDTO dto, int pageNo, int pageSize) throws DatabaseException {
 		Session session=null;
 		List list=null;
 		try {
@@ -183,7 +183,7 @@ public class CollegeModelHibImpl implements CollegeModelInt{
 			list=criteria.list();
 		} catch (HibernateException e) {
             
-            throw new ApplicationException("Exception in college search");
+            throw new DatabaseException("Exception in college search");
         } finally {
             session.close();
         }

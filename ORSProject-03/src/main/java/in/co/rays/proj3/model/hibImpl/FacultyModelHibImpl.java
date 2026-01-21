@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import in.co.rays.proj3.dto.FacultyDTO;
-import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.FacultyModelInt;
@@ -22,7 +22,7 @@ import in.co.rays.proj3.utill.HibDataSource;
  */
 public class FacultyModelHibImpl implements FacultyModelInt{
 
-	public long add(FacultyDTO dto) throws ApplicationException, DuplicateRecordException {
+	public long add(FacultyDTO dto) throws DatabaseException, DuplicateRecordException {
 		FacultyDTO existDto = null;
 		existDto = findByEmailId(dto.getEmailId());
 		if (existDto != null) {
@@ -40,7 +40,7 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 				tx.rollback();
 
 			}
-			throw new ApplicationException("Exception in Faculty Add " + e.getMessage());
+			throw new DatabaseException("Exception in Faculty Add " + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -48,7 +48,7 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 
 	}
 
-	public void delete(FacultyDTO dto) throws ApplicationException {
+	public void delete(FacultyDTO dto) throws DatabaseException {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -60,13 +60,13 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Faculty Delete" + e.getMessage());
+			throw new DatabaseException("Exception in Faculty Delete" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public void update(FacultyDTO dto) throws ApplicationException, DatabaseException, DuplicateRecordException {
+	public void update(FacultyDTO dto) throws DatabaseException, DatabaseException, DuplicateRecordException {
 		Session session = null;
 		Transaction tx = null;
 		FacultyDTO existDto = findByEmailId(dto.getEmailId());
@@ -84,13 +84,13 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in Faculty update" + e.getMessage());
+			throw new DatabaseException("Exception in Faculty update" + e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 
-	public FacultyDTO findByPK(long pk) throws ApplicationException {
+	public FacultyDTO findByPK(long pk) throws DatabaseException {
 		Session session = null;
 		FacultyDTO dto = null;
 		try {
@@ -98,7 +98,7 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 			dto = (FacultyDTO) session.get(FacultyDTO.class, pk);
 
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in getting Faculty by pk");
+			throw new DatabaseException("Exception : Exception in getting Faculty by pk");
 		} finally {
 			session.close();
 		}
@@ -106,7 +106,7 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 		return dto;
 	}
 
-	public FacultyDTO findByEmailId(String emailId) throws ApplicationException {
+	public FacultyDTO findByEmailId(String emailId) throws DatabaseException {
 		Session session = null;
 		FacultyDTO dto = null;
 		try {
@@ -119,7 +119,7 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new ApplicationException("Exception in getting Faculty by Email " + e.getMessage());
+			throw new DatabaseException("Exception in getting Faculty by Email " + e.getMessage());
 
 		} finally {
 			session.close();
@@ -128,11 +128,11 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 		return dto;
 	}
 
-	public List list() throws ApplicationException {
+	public List list() throws DatabaseException {
 		return list(0, 0);
 	}
 
-	public List list(int pageNo, int pageSize) throws ApplicationException {
+	public List list(int pageNo, int pageSize) throws DatabaseException {
 		Session session = null;
 		List list = null;
 		try {
@@ -146,7 +146,7 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 			}
 			list = criteria.list();
 		} catch (HibernateException e) {
-			throw new ApplicationException("Exception : Exception in  Faculty list");
+			throw new DatabaseException("Exception : Exception in  Faculty list");
 		} finally {
 			session.close();
 		}
@@ -154,11 +154,11 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 		return list;
 	}
 
-	public List search(FacultyDTO dto) throws ApplicationException {
+	public List search(FacultyDTO dto) throws DatabaseException {
 		return search(dto, 0, 0);
 	}
 
-	public List search(FacultyDTO dto, int pageNo, int pageSize) throws ApplicationException {
+	public List search(FacultyDTO dto, int pageNo, int pageSize) throws DatabaseException {
 	    Session session = null;
 	    List list = null;
 	    try {
@@ -211,7 +211,7 @@ public class FacultyModelHibImpl implements FacultyModelInt{
 	        }
 	        list = criteria.list();
 	    } catch (HibernateException e) {
-	        throw new ApplicationException("Exception in faculty search");
+	        throw new DatabaseException("Exception in faculty search");
 	    } finally {
 	        session.close();
 	    }

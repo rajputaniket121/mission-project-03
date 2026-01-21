@@ -24,7 +24,7 @@ public class HibDataSource {
             System.out.println("Hibernate using DB URL = " + jdbcUrl);
             
             sessionFactory = new Configuration().configure()
-            		.setProperty("hibernate.connection.url", jdbcUrl).buildSessionFactory();
+            		.setProperty("hibernate.connection.url", jdbcUrl+ "?useSSL=false").buildSessionFactory();
         }
         return sessionFactory;
     }
@@ -38,4 +38,17 @@ public class HibDataSource {
             session.close();
         }
     }
+    
+    public static synchronized void rebuildSessionFactory() {
+        try {
+            if (sessionFactory != null) {
+                sessionFactory.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory = null;
+        }
+    }
+
 }
