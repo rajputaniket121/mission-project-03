@@ -122,15 +122,16 @@ public class HTMLUtility {
     }
 */
 	public static String getList(String name, String selectedVal, List list) {
-
-        Collections.sort(list);       
+        Collections.sort(list);
         StringBuffer sb = new StringBuffer("<select class='form-control' style='border: 2px solid #8080803b;' class='form-control' name='" + name + "'>");
 
         boolean select=true;
-        if (select)
+        if (select && !list.isEmpty())
         {
 
             sb.append("<option class='dropdown-item' style='border: 2px solid #8080803b;' selected value=''>------Select a "+ name +"---------</option>");
+        }else {
+        	sb.append("<option class='dropdown-item' style='border: 2px solid #8080803b;' selected value=''><b>Con't Load Preload DataBase down</b></option>");
         }
 
         

@@ -1,6 +1,7 @@
 package in.co.rays.proj3.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import in.co.rays.proj3.dto.BaseDTO;
 import in.co.rays.proj3.dto.RoleDTO;
 import in.co.rays.proj3.dto.UserDTO;
 import in.co.rays.proj3.exception.ApplicationException;
+import in.co.rays.proj3.exception.DatabaseException;
 import in.co.rays.proj3.exception.DuplicateRecordException;
 import in.co.rays.proj3.model.ModelFactory;
 import in.co.rays.proj3.model.RoleModelInt;
@@ -37,8 +39,9 @@ public class UserCtl extends BaseCtl {
         try {
             List<RoleDTO> roleList = roleModel.list();
             request.setAttribute("roleList", roleList);
-        } catch (ApplicationException e) {
-            e.printStackTrace();
+        } catch (DatabaseException e) {
+        	request.setAttribute("roleList", new ArrayList());
+        	request.setAttribute(BaseCtl.MSG_ERROR, "Database connection was lost. Please try again.");
         }
         log.debug("Out UserCtl Preload ");
     }
@@ -163,7 +166,7 @@ public class UserCtl extends BaseCtl {
                 if(e.getClass().toString().equals(e.toString())) {
                 	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
                 }else {
-                	ServletUtility.handleException(e, req, resp);
+                	ServletUtility.handleExceptionDBDown(e, req, resp,getView());
                 }
                 return;
             }
@@ -191,7 +194,7 @@ public class UserCtl extends BaseCtl {
                 if(e.getClass().toString().equals(e.toString())) {
                 	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
                 }else {
-                	ServletUtility.handleException(e, req, resp);
+                	ServletUtility.handleExceptionDBDown(e, req, resp,getView());
                 }
                 return;
             }

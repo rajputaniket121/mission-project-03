@@ -89,14 +89,9 @@ public class UserListCtl extends BaseCtl {
 			ServletUtility.setPageSize(pageSize, req);
 			req.setAttribute("nextListSize", next.size());
 		} catch (ApplicationException e) {
-            e.printStackTrace();
-            if(e.getClass().toString().equals(e.toString())) {
-            	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
-            }else {
-            	ServletUtility.handleException(e, req, resp);
-            }
-            return;
-        }
+			ServletUtility.handleExceptionDBDown(e, req, resp, getView());
+			return;
+		}
 		ServletUtility.forward(getView(), req, resp);
 	}
 
@@ -165,15 +160,10 @@ public class UserListCtl extends BaseCtl {
 			ServletUtility.setPageNo(pageNo, req);
 			ServletUtility.setPageSize(pageSize, req);
 			req.setAttribute("nextListSize", next.size());
-		}catch (ApplicationException e) {
-            e.printStackTrace();
-            if(e.getClass().toString().equals(e.toString())) {
-            	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
-            }else {
-            	ServletUtility.handleException(e, req, resp);
-            }
-            return;
-        }
+		} catch (ApplicationException e) {
+			ServletUtility.handleExceptionDBDown(e, req, resp, getView());
+			return;
+		}
 
 		ServletUtility.forward(getView(), req, resp);
 	}

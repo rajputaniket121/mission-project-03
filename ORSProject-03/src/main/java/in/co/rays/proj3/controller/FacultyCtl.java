@@ -1,6 +1,7 @@
 package in.co.rays.proj3.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -42,7 +43,10 @@ public class FacultyCtl extends BaseCtl{
 	            request.setAttribute("subjectList", subjectList);
 	            request.setAttribute("collegeList", collegeList);
 	        } catch (ApplicationException e) {
-	           e.printStackTrace();
+	        	request.setAttribute("courseList", new ArrayList());
+	            request.setAttribute("subjectList", new ArrayList());
+	            request.setAttribute("collegeList", new ArrayList());
+	            request.setAttribute(BaseCtl.MSG_ERROR, "Database connection was lost. Please try again.");
 	        }
 	    }
 

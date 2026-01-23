@@ -86,8 +86,8 @@ public class RoleCtl extends BaseCtl{
 				ServletUtility.setDto(dto, req);
 				ServletUtility.setErrorMessage("Role Already exist !!!", req);
 			}catch (ApplicationException ae) {
-				ae.printStackTrace();
-				ServletUtility.handleException(ae, req, resp);
+				 ServletUtility.handleExceptionDBDown(ae, req, resp,getView());
+				 return;
 			}
 		}else if(RoleCtl.OP_RESET.equalsIgnoreCase(op)){
 			ServletUtility.redirect(ORSView.ROLE_CTL,req, resp);

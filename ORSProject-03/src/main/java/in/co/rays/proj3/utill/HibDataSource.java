@@ -23,8 +23,10 @@ public class HibDataSource {
             }
             System.out.println("Hibernate using DB URL = " + jdbcUrl);
             
-            sessionFactory = new Configuration().configure()
-            		.setProperty("hibernate.connection.url", jdbcUrl+ "?useSSL=false").buildSessionFactory();
+            Configuration cfg = new Configuration().configure()
+            		.setProperty("hibernate.connection.url", jdbcUrl);
+            sessionFactory = cfg.buildSessionFactory();
+            		
         }
         return sessionFactory;
     }

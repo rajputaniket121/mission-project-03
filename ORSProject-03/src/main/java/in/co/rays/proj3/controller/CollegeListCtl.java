@@ -77,10 +77,9 @@ public class CollegeListCtl extends BaseCtl {
 			ServletUtility.forward(getView(), request, response);
 
 		} catch (ApplicationException e) {
-			log.error("Error in college list search", e);
-			ServletUtility.handleException(e, request, response);
-			return;
-		}
+            ServletUtility.handleExceptionDBDown(e, request, response,getView());
+            return;
+        }
 		log.debug("CollegeListCtl doGet method ended");
 	}
 
@@ -167,10 +166,9 @@ public class CollegeListCtl extends BaseCtl {
 			ServletUtility.setPageSize(pageSize, request);
 
 		} catch (ApplicationException e) {
-			log.error("Error in college list operation", e);
-			ServletUtility.handleException(e, request, response);
-			return;
-		}
+            ServletUtility.handleExceptionDBDown(e, request, response,getView());
+            return;
+        }
 
 		ServletUtility.forward(getView(), request, response);
 		log.debug("CollegeListCtl doPost method ended");

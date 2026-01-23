@@ -1,6 +1,7 @@
 package in.co.rays.proj3.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -31,7 +32,8 @@ public class SubjectCtl extends BaseCtl{
 			List<CourseDTO> courseList = model.list();
 			request.setAttribute("courseList", courseList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			request.setAttribute("courseList", new ArrayList());
+			request.setAttribute(BaseCtl.MSG_ERROR, "Database connection was lost. Please try again.");
 		}
 	}
 	
@@ -113,8 +115,7 @@ public class SubjectCtl extends BaseCtl{
                 ServletUtility.setDto(dto, req);
                 ServletUtility.setErrorMessage("Subject Already Exist !!!", req);
             }catch(ApplicationException ae) {
-                ae.printStackTrace();
-                ServletUtility.handleException(ae, req, resp);
+                ServletUtility.handleExceptionDBDown(ae, req, resp,getView());
                 return;
             }
             ServletUtility.forward(getView(), req, resp);

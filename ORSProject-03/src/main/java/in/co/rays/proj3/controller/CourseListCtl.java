@@ -56,12 +56,7 @@ public class CourseListCtl extends BaseCtl{
 			ServletUtility.setPageSize(pageSize, req);
 			req.setAttribute("nextListSize", next.size());
 		} catch (ApplicationException e) {
-            e.printStackTrace();
-            if(e.getClass().toString().equals(e.toString())) {
-            	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
-            }else {
-            	ServletUtility.handleException(e, req, resp);
-            }
+            ServletUtility.handleExceptionDBDown(e, req, resp,getView());
             return;
         }
 		ServletUtility.forward(getView(), req, resp);
@@ -135,12 +130,7 @@ public class CourseListCtl extends BaseCtl{
 			ServletUtility.setPageSize(pageSize, req);
 			req.setAttribute("nextListSize", next.size());
 		}catch (ApplicationException e) {
-            e.printStackTrace();
-            if(e.getClass().toString().equals(e.toString())) {
-            	 ServletUtility.handleExceptionDBDown(e, req, resp,getView());
-            }else {
-            	ServletUtility.handleException(e, req, resp);
-            }
+            ServletUtility.handleExceptionDBDown(e, req, resp,getView());
             return;
         }
 		ServletUtility.forward(getView(), req, resp);

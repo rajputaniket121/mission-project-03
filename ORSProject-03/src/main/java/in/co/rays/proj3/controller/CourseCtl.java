@@ -89,16 +89,10 @@ public class CourseCtl extends BaseCtl {
                 CourseDTO dto = model.findByPK(id);
                 ServletUtility.setDto(dto, request);
             }catch (ApplicationException e) {
-                e.printStackTrace();
-                if(e.getClass().toString().equals(e.toString())) {
-                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
-                }else {
-                	ServletUtility.handleException(e, request, response);
-                }
+                ServletUtility.handleExceptionDBDown(e, request, response,getView());
                 return;
             }
         }
-        
         ServletUtility.forward(getView(), request, response);
         log.debug("CourseCtl doGet method ended");
     }
@@ -134,13 +128,8 @@ public class CourseCtl extends BaseCtl {
                 log.warn("Duplicate course found: " + dto.getCourseName());
                 ServletUtility.setDto(dto, request);
                 ServletUtility.setErrorMessage("Course Name already exists", request);
-            } catch (ApplicationException e) {
-                e.printStackTrace();
-                if(e.getClass().toString().equals(e.toString())) {
-                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
-                }else {
-                	ServletUtility.handleException(e, request, response);
-                }
+            }catch (ApplicationException e) {
+                ServletUtility.handleExceptionDBDown(e, request, response,getView());
                 return;
             }
         } else if(OP_DELETE.equalsIgnoreCase(op)) {
@@ -151,13 +140,8 @@ public class CourseCtl extends BaseCtl {
                 log.info("Course deleted successfully with id: " + id);
                 ServletUtility.redirect(ORSView.COURSE_LIST_CTL, request, response);
                 return;
-            } catch (ApplicationException e) {
-                e.printStackTrace();
-                if(e.getClass().toString().equals(e.toString())) {
-                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
-                }else {
-                	ServletUtility.handleException(e, request, response);
-                }
+            }catch (ApplicationException e) {
+                ServletUtility.handleExceptionDBDown(e, request, response,getView());
                 return;
             }
         } else if(OP_CANCEL.equalsIgnoreCase(op)) {

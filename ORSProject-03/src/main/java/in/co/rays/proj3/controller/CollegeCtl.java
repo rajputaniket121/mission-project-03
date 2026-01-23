@@ -109,12 +109,7 @@ public class CollegeCtl extends BaseCtl {
                 CollegeDTO bean = model.findByPK(id);
                 ServletUtility.setDto(bean, request);
             } catch (ApplicationException e) {
-                e.printStackTrace();
-                if(e.getClass().toString().equals(e.toString())) {
-                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
-                }else {
-                	ServletUtility.handleException(e, request, response);
-                }
+            	ServletUtility.handleExceptionDBDown(e, request, response, getView());
                 return;
             }
         }
@@ -146,12 +141,7 @@ public class CollegeCtl extends BaseCtl {
                 ServletUtility.setDto(bean, request);
                 ServletUtility.setErrorMessage("College Name already exists", request);
             }catch (ApplicationException e) {
-                e.printStackTrace();
-                if(e.getClass().toString().equals(e.toString())) {
-                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
-                }else {
-                	ServletUtility.handleException(e, request, response);
-                }
+                ServletUtility.handleExceptionDBDown(e, request, response,getView());
                 return;
             }
         } else if(RoleCtl.OP_RESET.equalsIgnoreCase(op)){
@@ -169,12 +159,7 @@ public class CollegeCtl extends BaseCtl {
                 ServletUtility.setDto(bean, request);
                 ServletUtility.setErrorMessage("College Name already exists", request);
             }catch (ApplicationException e) {
-                e.printStackTrace();
-                if(e.getClass().toString().equals(e.toString())) {
-                	 ServletUtility.handleExceptionDBDown(e, request, response,getView());
-                }else {
-                	ServletUtility.handleException(e, request, response);
-                }
+                ServletUtility.handleExceptionDBDown(e, request, response,getView());
                 return;
             }
         } else if(OP_CANCEL.equalsIgnoreCase(op)) {

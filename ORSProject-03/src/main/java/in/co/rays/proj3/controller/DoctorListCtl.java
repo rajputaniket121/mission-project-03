@@ -1,6 +1,7 @@
 package in.co.rays.proj3.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -99,13 +100,9 @@ public class DoctorListCtl extends BaseCtl {
             ServletUtility.setPageSize(pageSize, req);
             req.setAttribute("nextListSize", next.size());
         } catch (ApplicationException e) {
-            e.printStackTrace();
-            ServletUtility.handleException(e, req, resp);
+            ServletUtility.handleExceptionDBDown(e, req, resp,getView());
             return;
-        }catch (Exception e) {
-			ServletUtility.handleExceptionDBDown(e, req, resp,getView());
-			return;
-		}
+        }
 
         ServletUtility.forward(getView(), req, resp);
     }
@@ -184,12 +181,9 @@ public class DoctorListCtl extends BaseCtl {
             req.setAttribute("nextListSize", next.size());
         } catch (ApplicationException e) {
             e.printStackTrace();
-            ServletUtility.handleException(e, req, resp);
+            ServletUtility.handleExceptionDBDown(e, req, resp,getView());
             return;
-        }catch (Exception e) {
-			ServletUtility.handleExceptionDBDown(e, req, resp,getView());
-			return;
-		}
+        }
 
         ServletUtility.forward(getView(), req, resp);
     }

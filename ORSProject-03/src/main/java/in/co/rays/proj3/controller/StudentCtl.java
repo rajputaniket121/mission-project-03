@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 @WebServlet(name = "StudentCtl",urlPatterns = {"/ctl/StudentCtl"})
 public class StudentCtl extends  BaseCtl{
@@ -27,7 +28,8 @@ public class StudentCtl extends  BaseCtl{
             List<CollegeDTO> collegeList =  collegeModel.list();
             request.setAttribute("collegeList", collegeList);
         } catch (ApplicationException e) {
-            e.printStackTrace();
+        	 request.setAttribute("collegeList", new ArrayList());
+        	request.setAttribute(BaseCtl.MSG_ERROR, "Database connection was lost. Please try again.");
         }
     }
 
