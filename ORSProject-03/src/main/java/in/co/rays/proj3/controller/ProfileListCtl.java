@@ -1,7 +1,6 @@
 package in.co.rays.proj3.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,88 +8,56 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
 import in.co.rays.proj3.dto.BaseDTO;
-import in.co.rays.proj3.dto.DoctorDTO;
+import in.co.rays.proj3.dto.ProfileDTO;
 import in.co.rays.proj3.exception.ApplicationException;
-import in.co.rays.proj3.model.DoctorModelInt;
+import in.co.rays.proj3.model.ProfileModelInt;
 import in.co.rays.proj3.model.ModelFactory;
 import in.co.rays.proj3.utill.DataUtility;
 import in.co.rays.proj3.utill.PropertyReader;
 import in.co.rays.proj3.utill.ServletUtility;
 
-/**
- * DoctorListCtl is a servlet controller that manages listing, searching,
- * pagination, and deletion of Doctor records in the application.
- *
- */
-@WebServlet(name = "DoctorListCtl", urlPatterns = { "/ctl/DoctorListCtl" })
-public class DoctorListCtl extends BaseCtl {
+@WebServlet(name = "ProfileListCtl", urlPatterns = { "/ctl/ProfileListCtl" })
+public class ProfileListCtl extends BaseCtl {
 
-	private static final Logger log = Logger.getLogger(DoctorListCtl.class.getName());
-
-	/**
-	 * Preloads the list of doctor specialties (experties) for search filter
-	 * dropdown.
-	 *
-	 * @param request the HttpServletRequest object
-	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
-		log.info("Inside preload method of DoctorListCtl");
-		DoctorModelInt model = ModelFactory.getInstance().getDoctorModel();
+		ProfileModelInt model = ModelFactory.getInstance().getProfileModel();
 		try {
-			List<DoctorDTO> doctorExpertiesList = model.list();
-			HashMap<String, String> expertiesMap = new HashMap<>();
-			Iterator<DoctorDTO> it = doctorExpertiesList.iterator();
+			List<ProfileDTO> profileStatusList = model.list();
+			HashMap<String, String> profileStatusMap = new HashMap<>();
+			Iterator<ProfileDTO> it = profileStatusList.iterator();
 
 			while (it.hasNext()) {
-				DoctorDTO dto = it.next();
-				expertiesMap.put(dto.getExperties(), dto.getExperties());
+				ProfileDTO dto = it.next();
+				profileStatusMap.put(dto.getProfileStatus(), dto.getProfileStatus());
 			}
-			request.setAttribute("expertiesMap", expertiesMap);
+			request.setAttribute("profileStatusMap", profileStatusMap);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Populates a {@link DoctorDTO} from search form parameters.
-	 *
-	 * @param request the HttpServletRequest object
-	 * @return a DoctorDTO populated with search criteria
-	 */
 	@Override
 	protected BaseDTO populateDTO(HttpServletRequest request) {
-		log.info("Inside populateDTO method of DoctorListCtl");
-		DoctorDTO dto = new DoctorDTO();
-		dto.setName(DataUtility.getString(request.getParameter("name")));
-		dto.setMobile(DataUtility.getString(request.getParameter("mobile")));
-		dto.setExperties(DataUtility.getString(request.getParameter("experties")));
+		ProfileDTO dto = new ProfileDTO();
+		dto.setFullName(DataUtility.getString(request.getParameter("fullName")));
+		dto.setProfileStatus(DataUtility.getString(request.getParameter("profileStatus")));
 		return dto;
 	}
 
-	/**
-	 * Handles HTTP GET requests to display the doctor list with optional search
-	 * criteria.
-	 *
-	 * @param req  the HttpServletRequest object
-	 * @param resp the HttpServletResponse object
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
-	 */
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		log.info("Inside doGet method of DoctorListCtl");
 
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
-		DoctorDTO dto = (DoctorDTO) populateDTO(req);
-		DoctorModelInt model = ModelFactory.getInstance().getDoctorModel();
+		ProfileDTO dto = (ProfileDTO) populateDTO(req);
+		ProfileModelInt model = ModelFactory.getInstance().getProfileModel();
 
 		try {
-			List<DoctorDTO> list = model.search(dto, pageNo, pageSize);
-			List<DoctorDTO> next = model.search(dto, pageNo + 1, pageSize);
+			List<ProfileDTO> list = model.search(dto, pageNo, pageSize);
+			List<ProfileDTO> next = model.search(dto, pageNo + 1, pageSize);
 
 			if (list.isEmpty() || list == null) {
 				ServletUtility.setErrorMessage("No Records found", req);
@@ -108,21 +75,12 @@ public class DoctorListCtl extends BaseCtl {
 		ServletUtility.forward(getView(), req, resp);
 	}
 
-	/**
-	 * Handles HTTP POST requests for searching, pagination, deletion, reset, and
-	 * redirection to new doctor form.
-	 *
-	 * @param req  the HttpServletRequest object
-	 * @param resp the HttpServletResponse object
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
-	 */
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		log.info("Inside doPost method of DoctorListCtl");
 
-		List<DoctorDTO> list = null;
-		List<DoctorDTO> next = null;
+		List<ProfileDTO> list = null;
+		List<ProfileDTO> next = null;
 
 		int pageNo = DataUtility.getInt(req.getParameter("pageNo"));
 		int pageSize = DataUtility.getInt(req.getParameter("pageSize"));
@@ -130,8 +88,8 @@ public class DoctorListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
-		DoctorDTO dto = (DoctorDTO) populateDTO(req);
-		DoctorModelInt model = ModelFactory.getInstance().getDoctorModel();
+		ProfileDTO dto = (ProfileDTO) populateDTO(req);
+		ProfileModelInt model = ModelFactory.getInstance().getProfileModel();
 
 		String op = DataUtility.getString(req.getParameter("operation"));
 
@@ -145,16 +103,16 @@ public class DoctorListCtl extends BaseCtl {
 					pageNo--;
 				}
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.DOCTOR_LIST_CTL, req, resp);
+				ServletUtility.redirect(ORSView.PROFILE_LIST_CTL, req, resp);
 				return;
 			} else if (OP_NEW.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.DOCTOR_CTL, req, resp);
+				ServletUtility.redirect(ORSView.PROFILE_CTL, req, resp);
 				return;
 			} else if (OP_DELETE.equalsIgnoreCase(op)) {
 				pageNo = 1;
 				String[] ids = req.getParameterValues("ids");
 				if (ids != null && ids.length > 0) {
-					DoctorDTO deleteDTO = new DoctorDTO();
+					ProfileDTO deleteDTO = new ProfileDTO();
 					for (String id : ids) {
 						deleteDTO.setId(DataUtility.getLong(id));
 						model.delete(deleteDTO);
@@ -164,7 +122,7 @@ public class DoctorListCtl extends BaseCtl {
 					ServletUtility.setErrorMessage("Select Atleast one Checkbox", req);
 				}
 			} else if (OP_BACK.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.DOCTOR_LIST_CTL, req, resp);
+				ServletUtility.redirect(ORSView.PROFILE_LIST_CTL, req, resp);
 				return;
 			}
 
@@ -187,15 +145,9 @@ public class DoctorListCtl extends BaseCtl {
 
 		ServletUtility.forward(getView(), req, resp);
 	}
-
-	/**
-	 * Returns the view (JSP page) associated with this controller.
-	 *
-	 * @return the doctor list view JSP path
-	 */
+	
 	@Override
 	protected String getView() {
-		log.info("Inside getView method of DoctorListCtl");
-		return ORSView.DOCTOR_LIST_VIEW;
+		return ORSView.PROFILE_LIST_VIEW;
 	}
 }

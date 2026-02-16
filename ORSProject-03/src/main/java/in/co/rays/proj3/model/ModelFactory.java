@@ -8,6 +8,7 @@ import in.co.rays.proj3.model.hibImpl.CourseModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.DoctorModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.FacultyModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.MarksheetModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.ProfileModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.RoleModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.StudentModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.SubjectModelHibImpl;
@@ -198,5 +199,19 @@ public final class ModelFactory {
 		}
 
 		return doctorModel;
+	}
+	public ProfileModelInt getProfileModel() {
+		ProfileModelInt profileModel = (ProfileModelInt) modelCache.get("profileModel");
+		if (profileModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				profileModel = new ProfileModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				profileModel = new ProfileModelHibImpl();
+			}
+			modelCache.put("profileModel", profileModel);
+		}
+
+		return profileModel;
 	}
 }
