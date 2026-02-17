@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import in.co.rays.proj3.model.hibImpl.CollegeModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.ContactModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CourseModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.DoctorModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.FacultyModelHibImpl;
@@ -213,5 +214,20 @@ public final class ModelFactory {
 		}
 
 		return profileModel;
+	}
+
+	public ContactModelInt getContactModel() {
+		ContactModelInt contactModel = (ContactModelInt) modelCache.get("contactModel");
+		if (contactModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				contactModel = new ContactModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				contactModel = new ContactModelHibImpl();
+			}
+			modelCache.put("contactModel", contactModel);
+		}
+
+		return contactModel;
 	}
 }

@@ -164,6 +164,14 @@ $(function() {
                                 <a class="dropdown-item" href="<%=ORSView.PROFILE_LIST_CTL%>"><i class="fa fa-list mr-2"></i>Profile List</a>
                             </div>
                         </li>
+                        <!-- Contact -->
+                        <li class="nav-item dropdown px-1">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Contact</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="<%=ORSView.CONTACT_CTL%>"><i class="fa fa-user-plus mr-2"></i>Add Contact</a>
+                                <a class="dropdown-item" href="<%=ORSView.CONTACT_LIST_CTL%>"><i class="fa fa-list mr-2"></i>Contact List</a>
+                            </div>
+                        </li>
                     <% } %>
                 <% } %>
                 <!-- ===== Profile / Auth Menu ===== -->

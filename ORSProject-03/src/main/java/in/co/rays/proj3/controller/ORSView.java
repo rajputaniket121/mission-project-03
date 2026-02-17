@@ -81,5 +81,10 @@ public interface ORSView {
 	public String PROFILE_LIST_VIEW = PAGE_FOLDER + "/ProfileListView.jsp";
 	public String PROFILE_CTL = APP_CONTEXT + "/ctl/ProfileCtl";
 	public String PROFILE_LIST_CTL = APP_CONTEXT + "/ctl/ProfileListCtl";
+	
+	public static final String CONTACT_VIEW =PAGE_FOLDER+ "/ContactView.jsp";
+	public static final String CONTACT_LIST_VIEW = PAGE_FOLDER + "/ContactListView.jsp";
+	public static final String CONTACT_CTL = APP_CONTEXT + "/ctl/ContactCtl";
+	public static final String CONTACT_LIST_CTL = APP_CONTEXT + "/ctl/ContactListCtl";
 
 }

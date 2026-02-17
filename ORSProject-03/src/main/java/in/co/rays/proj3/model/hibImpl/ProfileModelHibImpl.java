@@ -22,12 +22,8 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 	 *
 	 */
 
-	private static Logger log = Logger.getLogger(ProfileModelHibImpl.class.getName());
-
 	@Override
 	public long add(ProfileDTO dto) throws DatabaseException, DuplicateRecordException {
-		log.info("ProfileModelHibImpl add started");
-
 		ProfileDTO existDto = findByName(dto.getFullName());
 		if (existDto != null) {
 			throw new DuplicateRecordException("Profile name already exists");
@@ -40,13 +36,11 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 			tx = session.beginTransaction();
 			session.save(dto);
 			tx.commit();
-			log.info("Profile added successfully");
 
 		} catch (HibernateException e) {
 			if (tx != null) {
 				tx.rollback();
 			}
-			log.severe("Exception in Profile add");
 			throw new DatabaseException("Exception in Profile add " + e.getMessage());
 		} finally {
 			session.close();
@@ -57,7 +51,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 
 	@Override
 	public void delete(ProfileDTO dto) throws DatabaseException {
-		log.info("ProfileModelHibImpl delete started");
 
 		Session session = null;
 		Transaction tx = null;
@@ -67,13 +60,10 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 			tx = session.beginTransaction();
 			session.delete(dto);
 			tx.commit();
-			log.info("Profile deleted successfully");
-
 		} catch (HibernateException e) {
 			if (tx != null) {
 				tx.rollback();
 			}
-			log.severe("Exception in Profile delete");
 			throw new DatabaseException("Exception in Profile delete " + e.getMessage());
 		} finally {
 			session.close();
@@ -82,8 +72,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 
 	@Override
 	public void update(ProfileDTO dto) throws DatabaseException, DuplicateRecordException {
-		log.info("ProfileModelHibImpl update started");
-
 		ProfileDTO existDto = findByName(dto.getFullName());
 		if (existDto != null && existDto.getId() != dto.getId()) {
 			throw new DuplicateRecordException("Profile name already exists");
@@ -97,13 +85,11 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 			tx = session.beginTransaction();
 			session.saveOrUpdate(dto);
 			tx.commit();
-			log.info("Profile updated successfully");
 
 		} catch (HibernateException e) {
 			if (tx != null) {
 				tx.rollback();
 			}
-			log.severe("Exception in Profile update");
 			throw new DatabaseException("Exception in Profile update " + e.getMessage());
 		} finally {
 			session.close();
@@ -112,7 +98,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 
 	@Override
 	public ProfileDTO findByPK(long pk) throws DatabaseException {
-		log.info("ProfileModelHibImpl findByPK started");
 
 		Session session = null;
 		ProfileDTO dto = null;
@@ -122,7 +107,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 			dto = (ProfileDTO) session.get(ProfileDTO.class, pk);
 
 		} catch (HibernateException e) {
-			log.severe("Exception in findByPK Profile");
 			throw new DatabaseException("Exception in getting Profile by PK");
 		} finally {
 			session.close();
@@ -133,7 +117,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 
 	@Override
 	public ProfileDTO findByName(String name) throws DatabaseException {
-		log.info("ProfileModelHibImpl findByName started");
 
 		Session session = null;
 		ProfileDTO dto = null;
@@ -149,7 +132,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 			}
 
 		} catch (HibernateException e) {
-			log.severe("Exception in findByFullName Profile");
 			e.printStackTrace();
 			throw new DatabaseException("Exception in findByFullName Profile " + e.getMessage());
 		} finally {
@@ -165,7 +147,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 	}
 
 	public List list(int pageNo, int pageSize) throws DatabaseException {
-		log.info("ProfileModelHibImpl list started");
 
 		Session session = null;
 		List list = null;
@@ -183,7 +164,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 			list = criteria.list();
 
 		} catch (HibernateException e) {
-			log.severe("Exception in Profile list");
 			throw new DatabaseException("Exception in Profile list");
 		} finally {
 			session.close();
@@ -194,8 +174,7 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 
 	@Override
 	public List search(ProfileDTO dto, int pageNo, int pageSize) throws DatabaseException {
-		log.info("ProfileModelHibImpl search started");
-
+	
 		Session session = null;
 		List list = null;
 
@@ -230,7 +209,6 @@ public class ProfileModelHibImpl implements ProfileModelInt{
 			list = criteria.list();
 
 		} catch (HibernateException e) {
-			log.severe("Exception in Profile search");
 			throw new DatabaseException("Exception in Profile search");
 		} finally {
 			session.close();
