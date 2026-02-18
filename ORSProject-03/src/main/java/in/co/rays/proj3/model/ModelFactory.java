@@ -13,6 +13,7 @@ import in.co.rays.proj3.model.hibImpl.ProfileModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.RoleModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.StudentModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.SubjectModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.SupportModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.TimetableModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.UserModelHibImpl;
 import in.co.rays.proj3.model.jdbcImpl.CollegeModelJDBCImpl;
@@ -229,5 +230,21 @@ public final class ModelFactory {
 		}
 
 		return contactModel;
+	}
+	
+	public SupportModelInt getSupportModel() {
+		
+		SupportModelInt supportModel = (SupportModelInt) modelCache.get("supportModel");
+		if (supportModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				supportModel = new SupportModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				supportModel = new SupportModelHibImpl();
+			}
+			modelCache.put("supportModel", supportModel);
+		}
+
+		return supportModel;
 	}
 }

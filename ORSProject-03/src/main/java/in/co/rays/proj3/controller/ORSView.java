@@ -86,5 +86,10 @@ public interface ORSView {
 	public static final String CONTACT_LIST_VIEW = PAGE_FOLDER + "/ContactListView.jsp";
 	public static final String CONTACT_CTL = APP_CONTEXT + "/ctl/ContactCtl";
 	public static final String CONTACT_LIST_CTL = APP_CONTEXT + "/ctl/ContactListCtl";
+	
+	public static final String SUPPORT_VIEW = PAGE_FOLDER + "/SupportView.jsp";
+	public static final String SUPPORT_LIST_VIEW = PAGE_FOLDER + "/SupportListView.jsp";
+	public static final String SUPPORT_CTL = APP_CONTEXT + "/ctl/SupportCtl";
+	public static final String SUPPORT_LIST_CTL = APP_CONTEXT + "/ctl/SupportListCtl";
 
 }

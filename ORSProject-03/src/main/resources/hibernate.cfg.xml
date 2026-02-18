@@ -37,5 +37,6 @@
 		<mapping resource="in/co/rays/proj3/hbm/DoctorDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/ProfileDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/ContactDTO.hbm.xml" />
+		<mapping resource="in/co/rays/proj3/hbm/SupportDTO.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
