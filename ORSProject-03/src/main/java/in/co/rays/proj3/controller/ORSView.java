@@ -91,5 +91,15 @@ public interface ORSView {
 	public static final String SUPPORT_LIST_VIEW = PAGE_FOLDER + "/SupportListView.jsp";
 	public static final String SUPPORT_CTL = APP_CONTEXT + "/ctl/SupportCtl";
 	public static final String SUPPORT_LIST_CTL = APP_CONTEXT + "/ctl/SupportListCtl";
+	
+	public static final String ATTENDANCE_VIEW = PAGE_FOLDER + "/AttendanceView.jsp";
+	public static final String ATTENDANCE_LIST_VIEW = PAGE_FOLDER + "/AttendanceListView.jsp";
+	public static final String ATTENDANCE_CTL = APP_CONTEXT + "/ctl/AttendanceCtl";
+	public static final String ATTENDANCE_LIST_CTL = APP_CONTEXT + "/ctl/AttendanceListCtl";
+	
+	public static final String ALERT_VIEW = PAGE_FOLDER + "/AlertView.jsp";
+	public static final String ALERT_LIST_VIEW = PAGE_FOLDER + "/AlertListView.jsp";
+	public static final String ALERT_CTL = APP_CONTEXT + "/ctl/AlertCtl";
+	public static final String ALERT_LIST_CTL = APP_CONTEXT + "/ctl/AlertListCtl";
 
 }

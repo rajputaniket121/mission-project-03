@@ -3,6 +3,8 @@ package in.co.rays.proj3.model;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import in.co.rays.proj3.model.hibImpl.AlertModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.AttendanceModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CollegeModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.ContactModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CourseModelHibImpl;
@@ -246,5 +248,35 @@ public final class ModelFactory {
 		}
 
 		return supportModel;
+	}
+	
+	public AttendanceModelInt getAttendanceModel() {
+		AttendanceModelInt attendanceModel = (AttendanceModelInt) modelCache.get("attendanceModel");
+		if (attendanceModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				attendanceModel = new AttendanceModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				attendanceModel = new AttendanceModelHibImpl();
+			}
+			modelCache.put("attendanceModel", attendanceModel);
+		}
+
+		return attendanceModel;
+	}
+	
+	public AlertModelInt getAlertModel() {
+		AlertModelInt alertModel = (AlertModelInt) modelCache.get("alertModel");
+		if (alertModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				alertModel = new AlertModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				alertModel = new AlertModelHibImpl();
+			}
+			modelCache.put("alertModel", alertModel);
+		}
+
+		return alertModel;
 	}
 }

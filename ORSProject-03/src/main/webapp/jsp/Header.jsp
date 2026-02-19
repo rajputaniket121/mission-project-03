@@ -22,16 +22,16 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 <script>
-$(function() {
-	$("#selectall").click(function() {
-		$('.case').prop('checked', this.checked);
+	$(function() {
+		$("#selectall").click(function() {
+			$('.case').prop('checked', this.checked);
+		});
+		$(".case").click(
+				function() {
+					$("#selectall").prop("checked",
+							$(".case").length === $(".case:checked").length);
+				});
 	});
-	$(".case").click(
-			function() {
-				$("#selectall").prop("checked",
-						$(".case").length === $(".case:checked").length);
-			});
-});
 </script>
 <style type="text/css">
 /* Keep your custom styling for dropdown toggle text and caret */
@@ -46,11 +46,11 @@ $(function() {
 </head>
 <body>
 	<%
-    UserDTO userDto = (UserDTO) session.getAttribute("user");
-    boolean userLoggedIn = userDto != null;
-    String role = userLoggedIn ? (String) session.getAttribute("role") : "";
-    String welcomeMsg = "Hi, " + (userLoggedIn ? userDto.getFirstName() + " (" + role + ")" : "Guest");
-%>
+	UserDTO userDto = (UserDTO) session.getAttribute("user");
+	boolean userLoggedIn = userDto != null;
+	String role = userLoggedIn ? (String) session.getAttribute("role") : "";
+	String welcomeMsg = "Hi, " + (userLoggedIn ? userDto.getFirstName() + " (" + role + ")" : "Guest");
+	%>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
 
 		<a class="navbar-brand" href="<%=ORSView.WELCOME_CTL%>"> <img
@@ -63,9 +63,13 @@ $(function() {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav ml-auto">
-				<% if (userLoggedIn) { %>
+				<%
+				if (userLoggedIn) {
+				%>
 				<!-- ===== STUDENT MENUS ===== -->
-				<% if (userDto.getRoleId() == RoleDTO.STUDENT) { %>
+				<%
+				if (userDto.getRoleId() == RoleDTO.STUDENT) {
+				%>
 				<li class="nav-item dropdown px-1"><a
 					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Marksheet</a>
 					<div class="dropdown-menu">
@@ -83,7 +87,9 @@ $(function() {
 							class="fa fa-key mr-2"></i>Change Password</a>
 					</div></li>
 				<!-- ===== ADMIN MENUS ===== -->
-				<% } else if (userDto.getRoleId() == RoleDTO.ADMIN) { %>
+				<%
+				} else if (userDto.getRoleId() == RoleDTO.ADMIN) {
+				%>
 				<!-- User -->
 				<li class="nav-item dropdown px-1"><a
 					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">User</a>
@@ -203,17 +209,41 @@ $(function() {
 					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Support</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="<%=ORSView.SUPPORT_CTL%>"><i
-							class="fa fa-comment mr-2"></i>Add Ticket</a> <a class="dropdown-item"
-							href="<%=ORSView.SUPPORT_LIST_CTL%>"><i
+							class="fa fa-comment mr-2"></i>Add Ticket</a> <a
+							class="dropdown-item" href="<%=ORSView.SUPPORT_LIST_CTL%>"><i
 							class="fa fa-list mr-2"></i>Ticket List</a>
 					</div></li>
-				<% } %>
-				<% } %>
+				<!-- Alert -->
+				<li class="nav-item dropdown px-1"><a
+					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Alert</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<%=ORSView.ALERT_CTL%>"><i
+							class="fa fa-bell mr-2"></i>Add Alert</a> <a class="dropdown-item"
+							href="<%=ORSView.ALERT_LIST_CTL%>"><i class="fa fa-list mr-2"></i>Alert
+							List</a>
+					</div></li>
+				<%-- <!-- Attendance -->
+				<li class="nav-item dropdown px-1"><a
+					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Attendance</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<%=ORSView.ATTENDANCE_CTL%>"><i
+							class="fa fa-user-plus mr-2"></i>Add Attendance</a> <a
+							class="dropdown-item" href="<%=ORSView.ATTENDANCE_LIST_CTL%>"><i
+							class="fa fa-list mr-2"></i>Attendance List</a>
+					</div></li> --%>
+				<%
+				}
+				%>
+				<%
+				}
+				%>
 				<!-- ===== Profile / Auth Menu ===== -->
 				<li class="nav-item dropdown px-1"><a
-					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><%= welcomeMsg %></a>
+					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><%=welcomeMsg%></a>
 					<div class="dropdown-menu dropdown-menu-right mr-2">
-						<% if (userLoggedIn) { %>
+						<%
+						if (userLoggedIn) {
+						%>
 						<a class="dropdown-item" href="<%=ORSView.MY_PROFILE_CTL%>"><i
 							class="fa fa-user mr-2"></i>My Profile</a> <a class="dropdown-item"
 							href="<%=ORSView.CHANGE_PASSWORD_CTL%>"><i
@@ -225,12 +255,16 @@ $(function() {
 						<a class="dropdown-item"
 							href="<%=ORSView.LOGIN_CTL%>?operation=<%=LoginCtl.OP_LOG_OUT%>"><i
 							class="fa fa-sign-out-alt mr-2"></i>Logout</a>
-						<% } else { %>
+						<%
+						} else {
+						%>
 						<a class="dropdown-item" href="<%=ORSView.LOGIN_CTL%>"><i
 							class="fa fa-sign-in-alt mr-2"></i>Login</a> <a class="dropdown-item"
 							href="<%=ORSView.USER_REGISTRATION_CTL%>"><i
 							class="fa fa-user-plus mr-2"></i>Register</a>
-						<% } %>
+						<%
+						}
+						%>
 					</div></li>
 			</ul>
 		</div>
