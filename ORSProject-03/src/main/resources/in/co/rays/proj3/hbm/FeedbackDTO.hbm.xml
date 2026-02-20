@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="in.co.rays.proj3.dto.FeedbackDTO" table="ST_FEEDBACK">
+        <id name="id" type="java.lang.Long">
+            <column name="ID"></column>
+            <generator class="increment"></generator>
+        </id>
+        <property name="feedbackCode" type="java.lang.String">
+            <column name="FEEDBACK_CODE" />
+        </property>
+        <property name="customerName" type="java.lang.String">
+            <column name="CUSTOMER_NAME" />
+        </property>
+        <property name="rating" type="java.lang.String">
+            <column name="RATING" />
+        </property>
+        <property name="comments" type="java.lang.String">
+            <column name="COMMENTS" />
+        </property>
+        <property name="feedbackDate" type="java.util.Date">
+            <column name="FEEDBACK_DATE" />
+        </property>
+        <property name="createdBy" type="java.lang.String" length="50">
+            <column name="CREATED_BY" />
+        </property>
+        <property name="modifiedBy" type="java.lang.String" length="50">
+            <column name="MODIFIED_BY" />
+        </property>
+        <property name="createdDateTime" type="java.sql.Timestamp">
+            <column name="CREATED_DATETIME" />
+        </property>
+        <property name="modifiedDateTime" type="java.sql.Timestamp">
+            <column name="MODIFIED_DATETIME" />
+        </property>
+    </class>
+</hibernate-mapping>
