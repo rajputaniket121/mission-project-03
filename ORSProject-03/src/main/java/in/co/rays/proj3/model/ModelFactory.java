@@ -10,6 +10,7 @@ import in.co.rays.proj3.model.hibImpl.ContactModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CourseModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.DoctorModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.FacultyModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.FeedbackModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.MarksheetModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.ProfileModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.RoleModelHibImpl;
@@ -278,5 +279,19 @@ public final class ModelFactory {
 		}
 
 		return alertModel;
+	}
+	
+	public FeedbackModelInt getFeedbackModel() {
+		FeedbackModelInt feedbackModel = (FeedbackModelInt) modelCache.get("feedbackModel");
+		if (feedbackModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				feedbackModel = new FeedbackModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				feedbackModel = new FeedbackModelHibImpl();
+			}
+			modelCache.put("feedbackModel", feedbackModel);
+		}
+		return feedbackModel;
 	}
 }

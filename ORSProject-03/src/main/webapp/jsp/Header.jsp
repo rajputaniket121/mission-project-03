@@ -222,6 +222,15 @@
 							href="<%=ORSView.ALERT_LIST_CTL%>"><i class="fa fa-list mr-2"></i>Alert
 							List</a>
 					</div></li>
+				<!-- Feedback -->
+				<li class="nav-item dropdown px-1"><a
+					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Feedback</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<%=ORSView.FEEDBACK_CTL%>"><i
+							class="fa fa-comment mr-2"></i>Add Feedback</a> <a
+							class="dropdown-item" href="<%=ORSView.FEEDBACK_LIST_CTL%>"><i
+							class="fa fa-list mr-2"></i>Feedback List</a>
+					</div></li>
 				<%-- <!-- Attendance -->
 				<li class="nav-item dropdown px-1"><a
 					class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Attendance</a>

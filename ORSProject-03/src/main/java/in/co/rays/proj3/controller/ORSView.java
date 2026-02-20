@@ -101,5 +101,10 @@ public interface ORSView {
 	public static final String ALERT_LIST_VIEW = PAGE_FOLDER + "/AlertListView.jsp";
 	public static final String ALERT_CTL = APP_CONTEXT + "/ctl/AlertCtl";
 	public static final String ALERT_LIST_CTL = APP_CONTEXT + "/ctl/AlertListCtl";
+	
+	public static final String FEEDBACK_VIEW = PAGE_FOLDER + "/FeedbackView.jsp";
+	public static final String FEEDBACK_LIST_VIEW = PAGE_FOLDER + "/FeedbackListView.jsp";
+	public static final String FEEDBACK_CTL = APP_CONTEXT + "/ctl/FeedbackCtl";
+	public static final String FEEDBACK_LIST_CTL = APP_CONTEXT + "/ctl/FeedbackListCtl";
 
 }
