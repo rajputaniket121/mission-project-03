@@ -106,5 +106,10 @@ public interface ORSView {
 	public static final String FEEDBACK_LIST_VIEW = PAGE_FOLDER + "/FeedbackListView.jsp";
 	public static final String FEEDBACK_CTL = APP_CONTEXT + "/ctl/FeedbackCtl";
 	public static final String FEEDBACK_LIST_CTL = APP_CONTEXT + "/ctl/FeedbackListCtl";
+	
+	public static final String SHIFT_VIEW = PAGE_FOLDER + "/ShiftView.jsp";
+	public static final String SHIFT_LIST_VIEW = PAGE_FOLDER + "/ShiftListView.jsp";
+	public static final String SHIFT_CTL = APP_CONTEXT + "/ctl/ShiftCtl";
+	public static final String SHIFT_LIST_CTL = APP_CONTEXT + "/ctl/ShiftListCtl";
 
 }

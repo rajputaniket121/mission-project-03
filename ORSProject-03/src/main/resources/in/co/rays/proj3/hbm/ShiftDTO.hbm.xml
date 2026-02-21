@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="in.co.rays.proj3.dto.ShiftDTO" table="ST_SHIFT">
+        <id name="id" type="java.lang.Long">
+            <column name="ID"></column>
+            <generator class="increment"></generator>
+        </id>
+        <property name="shiftCode" type="java.lang.String">
+            <column name="SHIFT_CODE" unique="true" />
+        </property>
+        <property name="shiftName" type="java.lang.String">
+            <column name="SHIFT_NAME" />
+        </property>
+        <property name="startTime" type="java.util.Date">
+            <column name="START_TIME" />
+        </property>
+        <property name="endTime" type="java.util.Date">
+            <column name="END_TIME" />
+        </property>
+        <property name="shiftStatus" type="java.lang.String">
+            <column name="SHIFT_STATUS" />
+        </property>
+        <property name="createdBy" type="java.lang.String" length="50">
+            <column name="CREATED_BY" />
+        </property>
+        <property name="modifiedBy" type="java.lang.String" length="50">
+            <column name="MODIFIED_BY" />
+        </property>
+        <property name="createdDateTime" type="java.sql.Timestamp">
+            <column name="CREATED_DATETIME" />
+        </property>
+        <property name="modifiedDateTime" type="java.sql.Timestamp">
+            <column name="MODIFIED_DATETIME" />
+        </property>
+    </class>
+</hibernate-mapping>

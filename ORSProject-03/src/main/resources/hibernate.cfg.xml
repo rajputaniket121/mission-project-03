@@ -41,5 +41,6 @@
 		<mapping resource="in/co/rays/proj3/hbm/AttendanceDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/AlertDTO.hbm.xml" />
 		<mapping resource="in/co/rays/proj3/hbm/FeedbackDTO.hbm.xml" />
+		<mapping resource="in/co/rays/proj3/hbm/ShiftDTO.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

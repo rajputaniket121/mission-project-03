@@ -14,6 +14,7 @@ import in.co.rays.proj3.model.hibImpl.FeedbackModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.MarksheetModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.ProfileModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.RoleModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.ShiftModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.StudentModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.SubjectModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.SupportModelHibImpl;
@@ -293,5 +294,19 @@ public final class ModelFactory {
 			modelCache.put("feedbackModel", feedbackModel);
 		}
 		return feedbackModel;
+	}
+	
+	public ShiftModelInt getShiftModel() {
+		ShiftModelInt shiftModel = (ShiftModelInt) modelCache.get("shiftModel");
+		if (shiftModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				shiftModel = new ShiftModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				shiftModel = new ShiftModelHibImpl();
+			}
+			modelCache.put("shiftModel", shiftModel);
+		}
+		return shiftModel;
 	}
 }
