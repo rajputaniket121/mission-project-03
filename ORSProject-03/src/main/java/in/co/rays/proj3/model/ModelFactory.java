@@ -8,6 +8,7 @@ import in.co.rays.proj3.model.hibImpl.AttendanceModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CollegeModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.ContactModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CourseModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.DepartmentModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.DoctorModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.FacultyModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.FeedbackModelHibImpl;
@@ -308,5 +309,19 @@ public final class ModelFactory {
 			modelCache.put("shiftModel", shiftModel);
 		}
 		return shiftModel;
+	}
+	
+	public DepartmentModelInt getDepartmentModel() {
+		DepartmentModelInt departmentModel = (DepartmentModelInt) modelCache.get("departmentModel");
+		if (departmentModel == null) {
+			if ("Hibernate".equals(DATABASE)) {
+				departmentModel = new DepartmentModelHibImpl();
+			}
+			if ("JDBC".equals(DATABASE)) {
+				departmentModel = new DepartmentModelHibImpl();
+			}
+			modelCache.put("departmentModel", departmentModel);
+		}
+		return departmentModel;
 	}
 }

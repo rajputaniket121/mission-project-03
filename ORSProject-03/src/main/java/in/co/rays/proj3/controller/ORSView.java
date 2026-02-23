@@ -111,5 +111,10 @@ public interface ORSView {
 	public static final String SHIFT_LIST_VIEW = PAGE_FOLDER + "/ShiftListView.jsp";
 	public static final String SHIFT_CTL = APP_CONTEXT + "/ctl/ShiftCtl";
 	public static final String SHIFT_LIST_CTL = APP_CONTEXT + "/ctl/ShiftListCtl";
+	
+	public static final String DEPARTMENT_VIEW = PAGE_FOLDER + "/DepartmentView.jsp";
+	public static final String DEPARTMENT_LIST_VIEW = PAGE_FOLDER + "/DepartmentListView.jsp";
+	public static final String DEPARTMENT_CTL = APP_CONTEXT + "/ctl/DepartmentCtl";
+	public static final String DEPARTMENT_LIST_CTL = APP_CONTEXT + "/ctl/DepartmentListCtl";
 
 }

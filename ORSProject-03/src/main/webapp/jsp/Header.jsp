@@ -299,6 +299,18 @@
 							</a>
 						</div>
 
+						<!-- Department -->
+						<a class="dropdown-item" href="#" data-toggle="dropdown"> <i
+							class="fa fa-user mr-2"></i>Department
+						</a>
+						<div class="dropdown-submenu px-3 py-2">
+							<a class="dropdown-item" href="<%=ORSView.DEPARTMENT_CTL%>"> <i
+								class="fa fa-plus mr-2"></i>Add Department
+							</a> <a class="dropdown-item" href="<%=ORSView.DEPARTMENT_LIST_CTL%>">
+								<i class="fa fa-list mr-2"></i>Department List
+							</a>
+						</div>
+
 					</div></li>
 
 				<%
@@ -336,7 +348,9 @@
 							<i class="fa fa-sign-out-alt mr-2"></i>Logout
 						</a>
 
-						<% } else { %>
+						<%
+						} else {
+						%>
 
 						<a class="dropdown-item" href="<%=ORSView.LOGIN_CTL%>"> <i
 							class="fa fa-sign-in-alt mr-2"></i>Login
@@ -345,7 +359,9 @@
 							class="fa fa-user-plus mr-2"></i>Register
 						</a>
 
-						<% } %>
+						<%
+						}
+						%>
 
 					</div></li>
 
