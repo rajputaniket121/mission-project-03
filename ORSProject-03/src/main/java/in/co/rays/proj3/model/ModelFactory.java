@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import in.co.rays.proj3.model.hibImpl.AlertModelHibImpl;
+import in.co.rays.proj3.model.hibImpl.AnnouncementModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.AttendanceModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.CollegeModelHibImpl;
 import in.co.rays.proj3.model.hibImpl.ContactModelHibImpl;
@@ -323,5 +324,19 @@ public final class ModelFactory {
 			modelCache.put("departmentModel", departmentModel);
 		}
 		return departmentModel;
+	}
+	
+	public AnnouncementModelInt getAnnouncementModel() {
+	    AnnouncementModelInt announcementModel = (AnnouncementModelInt) modelCache.get("announcementModel");
+	    if (announcementModel == null) {
+	        if ("Hibernate".equals(DATABASE)) {
+	            announcementModel = new AnnouncementModelHibImpl();
+	        }
+	        if ("JDBC".equals(DATABASE)) {
+	            announcementModel = new AnnouncementModelHibImpl();
+	        }
+	        modelCache.put("announcementModel", announcementModel);
+	    }
+	    return announcementModel;
 	}
 }

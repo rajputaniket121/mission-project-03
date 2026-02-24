@@ -116,5 +116,10 @@ public interface ORSView {
 	public static final String DEPARTMENT_LIST_VIEW = PAGE_FOLDER + "/DepartmentListView.jsp";
 	public static final String DEPARTMENT_CTL = APP_CONTEXT + "/ctl/DepartmentCtl";
 	public static final String DEPARTMENT_LIST_CTL = APP_CONTEXT + "/ctl/DepartmentListCtl";
+	
+	public static final String ANNOUNCEMENT_VIEW = PAGE_FOLDER + "/AnnouncementView.jsp";
+	public static final String ANNOUNCEMENT_LIST_VIEW = PAGE_FOLDER + "/AnnouncementListView.jsp";
+	public static final String ANNOUNCEMENT_CTL = APP_CONTEXT + "/ctl/AnnouncementCtl";
+	public static final String ANNOUNCEMENT_LIST_CTL = APP_CONTEXT + "/ctl/AnnouncementListCtl";
 
 }

@@ -310,6 +310,18 @@
 								<i class="fa fa-list mr-2"></i>Department List
 							</a>
 						</div>
+						
+						<!-- Announcement -->
+						<a class="dropdown-item" href="#" data-toggle="dropdown"> <i
+							class="fa fa-bell mr-2"></i>Announcement
+						</a>
+						<div class="dropdown-submenu px-3 py-2">
+							<a class="dropdown-item" href="<%=ORSView.ANNOUNCEMENT_CTL%>"> <i
+								class="fa fa-plus mr-2"></i>Add Announcement
+							</a> <a class="dropdown-item" href="<%=ORSView.ANNOUNCEMENT_LIST_CTL%>">
+								<i class="fa fa-list mr-2"></i>Announcement List
+							</a>
+						</div>
 
 					</div></li>
 
